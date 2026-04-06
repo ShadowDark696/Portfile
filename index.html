@@ -311,7 +311,7 @@
                 <li><a onclick="showSection('modelador')" id="nav-modelador">3D</a></li>
                 <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
             </ul>
-            <a href="https://discord.gg/FYjPHNKD" target="_blank" class="discord-btn">Discord</a>
+            <a href="https://discord.gg/MdMaXuXb" target="_blank" class="discord-btn">Discord</a>
         </nav>
     </header>
 
@@ -623,10 +623,10 @@
                 const img = card.querySelector('.yt-thumb');
                 img.onerror = () => {
                     if (img.src.includes('maxresdefault')) {
-                        img.src = `https://i.ytimg.com/vi/${proj.youtubeId}/sddefault.jpg`;
-                    } else if (img.src.includes('sddefault')) {
-                        img.src = `https://i.ytimg.com/vi/${proj.youtubeId}/hqdefault.jpg`;
-                    } else if (img.src.includes('hqdefault')) {
+                        img.src = `https://i.ytimg.com/vi/${proj.youtubeId}/mqdefault.jpg`;
+                    } else if (img.src.includes('mqdefault')) {
+                        img.src = `https://i.ytimg.com/vi/${proj.youtubeId}/0.jpg`;
+                    } else if (img.src.includes('0.jpg')) {
                         img.src = placeholder;
                     }
                 };

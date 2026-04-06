@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,18 +8,18 @@
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
-            --primary: #ccff00; /* Acid Green */
-            --secondary: #ff007a; /* Neon Pink */
-            --accent: #7000ff; /* Purple */
-            --bg: #080a1a;
+            --primary: #ccff00;
+            --secondary: #ff007a;
+            --accent: #7000ff;
+            --bg: #03040a;
             --surface: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
+            --border: rgba(204, 255, 0, 0.15);
             --text-main: #ffffff;
-            --text-dim: rgba(255, 255, 255, 0.6);
-            --glass: blur(25px);
+            --text-dim: rgba(255, 255, 255, 0.5);
+            --glass: blur(30px);
             --font-head: 'Space Grotesk', sans-serif;
             --font-body: 'Plus Jakarta Sans', sans-serif;
-            --transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -39,8 +38,19 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
+        .grain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: var(--bg); }
         ::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 10px; }
 
@@ -51,63 +61,64 @@
             width: 100vw;
             height: 100vh;
             z-index: -1;
-            overflow: hidden;
             background: var(--bg);
+            overflow: hidden;
         }
 
         .mesh-blob {
             position: absolute;
-            width: 800px;
-            height: 800px;
+            width: 900px;
+            height: 900px;
             border-radius: 50%;
-            filter: blur(150px);
-            opacity: 0.15;
-            animation: float 25s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
+            filter: blur(180px);
+            opacity: 0.2;
+            animation: float 30s infinite alternate cubic-bezier(0.45, 0, 0.55, 1);
         }
 
         .blob-1 { background: var(--primary); top: -20%; left: -10%; }
-        .blob-2 { background: var(--secondary); bottom: -20%; right: -10%; animation-delay: -5s; }
-        .blob-3 { background: var(--accent); top: 30%; left: 20%; animation-delay: -10s; }
+        .blob-2 { background: var(--secondary); bottom: -20%; right: -10%; animation-delay: -7s; }
+        .blob-3 { background: var(--accent); top: 30%; left: 30%; animation-delay: -15s; }
 
         @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(150px, 100px) scale(1.3); }
+            0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+            100% { transform: translate(200px, 150px) scale(1.4) rotate(45deg); }
         }
 
-        /* Custom Cursor */
         .cursor-dot {
-            width: 8px; height: 8px; background: var(--primary);
+            width: 6px; height: 6px; background: var(--primary);
             position: fixed; pointer-events: none; z-index: 10000;
-            border-radius: 50%; transform: translate(-50%, -50%);
+            border-radius: 50%; top: 0; left: 0;
+            will-change: transform;
         }
 
         .cursor-outline {
-            width: 40px; height: 40px; border: 2px solid var(--primary);
+            width: 40px; height: 40px; border: 1.5px solid var(--primary);
             position: fixed; pointer-events: none; z-index: 10000;
-            border-radius: 50%; transform: translate(-50%, -50%);
-            transition: width 0.3s, height 0.3s, background 0.3s;
+            border-radius: 50%; top: 0; left: 0;
+            transition: width 0.4s, height 0.4s, background 0.4s, border 0.4s;
+            will-change: transform;
         }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 0 40px;
+            padding: 0 5vw;
         }
 
-        /* Header */
         header {
             position: fixed;
-            top: 30px;
+            top: 25px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90%;
-            max-width: 1100px;
+            width: 95%;
+            max-width: 1300px;
             z-index: 1000;
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.02);
             backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
             border: 1px solid var(--border);
             border-radius: 100px;
-            padding: 12px 30px;
+            padding: 8px 30px;
             transition: var(--transition);
         }
 
@@ -158,7 +169,6 @@
             box-shadow: 0 10px 30px rgba(204, 255, 0, 0.4);
         }
 
-        /* Sections */
         .page-section {
             display: none;
             min-height: 100vh;
@@ -170,7 +180,6 @@
         }
         .page-section.active { display: block; opacity: 1; transform: translateY(0); }
 
-        /* Hero */
         .hero-content { max-width: 1000px; }
         .subtitle {
             font-size: 1.1rem;
@@ -197,7 +206,6 @@
             margin-bottom: 50px;
         }
 
-        /* Bento Grid Stats */
         .bento-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -209,15 +217,27 @@
             border-radius: 35px;
             padding: 40px;
             backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
             transition: var(--transition);
+            position: relative;
+            overflow: hidden;
         }
+        .bento-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at var(--x) var(--y), rgba(204, 255, 0, 0.08), transparent 80%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .bento-item:hover::before { opacity: 1; }
         .bento-item:hover {
-            background: rgba(255, 255, 255, 0.07);
+            background: rgba(255, 255, 255, 0.06);
             border-color: var(--primary);
-            transform: translateY(-10px);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
-        /* Categories */
         .categories { margin-top: 50px; }
         .category-card {
             padding: 50px 30px;
@@ -226,7 +246,6 @@
         .category-card i { font-size: 3rem; margin-bottom: 20px; display: block; }
         .category-card h3 { font-family: var(--font-head); margin-bottom: 10px; font-size: 1.5rem; }
 
-        /* Work Cards */
         .work-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -248,7 +267,6 @@
         }
         .work-info { padding: 40px; }
 
-        /* Video Gallery */
         .gallery-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
@@ -262,7 +280,6 @@
         }
         .gallery-card:nth-child(3n) { grid-column: span 2; }
 
-        /* Form */
         .form-box {
             max-width: 900px;
             margin: 0 auto;
@@ -309,6 +326,7 @@
 </head>
 
 <body>
+    <div class="grain"></div>
     <div class="mesh-bg">
         <div class="mesh-blob blob-1"></div>
         <div class="mesh-blob blob-2"></div>
@@ -325,7 +343,9 @@
                 <li><a onclick="showSection('home')" id="nav-home" class="active">Home</a></li>
                 <li><a onclick="showSection('animator')" id="nav-animator">Animator</a></li>
                 <li><a onclick="showSection('scripter')" id="nav-scripter">Scripter</a></li>
-                <li><a onclick="showSection('hire')" id="nav-hire">Hire Me</a></li>
+                <li><a onclick="showSection('uidesign')" id="nav-uidesign">UI Design</a></li>
+                <li><a onclick="showSection('modelador')" id="nav-modelador">Modelador</a></li>
+                <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
             </ul>
             <a href="https://discord.gg/FYjPHNKD" target="_blank" class="discord-btn">Discord</a>
         </nav>
@@ -336,7 +356,7 @@
             <div class="hero-content">
                 <div class="subtitle">Creative Tech Disruptor</div>
                 <h1>
-                    <span>P</span><span>r</span><span>o</span><span>f</span><span>e</span><span>s</span><span>s</span><span>i</span><span>o</span><span>n</span><span>a</span><span>l</span><br>
+                    <span>P</span><span>r</span><span>o</span><span>f</span><span>e</span><span>s</span><span>s</span><span>i</span><span>o</span><span>m</span><span>a</span><span>l</span><br>
                     <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span><span>p</span><span>e</span><span>r</span>
                 </h1>
                 <p>Pushing the boundaries of digital interaction through high-end scripting, cinematic 3D animation, and fluid UI experiences.</p>
@@ -371,15 +391,15 @@
                         <h3>Scripter</h3>
                         <p>Architecture</p>
                     </div>
-                    <div class="bento-item category-card">
+                    <div class="bento-item category-card" onclick="showSection('uidesign')">
                         <i>🎨</i>
                         <h3>UI Design</h3>
                         <p>Experiences</p>
                     </div>
-                    <div class="bento-item category-card">
+                    <div class="bento-item category-card" onclick="showSection('modelador')">
                         <i>✨</i>
-                        <h3>VFX</h3>
-                        <p>Visual Style</p>
+                        <h3>Modelador</h3>
+                        <p>3D Assets</p>
                     </div>
                 </div>
             </div>
@@ -423,13 +443,50 @@
         </div>
     </section>
 
+    <section id="uidesign" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">Experiences</div>
+                <h2 class="section-title">UI Design Gallery</h2>
+                <p class="section-description">Modern, user-centric interfaces designed for seamless digital interaction.</p>
+            </div>
+            <div class="work-grid">
+                <div class="bento-item work-card">
+                    <div class="work-img">🎨</div>
+                    <div class="work-info">
+                        <h3>Interface Systems</h3>
+                        <p style="color: var(--text-dim);">Scalable design systems and interactive prototypes.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="modelador" class="page-section">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-tag">3D Mastery</div>
+                <h2 class="section-title">Modelador Portfolio</h2>
+                <p class="section-description">High-fidelity 3D assets and environment modeling for immersive worlds.</p>
+            </div>
+            <div class="work-grid">
+                <div class="bento-item work-card">
+                    <div class="work-img">🧱</div>
+                    <div class="work-info">
+                        <h3>Hard Surface Modeling</h3>
+                        <p style="color: var(--text-dim);">Detailed assets with optimized topology and PBR texturing.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <section id="hire" class="page-section">
         <div class="container">
             <div class="form-box">
                 <button onclick="showSection('home')" style="background: none; border: none; color: var(--text-dim); cursor: pointer; margin-bottom: 30px;">← Back Home</button>
                 <h1 style="font-family: var(--font-head); font-size: 3rem; margin-bottom: 10px;">Start a Build</h1>
                 <p style="color: var(--text-dim); margin-bottom: 50px;">Ready to elevate your project with elite quality?</p>
-                
                 <form id="hireForm">
                     <div class="form-row">
                         <input type="text" name="name" placeholder="Full Name" required>
@@ -440,7 +497,8 @@
                         <select name="service" style="background:rgba(255,255,255,0.04); border:1px solid var(--border); color:#fff; padding:20px; border-radius:20px;">
                             <option value="Animation">Animation</option>
                             <option value="Scripting">Scripting</option>
-                            <option value="Full Development">Full development</option>
+                            <option value="UI Design">UI Design</option>
+                            <option value="Modeling">Modeling</option>
                         </select>
                     </div>
                     <textarea name="message" placeholder="Project details..." style="height: 200px; margin-bottom: 30px;" required></textarea>
@@ -457,42 +515,72 @@
     <script>
         (function () { emailjs.init("Qa_eRk88SCXHFwSxr"); })();
 
-        // Cursor
         const dot = document.querySelector('.cursor-dot');
         const outline = document.querySelector('.cursor-outline');
+        let mouse = { x: 0, y: 0 };
+        let dotPos = { x: 0, y: 0 };
+        let outlinePos = { x: 0, y: 0 };
+
         window.addEventListener('mousemove', (e) => {
-            dot.style.left = `${e.clientX}px`;
-            dot.style.top = `${e.clientY}px`;
-            outline.animate({ left: `${e.clientX}px`, top: `${e.clientY}px` }, { duration: 500, fill: "forwards" });
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
         });
 
-        // Hover Effect
+        function updateCursor() {
+            dotPos.x += (mouse.x - dotPos.x) * 0.2;
+            dotPos.y += (mouse.y - dotPos.y) * 0.2;
+            dot.style.transform = `translate3d(${dotPos.x - 3}px, ${dotPos.y - 3}px, 0)`;
+
+            outlinePos.x += (mouse.x - outlinePos.x) * 0.1;
+            outlinePos.y += (mouse.y - outlinePos.y) * 0.1;
+            outline.style.transform = `translate3d(${outlinePos.x - 20}px, ${outlinePos.y - 20}px, 0)`;
+
+            requestAnimationFrame(updateCursor);
+        }
+        updateCursor();
+
         document.querySelectorAll('a, button, .bento-item').forEach(el => {
             el.addEventListener('mouseenter', () => {
-                outline.style.width = '70px'; outline.style.height = '70px';
+                outline.style.width = '70px';
+                outline.style.height = '70px';
                 outline.style.background = 'rgba(204, 255, 0, 0.1)';
+                outline.style.borderColor = 'transparent';
+                dot.style.background = 'white';
             });
             el.addEventListener('mouseleave', () => {
-                outline.style.width = '40px'; outline.style.height = '40px';
+                outline.style.width = '40px';
+                outline.style.height = '40px';
                 outline.style.background = 'transparent';
+                outline.style.borderColor = 'var(--primary)';
+                dot.style.background = 'var(--primary)';
+            });
+            
+            el.addEventListener('mousemove', (e) => {
+                const r = el.getBoundingClientRect();
+                const x = e.clientX - r.left;
+                const y = e.clientY - r.top;
+                el.style.setProperty('--x', `${x}px`);
+                el.style.setProperty('--y', `${y}px`);
             });
         });
 
-        // Scroll
         window.addEventListener('scroll', () => {
             const header = document.querySelector('header');
             header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // 3D Tilt
         function applyTilt(el) {
             el.addEventListener('mousemove', (e) => {
                 const r = el.getBoundingClientRect();
-                const x = e.clientX - r.left; const y = e.clientY - r.top;
-                const rx = (y - r.height / 2) / 10; const ry = (r.width / 2 - x) / 10;
-                el.style.transform = `translateY(-10px) rotateX(${rx}deg) rotateY(${ry}deg)`;
+                const x = e.clientX - r.left;
+                const y = e.clientY - r.top;
+                const rx = (y - r.height / 2) / 12;
+                const ry = (r.width / 2 - x) / 12;
+                el.style.transform = `translate3d(0, -10px, 50px) rotateX(${rx}deg) rotateY(${ry}deg)`;
             });
-            el.addEventListener('mouseleave', () => el.style.transform = `translateY(0) rotateX(0) rotateY(0)`);
+            el.addEventListener('mouseleave', () => {
+                el.style.transform = `translate3d(0, 0, 0) rotateX(0) rotateY(0)`;
+            });
         }
 
         const animationProjects = [
@@ -505,7 +593,7 @@
             { name: "Empanadita Bicicleteira Walk 🥟", youtubeId: "f9bNzV_MRlU" },
             { name: "Empanadita Bicicleteira Idle 🥟", youtubeId: "rXdnognlLU0" },
             { name: "Lechona Idle and Walk 🐷", youtubeId: "PuPCGzUK2ao" },
-            { name: "Weirddog Walk 🐕", youtubeId: "-oUKHncfbrg" },
+            { name: "Weirddog Walk 🐕", youtubeId: "-oUKHncf4rg" },
             { name: "Manzini Happyni Idle 🍎", youtubeId: "7HrWSKQyxYc" },
             { name: "Manzini Happyni Walk 🍎", youtubeId: "BUWmnf-xdi0" },
             { name: "Naruto Makini Walk 🍜", youtubeId: "fBVJJFrUjGw" },
@@ -519,19 +607,19 @@
             animationProjects.forEach((proj) => {
                 const card = document.createElement('div');
                 card.className = 'bento-item gallery-card';
-                const thumb = `https://img.youtube.com/vi/${proj.youtubeId}/maxresdefault.jpg`;
+                const thumb = `https://i.ytimg.com/vi/${proj.youtubeId}/maxresdefault.jpg`;
                 card.innerHTML = `
-                    <div style="height:100%; border-radius:35px; overflow:hidden; position:relative;">
-                        <img src="${thumb}" style="width:100%;height:100%;object-fit:cover;">
-                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 30px var(--primary);cursor:pointer;">
-                            <div style="width:0;height:0;border-left:15px solid var(--bg);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px;"></div>
+                    <div style="height:100%; border-radius:35px; overflow:hidden; position:relative; background:#000;">
+                        <img src="${thumb}" style="width:100%;height:100%;object-fit:cover;" onerror="this.src='https://i.ytimg.com/vi/${proj.youtubeId}/hqdefault.jpg'">
+                        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:65px;height:65px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 0 40px var(--primary);cursor:pointer;">
+                            <div style="width:0;height:0;border-left:18px solid var(--bg);border-top:12px solid transparent;border-bottom:12px solid transparent;margin-left:6px;"></div>
                         </div>
                     </div>
-                    <div style="position:absolute; bottom:30px; left:30px; z-index:10;">
-                        <h3 style="font-family:var(--font-head);">${proj.name}</h3>
+                    <div style="position:absolute; bottom:30px; left:30px; z-index:10; pointer-events:none;">
+                        <h3 style="font-family:var(--font-head); font-size:1.4rem;">${proj.name}</h3>
                     </div>`;
                 card.addEventListener('click', () => {
-                    card.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${proj.youtubeId}?autoplay=1" style="width:100%;height:100%;border:none;border-radius:35px;" allow="autoplay;fullscreen"></iframe>`;
+                    card.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${proj.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;border-radius:35px;" allow="autoplay;fullscreen"></iframe>`;
                 });
                 applyTilt(card);
                 container.appendChild(card);
@@ -539,9 +627,15 @@
         }
 
         function showSection(sectionId) {
-            document.querySelectorAll('.page-section').forEach(s => { s.classList.remove('active'); s.style.display = 'none'; });
+            document.querySelectorAll('.page-section').forEach(s => {
+                s.style.display = 'none';
+                s.classList.remove('active');
+            });
             const t = document.getElementById(sectionId);
-            if (t) { t.style.display = 'block'; setTimeout(() => t.classList.add('active'), 50); }
+            if (t) {
+                t.style.display = 'block';
+                setTimeout(() => t.classList.add('active'), 20);
+            }
             document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
             const link = document.getElementById('nav-' + sectionId);
             if (link) link.classList.add('active');
@@ -553,14 +647,26 @@
             document.querySelectorAll('.bento-item').forEach(el => applyTilt(el));
         });
 
-        document.getElementById('hireForm').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const f = e.target;
-            try {
-                await emailjs.send("service_k171wbt", "template_tp7g5di", { message: f.message.value, name: f.name.value, discord: f.discord.value, email: f.email.value });
-                f.style.display = 'none'; document.getElementById('successMessage').style.display = 'block';
-            } catch (err) { alert('Transmission failed.'); }
-        });
+        const hireForm = document.getElementById('hireForm');
+        if (hireForm) {
+            hireForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const f = e.target;
+                try {
+                    await emailjs.send("service_k171wbt", "template_tp7g5di", {
+                        message: f.message.value,
+                        name: f.name.value,
+                        discord: f.discord.value,
+                        email: f.email.value,
+                        service: f.service.value
+                    });
+                    f.style.display = 'none';
+                    document.getElementById('successMessage').style.display = 'block';
+                } catch (err) {
+                    alert('Error');
+                }
+            });
+        }
     </script>
 </body>
 </html>

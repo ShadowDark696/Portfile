@@ -54,6 +54,7 @@
                 linear-gradient(90deg, rgba(204, 255, 0, 0.02) 1px, transparent 1px);
             background-size: 60px 60px;
             z-index: -1;
+            -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
             mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
         }
 
@@ -70,12 +71,12 @@
 
         .mesh-blob {
             position: absolute; width: 800px; height: 800px;
-            border-radius: 50%; filter: blur(150px); opacity: 0.15;
-            animation: float 25s infinite alternate ease-in-out;
+            border-radius: 50%; filter: blur(150px); opacity: 0.2;
+            animation: float 30s infinite alternate ease-in-out;
         }
 
-        .blob-1 { background: var(--primary); top: -10%; left: -5%; }
-        .blob-2 { background: var(--accent); bottom: -10%; right: -5%; animation-delay: -5s; }
+        .blob-1 { background: var(--primary); top: -10%; left: -5%; animation-duration: 30s; }
+        .blob-2 { background: var(--accent); bottom: -10%; right: -5%; animation-delay: -10s; animation-duration: 35s; }
         
         @keyframes float {
             0% { transform: translate(0, 0) scale(1); }
@@ -100,7 +101,8 @@
             position: fixed; top: 30px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 1200px; z-index: 1000;
             background: rgba(10, 11, 14, 0.4);
-            backdrop-filter: var(--glass); -webkit-backdrop-filter: var(--glass);
+            -webkit-backdrop-filter: var(--glass);
+            backdrop-filter: var(--glass);
             border: 1px solid var(--border); border-radius: 100px;
             padding: 8px 32px; transition: var(--transition);
         }
@@ -132,10 +134,11 @@
             border-radius: 50px; font-weight: 700; text-decoration: none;
             font-family: var(--font-body); transition: var(--transition);
             font-size: 0.9rem;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
         }
         .discord-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(204, 255, 0, 0.1);
         }
 
         .page-section {
@@ -160,14 +163,18 @@
         }
         .bento-item {
             background: var(--surface); border: 1px solid var(--border);
-            border-radius: 24px; padding: 40px; backdrop-filter: var(--glass);
-            -webkit-backdrop-filter: var(--glass); transition: var(--transition);
+            border-radius: 24px; padding: 40px;
+            -webkit-backdrop-filter: var(--glass);
+            backdrop-filter: var(--glass);
+            transition: var(--transition);
             position: relative; overflow: hidden;
+            box-shadow: 0 0 20px rgba(204, 255, 0, 0.05);
         }
         .bento-item:hover {
             border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
-            background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 40px rgba(0, 234, 255, 0.15), 0 20px 40px rgba(0, 0, 0, 0.3);
         }
 
         .card-glow {
@@ -178,7 +185,8 @@
         .bento-item:hover .card-glow { opacity: 1; }
 
         .category-card { cursor: pointer; text-align: center; }
-        .category-card i { font-size: 2.5rem; margin-bottom: 20px; display: block; }
+        .category-card i { font-size: 2.5rem; margin-bottom: 20px; display: block; transition: var(--transition); }
+        .category-card:hover i { transform: scale(1.2) rotate(5deg); }
         .category-card h3 { font-family: var(--font-head); margin-bottom: 8px; font-size: 1.4rem; }
 
         .work-grid {
@@ -198,7 +206,9 @@
         .form-box {
             max-width: 900px; margin: 0 auto; background: var(--surface);
             border: 1px solid var(--border); border-radius: 40px;
-            padding: 60px; backdrop-filter: var(--glass);
+            padding: 60px;
+            -webkit-backdrop-filter: var(--glass);
+            backdrop-filter: var(--glass);
         }
 
         .service-selector {
@@ -221,8 +231,12 @@
             width: 100%; padding: 24px; background: var(--primary); color: #000;
             border: none; border-radius: 100px; font-family: var(--font-head);
             font-size: 1.2rem; font-weight: 800; transition: var(--transition);
+            box-shadow: 0 0 30px rgba(204, 255, 0, 0.3);
         }
-        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(204, 255, 0, 0.2); }
+        .submit-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 50px rgba(204, 255, 0, 0.4), 0 0 30px rgba(204, 255, 0, 0.5);
+        }
 
         .section-header { text-align: center; margin-bottom: 60px; }
         .section-tag { font-size: 0.8rem; color: var(--primary); text-transform: uppercase; letter-spacing: 4px; font-weight: 700; margin-bottom: 10px; display: block; }
@@ -231,6 +245,67 @@
         @media (max-width: 1000px) {
             .bento-grid { grid-template-columns: repeat(2, 1fr); }
         }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .stat-number.primary { color: var(--primary); }
+        .stat-number.secondary { color: var(--secondary); }
+        .stat-number.accent { color: var(--accent); }
+
+        .grid-mt-20 { margin-top: 20px; grid-template-columns: repeat(4, 1fr); }
+
+        .para-dim { color: var(--text-dim); }
+
+        .textarea-tall {
+            height: 200px;
+            margin-bottom: 40px;
+        }
+
+        .success-container {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .success-title {
+            color: var(--primary);
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .success-text { font-size: 1.2rem; }
+
+        .return-btn {
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            cursor: pointer;
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .section-title-form {
+            font-family: var(--font-head);
+            font-size: 4rem;
+            margin-bottom: 10px;
+            letter-spacing: -2px;
+        }
+
+        .form-description {
+            color: var(--text-dim);
+            margin-bottom: 60px;
+            font-size: 1.1rem;
+        }
+
         @media (max-width: 700px) {
             .bento-grid, .work-grid { grid-template-columns: 1fr; }
             .nav-links { display: none; }
@@ -262,7 +337,7 @@
                 <li><a onclick="showSection('modelador')" id="nav-modelador">3D</a></li>
                 <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
             </ul>
-            <a href="https://discord.gg/MdMaXuXb" target="_blank" class="discord-btn">Discord</a>
+            <a href="https://discord.gg/MdMaXuXb" target="_blank" rel="noopener" class="discord-btn">Discord</a>
         </nav>
     </header>
 
@@ -278,24 +353,24 @@
                 
                 <div class="bento-grid">
                     <div class="bento-item">
-                        <div style="font-size: 3rem; font-weight: 700; color: var(--primary);">5+</div>
-                        <div style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Years XP</div>
+                        <div class="stat-number primary">5+</div>
+                        <div class="stat-label">Years XP</div>
                     </div>
                     <div class="bento-item">
-                        <div style="font-size: 3rem; font-weight: 700; color: var(--secondary);">100+</div>
-                        <div style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Animations</div>
+                        <div class="stat-number secondary">100+</div>
+                        <div class="stat-label">Animations</div>
                     </div>
                     <div class="bento-item">
-                        <div style="font-size: 3rem; font-weight: 700; color: var(--accent);">24/7</div>
-                        <div style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Innovation</div>
+                        <div class="stat-number accent">24/7</div>
+                        <div class="stat-label">Innovation</div>
                     </div>
                     <div class="bento-item">
-                        <div style="font-size: 3rem; font-weight: 700; color: var(--primary);">100%</div>
-                        <div style="color: var(--text-dim); text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px;">Uptime</div>
+                        <div class="stat-number primary">100%</div>
+                        <div class="stat-label">Uptime</div>
                     </div>
                 </div>
 
-                <div class="bento-grid" style="margin-top: 20px; grid-template-columns: repeat(4, 1fr);">
+                <div class="bento-grid grid-mt-20">
                     <div class="bento-item category-card" onclick="showSection('animator')">
                         <i>🎬</i>
                         <h3>Animator</h3>
@@ -344,14 +419,14 @@
                     <div class="work-img">🤖</div>
                     <div class="work-info">
                         <h3>Advanced Systems</h3>
-                        <p style="color: var(--text-dim);">Complex AI and automation frameworks in multiple languages.</p>
+                        <p class="para-dim">Complex AI and automation frameworks in multiple languages.</p>
                     </div>
                 </div>
                 <div class="bento-item work-card">
                     <div class="work-img">⚙️</div>
                     <div class="work-info">
                         <h3>Core Logic</h3>
-                        <p style="color: var(--text-dim);">Robust backend systems and performance-first scripting.</p>
+                        <p class="para-dim">Robust backend systems and performance-first scripting.</p>
                     </div>
                 </div>
             </div>
@@ -370,7 +445,7 @@
                     <div class="work-img">🎨</div>
                     <div class="work-info">
                         <h3>Interface Systems</h3>
-                        <p style="color: var(--text-dim);">Scalable design systems and interactive prototypes.</p>
+                        <p class="para-dim">Scalable design systems and interactive prototypes.</p>
                     </div>
                 </div>
             </div>
@@ -389,7 +464,7 @@
                     <div class="work-img">🧱</div>
                     <div class="work-info">
                         <h3>Hard Surface Modeling</h3>
-                        <p style="color: var(--text-dim);">Detailed assets with optimized topology and PBR texturing.</p>
+                        <p class="para-dim">Detailed assets with optimized topology and PBR texturing.</p>
                     </div>
                 </div>
             </div>
@@ -399,9 +474,9 @@
     <section id="hire" class="page-section">
         <div class="container">
             <div class="form-box">
-                <button onclick="showSection('home')" style="background: none; border: none; color: var(--text-dim); cursor: pointer; margin-bottom: 40px; font-weight: 700;">← RETURN HOME</button>
-                <h1 style="font-family: var(--font-head); font-size: 4rem; margin-bottom: 10px; letter-spacing: -2px;">Initialize Build</h1>
-                <p style="color: var(--text-dim); margin-bottom: 60px; font-size: 1.1rem;">Select a specialized service and transmit your requirements.</p>
+                <button onclick="showSection('home')" class="return-btn">← RETURN HOME</button>
+                <h1 class="section-title-form">Initialize Build</h1>
+                <p class="form-description">Select a specialized service and transmit your requirements.</p>
                 
                 <form id="hireForm">
                     <div class="service-selector">
@@ -436,12 +511,12 @@
                     <div class="form-row">
                         <input type="email" name="email" placeholder="Email Address" required>
                     </div>
-                    <textarea name="message" placeholder="Transmission details... describe your project goals." style="height: 200px; margin-bottom: 40px;" required></textarea>
+                    <textarea name="message" placeholder="Transmission details... describe your project goals." class="textarea-tall" required></textarea>
                     <button type="submit" class="submit-btn">SEND PROPOSAL</button>
                 </form>
-                <div id="successMessage" style="display:none; text-align:center; padding:40px;">
-                    <h2 style="color: var(--primary); font-size: 3rem; margin-bottom: 10px;">TRANSMITTED</h2>
-                    <p style="font-size: 1.2rem;">Proposal received. Standby for contact.</p>
+                <div id="successMessage" class="success-container">
+                    <h2 class="success-title">TRANSMITTED</h2>
+                    <p class="success-text">Proposal received. Standby for contact.</p>
                 </div>
             </div>
         </div>
@@ -525,11 +600,11 @@
             { name: "Empanadita Bicicleteira Walk 🥟", youtubeId: "f9bNzV_MRlU" },
             { name: "Empanadita Bicicleteira Idle 🥟", youtubeId: "rXdnognlLU0" },
             { name: "Lechona Idle and Walk 🐷", youtubeId: "PuPCGzUK2ao" },
-            { name: "Weirddog Walk 🐕", youtubeId: "-oUKHncf4rg" },
-            { name: "Manzini Happyni Idle 🍎", youtubeId: "7HrWSKQyxYc" },
-            { name: "Manzini Happyni Walk 🍎", youtubeId: "BUWmnf-xdi0" },
+            { name: "Monster Walk 👹", youtubeId: "-oUKHncfbrg" },
+            { name: "Manzini Happini Idle 🍎", youtubeId: "7HrWSKQyxYc" },
+            { name: "Manzini Happini Walk 🍎", youtubeId: "BUWmnf-xdi0" },
             { name: "Naruto Makini Walk 🍜", youtubeId: "fBVJJFrUjGw" },
-            { name: "StrawberrySaurus Idle and Walk 🍓", youtubeId: "fDoMAY026tA" },
+            { name: "Strawberry Saurus Idle and Walk 🍓", youtubeId: "fDoMAY026tA" },
             { name: "Orangini Walk 🍊", youtubeId: "A-na79SPDPg" }
         ];
 

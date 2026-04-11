@@ -669,21 +669,21 @@
         });
 
         const animationProjects = [
-            { name: "Mexico Event 🌮", youtubeId: "C4rNl8lzMYU" },
-            { name: "Las Combinaciones Walk 🎪", youtubeId: "N4cDoc1CF-o" },
-            { name: "ExtraditaBlessd Anim ✨", youtubeId: "ss6E67uTmts" },
-            { name: "Ant Walk 🐜", youtubeId: "nvdQOFVZ1s0" },
-            { name: "ExtraditaBlessd Walk ✨", youtubeId: "44nA9eghCJ0" },
-            { name: "OctavioMesa And Devil Idle 😈", youtubeId: "heRcohMJ-Wg" },
-            { name: "Empanadita Bicicleteira Walk 🥟", youtubeId: "f9bNzV_MRlU" },
-            { name: "Empanadita Bicicleteira Idle 🥟", youtubeId: "rXdnognlLU0" },
-            { name: "Lechona Idle and Walk 🐷", youtubeId: "PuPCGzUK2ao" },
-            { name: "Monster Walk 👹", youtubeId: "-oUKHncfbrg" },
-            { name: "Manzini Happini Idle 🍎", youtubeId: "7HrWSKQyxYc" },
-            { name: "Manzini Happini Walk 🍎", youtubeId: "BUWmnf-xdi0" },
-            { name: "Naruto Makini Walk 🍜", youtubeId: "fBVJJFrUjGw" },
-            { name: "Strawberry Saurus Idle and Walk 🍓", youtubeId: "fDoMAY026tA" },
-            { name: "Orangini Walk 🍊", youtubeId: "A-na79SPDPg" }
+            { name: "Mexico Event 🌮", youtubeId: "C4rNl8lzMYU", fallbackId: "maxresdefault.jpg" },
+            { name: "Las Combinaciones Walk 🎪", youtubeId: "N4cDoc1CF-o", fallbackId: "maxresdefault.jpg" },
+            { name: "ExtraditaBlessd Anim ✨", youtubeId: "ss6E67uTmts", fallbackId: "maxresdefault.jpg" },
+            { name: "Ant Walk 🐜", youtubeId: "nvdQOFVZ1s0", fallbackId: "maxresdefault.jpg" },
+            { name: "ExtraditaBlessd Walk ✨", youtubeId: "44nA9eghCJ0", fallbackId: "maxresdefault.jpg" },
+            { name: "OctavioMesa And Devil Idle 😈", youtubeId: "heRcohMJ-Wg", fallbackId: "maxresdefault.jpg" },
+            { name: "Empanadita Bicicleteira Walk 🥟", youtubeId: "f9bNzV_MRlU", fallbackId: "maxresdefault.jpg" },
+            { name: "Empanadita Bicicleteira Idle 🥟", youtubeId: "rXdnognlLU0", fallbackId: "maxresdefault.jpg" },
+            { name: "Lechona Idle and Walk 🐷", youtubeId: "PuPCGzUK2ao", fallbackId: "maxresdefault.jpg" },
+            { name: "Monster Walk 👹", youtubeId: "-oUKHncfbrg", fallbackId: "default.jpg" },
+            { name: "Manzini Happini Idle 🍎", youtubeId: "7HrWSKQyxYc", fallbackId: "default.jpg" },
+            { name: "Manzini Happini Walk 🍎", youtubeId: "BUWmnf-xdi0", fallbackId: "default.jpg" },
+            { name: "Naruto Makini Walk 🍜", youtubeId: "fBVJJFrUjGw", fallbackId: "default.jpg" },
+            { name: "Strawberry Saurus Idle and Walk 🍓", youtubeId: "fDoMAY026tA", fallbackId: "default.jpg" },
+            { name: "Orangini Walk 🍊", youtubeId: "A-na79SPDPg", fallbackId: "default.jpg" }
         ];
 
         function loadAnimationGallery() {
@@ -693,9 +693,12 @@
             animationProjects.forEach((proj) => {
                 const card = document.createElement('div');
                 card.className = 'bento-item gallery-card';
+                const primaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/${proj.fallbackId}`;
+                const secondaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/0.jpg`;
+                
                 card.innerHTML = `
                     <div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
-                        <img class="yt-thumb" data-fallback="1" src="https://i.ytimg.com/vi/${proj.youtubeId}/maxresdefault.jpg" style="width:100%;height:100%;object-fit:cover;">
+                        <img class="yt-thumb" src="${primaryThumb}" data-secondary="${secondaryThumb}" style="width:100%;height:100%;object-fit:cover;">
                         <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;box-shadow:0 0 50px var(--primary), inset 0 0 20px rgba(255,255,255,0.3);transition:all 0.3s ease;">
                             <div style="width:0;height:0;border-left:22px solid #000;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:5px;"></div>
                         </div>
@@ -707,14 +710,9 @@
                 const img = card.querySelector('.yt-thumb');
                 
                 img.onerror = function() {
-                    const fallback = parseInt(this.getAttribute('data-fallback'));
-                    const fallbacks = ['hq.jpg', '0.jpg', 'default.jpg'];
-                    
-                    if (fallback < fallbacks.length) {
-                        this.setAttribute('data-fallback', fallback + 1);
-                        this.src = `https://i.ytimg.com/vi/${proj.youtubeId}/${fallbacks[fallback]}`;
-                    } else {
-                        this.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Crect fill='%23111'/%3E%3Ctext x='50%25' y='50%25' text-anchor='middle' dy='.3em' fill='%23666' font-size='16'%3EVideo Unavailable%3C/text%3E%3C/svg%3E`;
+                    const secondary = this.getAttribute('data-secondary');
+                    if (secondary && this.src !== secondary) {
+                        this.src = secondary;
                     }
                 };
 

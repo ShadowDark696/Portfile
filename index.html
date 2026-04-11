@@ -254,6 +254,7 @@
             padding: 60px;
             -webkit-backdrop-filter: var(--glass);
             backdrop-filter: var(--glass);
+            box-shadow: 0 0 60px rgba(0, 234, 255, 0.1), 0 0 30px rgba(204, 255, 0, 0.05);
         }
 
         .service-selector {
@@ -262,8 +263,19 @@
         .service-card {
             background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border);
             border-radius: 20px; padding: 20px; cursor: pointer; transition: var(--transition);
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
         }
-        .service-card.active { border-color: var(--primary); background: rgba(204, 255, 0, 0.05); }
+        .service-card:hover {
+            border-color: var(--primary);
+            background: rgba(204, 255, 0, 0.08);
+            box-shadow: 0 0 40px rgba(204, 255, 0, 0.25), inset 0 0 20px rgba(204, 255, 0, 0.05);
+            transform: scale(1.05) translateY(-4px);
+        }
+        .service-card.active {
+            border-color: var(--primary);
+            background: rgba(204, 255, 0, 0.1);
+            box-shadow: 0 0 50px rgba(204, 255, 0, 0.3);
+        }
 
         input, textarea {
             width: 100%; padding: 20px; background: rgba(255, 255, 255, 0.02);
@@ -299,6 +311,7 @@
         .stat-number {
             font-size: 3rem;
             font-weight: 700;
+            text-shadow: 0 0 30px rgba(204, 255, 0, 0.3), 0 0 60px rgba(0, 234, 255, 0.2);
         }
 
         .stat-label {
@@ -308,9 +321,23 @@
             letter-spacing: 2px;
         }
 
-        .stat-number.primary { color: var(--primary); }
-        .stat-number.secondary { color: var(--secondary); }
-        .stat-number.accent { color: var(--accent); }
+        .stat-number.primary {
+            color: var(--primary);
+            animation: glowPulse 3s ease-in-out infinite;
+        }
+        .stat-number.secondary {
+            color: var(--secondary);
+            animation: glowPulse 3.5s ease-in-out infinite;
+        }
+        .stat-number.accent {
+            color: var(--accent);
+            animation: glowPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(204, 255, 0, 0.3), 0 0 40px rgba(0, 234, 255, 0.2); }
+            50% { text-shadow: 0 0 40px rgba(204, 255, 0, 0.5), 0 0 80px rgba(0, 234, 255, 0.3); }
+        }
 
         .grid-mt-20 { margin-top: 20px; grid-template-columns: repeat(4, 1fr); }
 

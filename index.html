@@ -994,7 +994,7 @@
                 <li><a onclick="showSection('modelador')" id="nav-modelador">3D</a></li>
                 <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
             </ul>
-            <a href="https://discord.gg/MdMaXuXb" target="_blank" rel="noopener" class="discord-btn">Discord</a>
+            <a href="https://discord.gg/STzVuTs7" target="_blank" rel="noopener" class="discord-btn">Discord</a>
         </nav>
     </header>
 
@@ -1320,19 +1320,70 @@
             "Tralaleritou Gold.jpeg",
             "Tralaleritou Ocean.jpeg",
             "Tralaleritou.jpeg",
-            "Tung tungsito sahur.jpeg"
+            "Tung tungsito sahur.jpeg",
+            "+57.jpeg",
+            "2026 Lucky Block.jpeg",
+            "Ara.jpeg",
+            "Arepita Huevita.jpeg",
+            "Ave Maria.jpeg",
+            "Banco Combi.jpeg",
+            "Bancolombia Down.jpeg",
+            "Bianchi.jpeg",
+            "Blessd.jpeg",
+            "Bombunsito.jpeg",
+            "Bombunsitos.jpeg",
+            "Bonyurtini Delish.jpeg",
+            "Cajitas.jpeg",
+            "Calzoski.jpeg",
+            "Capibarini Aguacatini.jpeg",
+            "Clock Clock 26.jpeg",
+            "Empanadita Combi.jpeg",
+            "Empanadita.jpeg",
+            "ExtraditaBlessd.jpeg",
+            "Fernanfloo.jpeg",
+            "Guacamo and Atojito.jpeg",
+            "Gustambo.jpeg",
+            "Hit Mango.jpeg",
+            "Hormiga Culona.jpeg",
+            "It was ur fault.jpeg",
+            "Kris R.jpeg",
+            "Las 12 MidNight.jpeg",
+            "Luchando los Dias.jpeg",
+            "Mazamorra.jpeg",
+            "Mojarrelón.jpeg",
+            "Morning Café.jpeg",
+            "Navideña Combi.jpeg",
+            "Nooo my nequi Crew.jpeg",
+            "Nooo the Light.jpeg",
+            "Noooo my Nequi.jpeg",
+            "Octavio Mesa and the Devil.jpeg",
+            "Parceritos Combis.jpeg",
+            "Parcero Combi.jpeg",
+            "Parcero Festive.jpeg",
+            "Petroski.jpeg",
+            "Pony Malta.jpeg",
+            "Priest Jaramillo.jpeg",
+            "Sillita Paisita.jpeg",
+            "Super Coco.jpeg",
+            "Tazarini con Quesini.jpeg",
+            "The Parceritos.jpeg",
+            "Tintico.jpeg",
+            "Velita del 7.jpeg",
+            "Velitas.jpeg"
         ];
 
         function loadModelsGallery() {
             const container = document.getElementById('models-gallery');
             if (!container) return;
 
+            const emojis = ['✨', '🎨', '💎', '🧿', '👹', '🐚', '🌟', '🎭', '💫', '🌺', '🦈', '🍓', '🐪', '💛', '🌊', '🧩', '🌸', '🎪', '🎯', '🎸', '🎲', '🎳', '🎮', '🎬', '🎤', '🎧', '🎼', '🎹', '🎺', '🎻', '🥁', '🎰', '🎭', '🎪', '🎟', '🎠', '🎡', '🎢', '🎨', '🖼', '🎬', '🎮', '🎲', '🎯', '🏆', '🥇', '🥈', '🥉', '🏅', '⭐', '🌟', '✨', '💫', '🌠', '🎆', '🎇', '✨', '🌌', '🌃', '🌆', '🌇', '🌉', '🌁'];
+
             modelFiles.forEach((filename) => {
                 const card = document.createElement('div');
                 card.className = 'bento-item gallery-card';
                 const imagePath = `Models/${filename}`;
                 const name = filename.replace('.jpeg', '').replace('.jpg', '');
-                const emoji = ['✨', '🎨', '💎', '🧿', '👹', '🐚', '🌟', '🎭', '💫', '🌺', '🦈', '🍓', '🐪', '💛', '🌊', '🧩', '🌸'][modelFiles.indexOf(filename) % 17];
+                const emoji = emojis[modelFiles.indexOf(filename) % emojis.length];
 
                 card.innerHTML = `
                     <div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); display:flex; align-items:center; justify-content:center;">

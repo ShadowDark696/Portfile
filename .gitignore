@@ -1,3 +1,10 @@
 ﻿# Large video files (exceed GitHub 100MB limit)
 Scripts/*.mp4
 Anims/*.mp4
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

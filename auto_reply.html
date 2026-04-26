@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>Auto Reply</title>
+ <style>
+ body {
+ font-family: system-ui, sans-serif, Arial;
+ font-size: 16px;
+ color: #2c3e50;
+ margin: 0;
+ padding: 0;
+ background-color: #f9f9f9;
+ }
+
+ .email-container {
+ max-width: 600px;
+ margin: 20px auto;
+ background: #ffffff;
+ border: 1px solid #e0e0e0;
+ border-radius: 8px;
+ overflow: hidden;
+ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ }
+
+ .email-header {
+ background-color: #00d4ff;
+ color: #ffffff;
+ padding: 20px;
+ text-align: center;
+ font-size: 18px;
+ font-weight: bold;
+ }
+
+ .email-body {
+ padding: 20px;
+ }
+
+ .email-body p {
+ margin: 10px 0;
+ line-height: 1.6;
+ }
+
+ .email-footer {
+ background-color: #f1f1f1;
+ padding: 15px;
+ text-align: center;
+ font-size: 12px;
+ color: #7f8c8d;
+ }
+
+ .discord-link {
+ display: inline-block;
+ margin-top: 20px;
+ padding: 10px 20px;
+ background-color: #7289da;
+ color: #ffffff;
+ text-decoration: none;
+ border-radius: 5px;
+ font-size: 14px;
+ font-weight: bold;
+ }
+
+ .discord-link:hover {
+ background-color: #5b6eae;
+ }
+ </style>
+</head>
+
+<body>
+ <div class="email-container">
+ <div class="email-header">
+ Thank You for Contacting Us!
+ </div>
+ <div class="email-body">
+ <p>Hi {{name}},</p>
+ <p>
+ Thank you for reaching out to us! We have received your request and will review it as soon as possible.
+ Typically, we respond within 3 business days.
+ </p>
+ <p>
+ If you'd like to expedite your request or discuss further, feel free to join our Discord community by
+ clicking the button below:
+ </p>
+ <a href="https://discord.gg/3C6fRWnp" class="discord-link" target="_blank" rel="noopener">Join Our
+ Discord</a>
+ <p>
+ We appreciate your patience and look forward to assisting you!
+ </p>
+ </div>
+ <div class="email-footer">
+ This is an automated message. Please do not reply directly to this email.
+ </div>
+ </div>
+</body>
+
+</html>

@@ -3096,62 +3096,62 @@
  name: "Tornado Storm System",
  badge: "Basic",
  badgeType: "basic",
- description: "Simulaci&oacute;n completa de tormenta/tornado con HUD termodin&aacute;mico en vivo, escala de da&ntilde;o EF0-EF5 e interacci&oacute;n f&iacute;sica din&aacute;mica con jugadores, veh&iacute;culos y estructuras.",
+ description: "Full storm/tornado simulation with a live thermodynamic HUD, EF0&ndash;EF5 progressive damage, and real physics interaction with players, vehicles, and world structures.",
  features: [
  {
- short: "HUD en vivo: CAPE, viento, punto de roc&iacute;o, severidad y pron&oacute;stico en 2 columnas",
- detail: `<p>El panel termodin&aacute;mico muestra <strong>2 columnas en tiempo real</strong>: <em>CURRENT</em> (estado actual) y <em>FORECAST</em> (predicci&oacute;n futura). M&eacute;tricas visibles:</p>
-<table class="dtable"><tr><th>M&eacute;trica</th><th>Descripci&oacute;n</th></tr>
-<tr><td><code>CAPE</code></td><td>Energ&iacute;a potencial convectiva &mdash; define qu&eacute; tan intenso puede ser el tornado</td></tr>
-<tr><td>Temperatura / Pto. de roc&iacute;o</td><td>Su diferencia indica la humedad disponible para alimentar la tormenta</td></tr>
-<tr><td>Lapse Rate</td><td>Tasa de enfriamiento vertical &mdash; valores altos = aire sube m&aacute;s r&aacute;pido</td></tr>
-<tr><td>Viento cardinal + flecha</td><td>Direcci&oacute;n del viento con flecha orientada din&aacute;micamente</td></tr>
-<tr><td>Severidad / Riesgo</td><td>Nivel de riesgo en texto, actualizado seg&uacute;n el CAPE calculado</td></tr>
-<tr><td>Probabilidad de tornado fuerte</td><td>Porcentaje mostrado en la columna FORECAST</td></tr></table>
-<p>Si no hay tornados activos, las m&eacute;tricas clave muestran <code>&quot; .... &quot;</code> como placeholder. Tambi&eacute;n incluye leaderboard simple y texto de estado del evento.</p>`
+ short: "Live HUD: CAPE, wind, dew point, severity &amp; 2-column forecast panel",
+ detail: `<p>The thermodynamic panel displays <strong>2 columns in real time</strong>: <em>CURRENT</em> (active state) and <em>FORECAST</em> (predicted values). Visible metrics:</p>
+<table class="dtable"><tr><th>Metric</th><th>Description</th></tr>
+<tr><td><code>CAPE</code></td><td>Convective Available Potential Energy &mdash; determines how intense the tornado can become</td></tr>
+<tr><td>Temperature / Dew Point</td><td>Their difference indicates available humidity to feed the storm</td></tr>
+<tr><td>Lapse Rate</td><td>Vertical cooling rate &mdash; high values = air rises faster, more instability</td></tr>
+<tr><td>Cardinal Wind + Arrow</td><td>Wind direction with a dynamically oriented arrow indicator</td></tr>
+<tr><td>Severity / Risk</td><td>Risk level in text, updated according to the calculated CAPE value</td></tr>
+<tr><td>Strong Tornado Probability</td><td>Percentage shown in the FORECAST column</td></tr></table>
+<p>If no tornados are active, key thermo metrics display <code>&quot; .... &quot;</code> as a placeholder. Also includes a simple leaderboard and event status text.</p>`
  },
  {
- short: "3 tipos de tornado con f&iacute;sica distinta: Rope, Cone y Wedge",
- detail: `<p>Cada tipo define par&aacute;metros distintos de radio base, altura y presencia visual:</p>
-<table class="dtable"><tr><th>Tipo</th><th>Radio base</th><th>Altura</th><th>Car&aacute;cter</th></tr>
-<tr><td><strong>Rope</strong></td><td>Peque&ntilde;o</td><td>Media</td><td>Estrecho y sinuoso &mdash; menor &aacute;rea de da&ntilde;o pero rotaci&oacute;n r&aacute;pida y aspecto amenazante</td></tr>
-<tr><td><strong>Cone</strong></td><td>Intermedio</td><td>Media-alta</td><td>Equilibrado &mdash; el m&aacute;s com&uacute;n en spawns autom&aacute;ticos, buena balance entre &aacute;rea y velocidad</td></tr>
-<tr><td><strong>Wedge</strong></td><td>Grande</td><td>Alta</td><td>Ancho y masivo &mdash; mayor &aacute;rea de da&ntilde;o, m&aacute;xima presencia visual, el m&aacute;s destructivo</td></tr></table>
-<p>Se especifica al spawnear: <code>!storm spawn rope 3</code> crea un Rope EF3. Si se omite el tipo, el sistema elige aleatoriamente seg&uacute;n el CAPE del momento.</p>`
+ short: "3 tornado types with distinct physics: Rope, Cone and Wedge",
+ detail: `<p>Each type defines different base radius, height, and visual presence parameters:</p>
+<table class="dtable"><tr><th>Type</th><th>Base Radius</th><th>Height</th><th>Character</th></tr>
+<tr><td><strong>Rope</strong></td><td>Small</td><td>Medium</td><td>Narrow and sinuous &mdash; smaller damage area but fast rotation and a threatening, whip-like appearance</td></tr>
+<tr><td><strong>Cone</strong></td><td>Intermediate</td><td>Medium-High</td><td>Balanced &mdash; most common in auto spawns, good balance between area coverage and speed</td></tr>
+<tr><td><strong>Wedge</strong></td><td>Large</td><td>High</td><td>Wide and massive &mdash; largest damage area, maximum visual presence, the most destructive type</td></tr></table>
+<p>Specified when spawning: <code>!storm spawn rope 3</code> creates a Rope EF3. If the type is omitted, the system picks randomly based on the current CAPE value.</p>`
  },
  {
- short: "Escala EF0&ndash;EF5: da&ntilde;o progresivo en 6 niveles de intensidad",
- detail: `<p>El sistema implementa la <strong>Escala Fujita Mejorada (EF)</strong> con 6 niveles. La intensidad EF determina el da&ntilde;o por tick a jugadores, veh&iacute;culos y props:</p>
-<table class="dtable"><tr><th>Nivel</th><th>Viento aprox.</th><th>Da&ntilde;o/tick</th><th>Efecto principal</th></tr>
-<tr><td>EF0</td><td>105&ndash;137 km/h</td><td>Leve</td><td>Props peque&ntilde;os se mueven, jugadores empujados</td></tr>
-<tr><td>EF1</td><td>138&ndash;177 km/h</td><td>Moderado</td><td>Estructuras d&eacute;biles da&ntilde;adas, veh&iacute;culos desplazados</td></tr>
-<tr><td>EF2</td><td>178&ndash;217 km/h</td><td>Significativo</td><td>Props medianos se desprenden y vuelan</td></tr>
-<tr><td>EF3</td><td>218&ndash;266 km/h</td><td>Severo</td><td>Estructuras s&oacute;lidas da&ntilde;adas, veh&iacute;culos lanzados</td></tr>
-<tr><td>EF4</td><td>267&ndash;322 km/h</td><td>Devastador</td><td>Casi todo destruido, da&ntilde;o masivo a jugadores</td></tr>
-<tr><td>EF5</td><td>+322 km/h</td><td>M&aacute;ximo</td><td>Destrucci&oacute;n total &mdash; da&ntilde;o extremo, props arrancados inmediatamente</td></tr></table>`
+ short: "EF0&ndash;EF5 scale: progressive damage across 6 intensity levels",
+ detail: `<p>The system implements the <strong>Enhanced Fujita Scale (EF)</strong> with 6 levels. EF intensity determines per-tick damage to players, vehicles, and props:</p>
+<table class="dtable"><tr><th>Level</th><th>Wind Speed</th><th>Damage/Tick</th><th>Main Effect</th></tr>
+<tr><td>EF0</td><td>65&ndash;85 mph</td><td>Light</td><td>Small props move, players pushed by wind force</td></tr>
+<tr><td>EF1</td><td>86&ndash;110 mph</td><td>Moderate</td><td>Weak structures damaged, vehicles displaced</td></tr>
+<tr><td>EF2</td><td>111&ndash;135 mph</td><td>Significant</td><td>Medium props detach and fly through the air</td></tr>
+<tr><td>EF3</td><td>136&ndash;165 mph</td><td>Severe</td><td>Solid structures damaged, vehicles launched</td></tr>
+<tr><td>EF4</td><td>166&ndash;200 mph</td><td>Devastating</td><td>Nearly everything destroyed, massive player damage</td></tr>
+<tr><td>EF5</td><td>200+ mph</td><td>Maximum</td><td>Total destruction &mdash; extreme damage, props ripped off immediately</td></tr></table>`
  },
  {
- short: "Spawn manual por comando + modo autom&aacute;tico con IDs &uacute;nicos por tornado",
- detail: `<p>Cada tornado generado recibe un <strong>ID num&eacute;rico &uacute;nico</strong> para referenciarlo individualmente:</p>
-<p><code>!storm spawn cone 4</code> &rarr; crea Cone EF4, recibe ID #1. <code>!storm stop 1</code> lo destruye solo a &eacute;l sin afectar otros tornados activos.</p>
-<p><code>!storm stop all</code> destruye todos los tornados activos a la vez.</p>
-<p><strong>Modo autom&aacute;tico:</strong> <code>!storm auto on</code> activa spawns peri&oacute;dicos. El sistema elige tipo y EF aleatoriamente basado en el CAPE actual &mdash; m&aacute;s CAPE = m&aacute;s probabilidad de EF alto. <code>!storm auto off</code> detiene el modo sin destruir tornados ya activos.</p>
-<p><code>!storm list</code> muestra snapshot de todos los activos: ID, tipo, EF y posici&oacute;n actual.</p>`
+ short: "Manual spawn via command + auto mode with unique IDs per tornado",
+ detail: `<p>Every spawned tornado receives a <strong>unique numeric ID</strong> to reference it individually:</p>
+<p><code>!storm spawn cone 4</code> &rarr; creates a Cone EF4, receives ID #1. <code>!storm stop 1</code> destroys only that one without affecting other active tornados.</p>
+<p><code>!storm stop all</code> destroys every active tornado at once.</p>
+<p><strong>Auto mode:</strong> <code>!storm auto on</code> enables periodic spawns. The system picks type and EF randomly based on the current CAPE &mdash; higher CAPE = higher probability of EF4/EF5. <code>!storm auto off</code> stops new spawns without destroying already-active tornados.</p>
+<p><code>!storm list</code> shows a snapshot of all active tornados: ID, type, EF level, and current position.</p>`
  },
  {
- short: "F&iacute;sica real: jugadores, veh&iacute;culos y props reaccionan al tornado &mdash; sin regen de vida",
- detail: `<p>El sistema desactiva la <strong>regeneraci&oacute;n autom&aacute;tica de vida</strong> para que el da&ntilde;o sea permanente durante la tormenta. Cada entidad reacciona diferente:</p>
-<p><strong>Jugadores:</strong> Fuerza de viento que desplaza el personaje + efecto de succi&oacute;n/spin que lo jala hacia el n&uacute;cleo. Da&ntilde;o escalado por distancia al n&uacute;cleo y nivel EF.</p>
-<p><strong>Veh&iacute;culos:</strong> Impulso de f&iacute;sica (<code>VectorForce</code>) proporcional al EF. Desde EF3 pueden ser lanzados al aire.</p>
-<p><strong>Props y estructuras:</strong> Acumulan estr&eacute;s progresivamente. Al superar el umbral se desanclan (<code>Anchored = false</code>) y pueden romperse seg&uacute;n la intensidad.</p>`
+ short: "Real physics: players, vehicles &amp; props all react &mdash; health regen disabled",
+ detail: `<p>The system <strong>disables automatic health regeneration</strong> so damage is permanent for the duration of the storm. Each entity type reacts differently:</p>
+<p><strong>Players:</strong> Wind force displaces the character + suction/spin effect pulls them toward the core. Damage is scaled by distance to the core and EF level.</p>
+<p><strong>Vehicles:</strong> Physics impulse (<code>VectorForce</code>) proportional to EF. From EF3 upward, vehicles can be launched into the air.</p>
+<p><strong>Props &amp; Structures:</strong> Accumulate stress progressively. Once the threshold is exceeded they unanchor (<code>Anchored = false</code>) and can break depending on intensity.</p>`
  },
  {
- short: "3 presets de d&iacute;a con termodin&aacute;mica distinta + reroll aleatorio en vivo",
- detail: `<p>Los presets (<code>!storm day 1/2/3</code>) configuran un estado termodin&aacute;mico completo con CAPE, temperatura, humedad y viento predefinidos:</p>
-<p><strong>Day 1:</strong> Condiciones moderadas &mdash; CAPE bajo/medio, probabilidad de tornado reducida. Ideal para warmup.</p>
-<p><strong>Day 2:</strong> Condiciones inestables &mdash; CAPE alto, probabilidad de tornado fuerte elevada. El preset de juego normal.</p>
-<p><strong>Day 3:</strong> Tormenta extrema &mdash; CAPE m&aacute;ximo, alt&iacute;sima probabilidad de tornados EF4/EF5 m&uacute;ltiples.</p>
-<p><code>!storm reroll</code> regenera <em>aleatoriamente</em> todos los valores dentro del rango del preset activo &mdash; sin cambiar el preset base. Crea condiciones &uacute;nicas en cada partida.</p>`
+ short: "3 day presets with different thermodynamics + live random reroll",
+ detail: `<p>Day presets (<code>!storm day 1/2/3</code>) configure a complete thermodynamic state with predefined CAPE, temperature, humidity, and wind values:</p>
+<p><strong>Day 1:</strong> Moderate conditions &mdash; low/medium CAPE, reduced tornado probability. Ideal for warmup.</p>
+<p><strong>Day 2:</strong> Unstable conditions &mdash; high CAPE, elevated strong-tornado probability. The standard gameplay preset.</p>
+<p><strong>Day 3:</strong> Extreme storm &mdash; maximum CAPE, very high probability of multiple EF4/EF5 tornados.</p>
+<p><code>!storm reroll</code> <em>randomly regenerates</em> all thermo values within the active preset&apos;s range &mdash; without changing the base preset. Creates unique conditions every match.</p>`
  }
  ],
  commands: [
@@ -3168,57 +3168,57 @@
  name: "Character Index System",
  badge: "Basic",
  badgeType: "basic",
- description: "Ventana de colecci&oacute;n con todos los personajes del juego ordenados por rareza y mutaci&oacute;n, con previews 3D animadas en ViewportFrame y sincronizaci&oacute;n en vivo con el inventario del servidor.",
+ description: "Collection window showing all game characters sorted by rarity and mutation, with animated 3D ViewportFrame previews and live server inventory sync.",
  features: [
  {
- short: "Preview 3D animado en ViewportFrame con animaci&oacute;n Idle &uacute;nica por personaje",
- detail: `<p>Cada carta usa un <strong>ViewportFrame</strong> que renderiza el modelo 3D directamente dentro de la GUI. El proceso al abrir cada carta:</p>
-<p>1. Clona el modelo desde <code>ReplicatedStorage/Characters/Models/{nombre}</code>.</p>
-<p>2. Busca la animaci&oacute;n Idle en <code>ReplicatedStorage/Characters/Animations/{nombre}/Idle</code>.</p>
-<p>3. La reproduce en loop con un <code>AnimationController</code> local dentro del viewport.</p>
-<p>4. La <code>Camera</code> del viewport se posiciona autom&aacute;ticamente para encuadrar al personaje.</p>
-<p>Los ViewportFrames activos se registran en <code>activeViewports[]</code> para limpiarlos al cerrar el Index y no dejar instancias hu&eacute;rfanas en memoria.</p>`
+ short: "Animated 3D ViewportFrame preview with unique Idle animation per character",
+ detail: `<p>Each card uses a <strong>ViewportFrame</strong> that renders the 3D model directly inside the GUI. The process when opening each card:</p>
+<p>1. Clones the model from <code>ReplicatedStorage/Characters/Models/{name}</code>.</p>
+<p>2. Finds the Idle animation at <code>ReplicatedStorage/Characters/Animations/{name}/Idle</code>.</p>
+<p>3. Plays it in a loop using a local <code>AnimationController</code> inside the viewport.</p>
+<p>4. The viewport&apos;s <code>Camera</code> is automatically positioned to frame the character correctly.</p>
+<p>Active ViewportFrames are tracked in <code>activeViewports[]</code> so they are cleaned up on Index close &mdash; no orphaned instances left in memory.</p>`
  },
  {
- short: "Rareza ordenada: Common &rarr; Rare &rarr; Epic &rarr; Legendary &rarr; Mythic &rarr; Divine",
- detail: `<p>Los personajes se ordenan por un &iacute;ndice de rareza fijo en c&oacute;digo:</p>
+ short: "Rarity sort: Common &rarr; Rare &rarr; Epic &rarr; Legendary &rarr; Mythic &rarr; Divine",
+ detail: `<p>Characters are sorted by a fixed rarity index defined in code:</p>
 <p><code>RARITY_ORDER = { "Common", "Rare", "Epic", "Legendary", "Mythic", "Divine" }</code></p>
-<p>Common va primero, Divine va al final. Si dos personajes tienen la misma rareza, el desempate es <strong>alfab&eacute;tico por nombre</strong>.</p>
-<p>Los colores, textos y bordes de cada rareza se leen de <code>RarityCatalog</code> din&aacute;micamente &mdash; agregar una nueva rareza solo requiere actualizar ese m&oacute;dulo, sin tocar el Index.</p>`
+<p>Common first, Divine last. Ties within the same rarity are broken <strong>alphabetically by name</strong>.</p>
+<p>Colors, text, and borders per rarity are read dynamically from <code>RarityCatalog</code> &mdash; adding a new rarity only requires updating that module, no changes to the Index itself.</p>`
  },
  {
- short: "4 tabs de mutaci&oacute;n con paleta propia: Normal, Gold, Diamond, Rainbow",
- detail: `<p>La barra de tabs se genera din&aacute;micamente al abrir el Index. Cada tab tiene colores &uacute;nicos activo/inactivo:</p>
-<table class="dtable"><tr><th>Tab</th><th>Fondo activo</th><th>Texto activo</th></tr>
-<tr><td><span class="dtag dtag-normal">Normal</span></td><td>Blanco</td><td>Negro</td></tr>
-<tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; dorado</td><td>Negro</td></tr>
-<tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(120,220,255) &mdash; azul diamante</td><td>Negro</td></tr>
-<tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>Gradiente RGB multicolor</td><td>Blanco</td></tr></table>
-<p>Al hacer clic en un tab, <code>switchTab(mutName)</code> filtra los personajes y re-renderiza solo los que tienen esa mutaci&oacute;n disponible. El tab activo muestra un <code>UIStroke</code> de acento.</p>`
+ short: "4 mutation tabs with unique color palettes: Normal, Gold, Diamond, Rainbow",
+ detail: `<p>The tab bar is generated dynamically when the Index opens. Each tab has unique active/inactive colors:</p>
+<table class="dtable"><tr><th>Tab</th><th>Active Background</th><th>Active Text</th></tr>
+<tr><td><span class="dtag dtag-normal">Normal</span></td><td>White</td><td>Black</td></tr>
+<tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; golden</td><td>Black</td></tr>
+<tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(120,220,255) &mdash; diamond blue</td><td>Black</td></tr>
+<tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>Multicolor RGB gradient</td><td>White</td></tr></table>
+<p>Clicking a tab calls <code>switchTab(mutName)</code> which filters characters and re-renders only those with that mutation available. The active tab shows an accent <code>UIStroke</code>.</p>`
  },
  {
- short: "Sincronizaci&oacute;n en vivo: RemoteFunction al abrir + RemoteEvent autom&aacute;tico en cambios",
- detail: `<p>El Index usa <strong>dos canales de comunicaci&oacute;n</strong> con el servidor para mantener los datos siempre actualizados:</p>
-<p><strong>Al abrir:</strong> <code>GetInventoryData:InvokeServer()</code> &mdash; RemoteFunction que pide el inventario completo. El resultado se guarda en <code>cachedInventory</code> para no hacer peticiones redundantes mientras el Index est&aacute; abierto.</p>
-<p><strong>Cambios en vivo:</strong> <code>InventoryUpdated</code> &mdash; RemoteEvent que el servidor dispara cuando el inventario cambia. Si el Index est&aacute; abierto, limpia el cache y llama <code>populateIndex()</code> para re-renderizar todo autom&aacute;ticamente.</p>
-<p><strong>Selecci&oacute;n:</strong> Al hacer clic en un personaje, <code>SelectedCharacterChanged:FireServer()</code> notifica al servidor cu&aacute;l qued&oacute; activo como personaje seleccionado del jugador.</p>`
+ short: "Live sync: RemoteFunction on open + auto RemoteEvent on inventory changes",
+ detail: `<p>The Index uses <strong>two communication channels</strong> with the server to keep data always current:</p>
+<p><strong>On open:</strong> <code>GetInventoryData:InvokeServer()</code> &mdash; a RemoteFunction that requests the full inventory. The result is stored in <code>cachedInventory</code> to avoid redundant requests while the Index is open.</p>
+<p><strong>Live changes:</strong> <code>InventoryUpdated</code> &mdash; a RemoteEvent fired by the server when the inventory changes. If the Index is open, it clears the cache and calls <code>populateIndex()</code> to automatically re-render everything.</p>
+<p><strong>Selection:</strong> Clicking a character fires <code>SelectedCharacterChanged:FireServer()</code> to notify the server which character the player currently has active.</p>`
  },
  {
- short: "Ingreso por segundo visible en cada carta, ajustado por mutaci&oacute;n activa",
- detail: `<p>Cada carta muestra el <code>GenerationPerSecond</code> del personaje para esa mutaci&oacute;n espec&iacute;fica. Al cambiar de tab, los valores se actualizan autom&aacute;ticamente:</p>
-<table class="dtable"><tr><th>Mutaci&oacute;n</th><th>Multiplicador</th><th>Ejemplo (base 100 G/s)</th></tr>
+ short: "Income per second shown on every card, adjusted for the active mutation tab",
+ detail: `<p>Each card shows the character&apos;s <code>GenerationPerSecond</code> for that specific mutation. Values update automatically when switching tabs:</p>
+<table class="dtable"><tr><th>Mutation</th><th>Multiplier</th><th>Example (base 100 G/s)</th></tr>
 <tr><td><span class="dtag dtag-normal">Normal</span></td><td>1&times;</td><td>$100/s</td></tr>
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>2&times;</td><td>$200/s</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>3&times;</td><td>$300/s</td></tr>
-<tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>10&times;</td><td>$1000/s</td></tr></table>
-<p>Esto le permite al jugador comparar r&aacute;pidamente cu&aacute;nto genera cada variante antes de decidir cu&aacute;l activar.</p>`
+<tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>10&times;</td><td>$1,000/s</td></tr></table>
+<p>This lets players quickly compare how much each variant generates before deciding which one to activate.</p>`
  },
  {
- short: "Ciclo de vida limpio: apertura, cierre y limpieza total de memoria autom&aacute;tica",
- detail: `<p>El sistema gestiona la memoria activamente para evitar acumulaci&oacute;n de instancias:</p>
-<p><strong>Al abrir:</strong> Destruye cualquier <code>indexGui</code> previo antes de clonar uno nuevo (evita duplicados si el jugador abre 2 veces r&aacute;pido). Resetea <code>selectedMutation = "Normal"</code>.</p>
-<p><strong>Al cerrar:</strong> Destruye <code>indexGui</code>, limpia <code>activeViewports[]</code> (AnimationControllers de viewport), borra <code>cachedInventory</code> y <code>tabButtonRefs</code>, y elimina el atributo <code>SelectedCharacter</code> del Player.</p>
-<p>Cada apertura del Index empieza desde estado cero, sin memoria de la sesi&oacute;n anterior. Esto evita leaks de memoria en sesiones largas.</p>`
+ short: "Clean lifecycle: open, close, and full automatic memory cleanup",
+ detail: `<p>The system actively manages memory to prevent instance accumulation:</p>
+<p><strong>On open:</strong> Destroys any previous <code>indexGui</code> before cloning a new one (prevents duplicates if the player opens it twice quickly). Resets <code>selectedMutation = "Normal"</code>.</p>
+<p><strong>On close:</strong> Destroys <code>indexGui</code>, clears <code>activeViewports[]</code> (viewport AnimationControllers), clears <code>cachedInventory</code> and <code>tabButtonRefs</code>, and removes the <code>SelectedCharacter</code> attribute from the Player.</p>
+<p>Every Index opening starts from a completely clean state with no memory from the previous session &mdash; prevents memory leaks in long play sessions.</p>`
  }
  ],
  commands: null
@@ -3229,56 +3229,56 @@
  name: "Advanced Mutation System",
  badge: "Advanced",
  badgeType: "advanced",
- description: "El sistema m&aacute;s complejo del codebase. Cada personaje tiene 4 variantes de mutaci&oacute;n que cambian su apariencia, multiplicador de ingresos y comportamiento visual &mdash; con un filtro inteligente de 4 capas que ignora autom&aacute;ticamente rasgos faciales y micro-partes.",
+ description: "The most complex system in the codebase. Each character has 4 weighted mutation variants that change its appearance, income multiplier, and visual behavior &mdash; with a 4-layer smart body filter that automatically ignores facial features and micro-parts.",
  features: [
  {
- short: "Filtro inteligente de cuerpo: 4 capas de verificaci&oacute;n antes de colorear cualquier parte",
- detail: `<p>Antes de aplicar color, cada parte del modelo pasa por <code>shouldColorPart()</code> &mdash; un filtro con <strong>4 capas independientes</strong>. Si falla cualquiera, esa parte queda sin colorear:</p>
-<p><strong>Capa 1 &mdash; Lista negra exacta:</strong> Partes con nombre exacto <code>Face</code>, <code>face</code>, <code>FaceDecal</code> o <code>Decal</code> &rarr; siempre omitidas.</p>
-<p><strong>Capa 2 &mdash; Patrones de subcadena (sin distinci&oacute;n may&uacute;sculas):</strong> Cualquier parte cuyo nombre contenga: <code>eye</code>, <code>pupil</code>, <code>iris</code>, <code>teeth</code>, <code>tongue</code>, <code>mouth</code>, <code>brow</code>, <code>eyelash</code>, <code>glasses</code>, <code>nose</code>, <code>nostril</code>, <code>blush</code>, <code>freckle</code>, <code>whisker</code>, <code>beard</code> o <code>mustache</code> &rarr; omitida.</p>
-<p><strong>Capa 3 &mdash; Volumen m&iacute;nimo:</strong> Cualquier <code>BasePart</code> con volumen &lt; <code>0.001</code> studs&sup3; &rarr; omitida (partes de detalle micro-invisibles).</p>
-<p><strong>Capa 4 &mdash; Guardia de d&iacute;a (solo activa 6:00&ndash;18:00):</strong> Partes casi negras (R/G/B &lt; 0.08) con volumen &lt; 0.5, o casi blancas (R/G/B &gt; 0.95) con volumen &lt; 0.3 &rarr; omitidas. Evita te&ntilde;ir el blanco de los ojos o pupilas oscuras en condiciones de luz diurna.</p>`
+ short: "Smart body filter: 4 verification layers before coloring any part",
+ detail: `<p>Before applying any color, every part of the model passes through <code>shouldColorPart()</code> &mdash; a filter with <strong>4 independent layers</strong>. Failing any layer leaves that part uncolored:</p>
+<p><strong>Layer 1 &mdash; Hard blacklist:</strong> Parts with exact names <code>Face</code>, <code>face</code>, <code>FaceDecal</code>, or <code>Decal</code> &rarr; always skipped.</p>
+<p><strong>Layer 2 &mdash; Substring patterns (case-insensitive):</strong> Any part whose name contains: <code>eye</code>, <code>pupil</code>, <code>iris</code>, <code>teeth</code>, <code>tongue</code>, <code>mouth</code>, <code>brow</code>, <code>eyelash</code>, <code>glasses</code>, <code>nose</code>, <code>nostril</code>, <code>blush</code>, <code>freckle</code>, <code>whisker</code>, <code>beard</code>, or <code>mustache</code> &rarr; skipped.</p>
+<p><strong>Layer 3 &mdash; Volume check:</strong> Any <code>BasePart</code> with volume &lt; <code>0.001</code> studs&sup3; &rarr; skipped (micro invisible detail parts).</p>
+<p><strong>Layer 4 &mdash; Day-only color guard (active 6:00&ndash;18:00):</strong> Parts that are nearly black (R/G/B &lt; 0.08) with volume &lt; 0.5, or nearly white (R/G/B &gt; 0.95) with volume &lt; 0.3 &rarr; skipped. Prevents accidentally tinting eye whites or dark pupils during daytime lighting.</p>`
  },
  {
- short: "3 tonos por mutaci&oacute;n asignados c&iacute;clicamente seg&uacute;n posici&oacute;n de cada parte",
- detail: `<p>Gold y Diamond definen exactamente <strong>3 valores Color3</strong>. El tono se asigna con la f&oacute;rmula c&iacute;clica:</p>
-<p><code>colorIdx = ((i - 1) % 3) + 1</code> &rarr; parte 1&rarr;tono 1, parte 2&rarr;tono 2, parte 3&rarr;tono 3, parte 4&rarr;tono 1 de nuevo...</p>
-<table class="dtable"><tr><th>Mutaci&oacute;n</th><th>Tono 1</th><th>Tono 2</th><th>Tono 3</th></tr>
-<tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; oro brillante</td><td>RGB(255,185,15) &mdash; oro medio</td><td>RGB(218,165,32) &mdash; oro oscuro</td></tr>
-<tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(185,242,255) &mdash; cyan p&aacute;lido</td><td>RGB(120,220,255) &mdash; azul diamante</td><td>RGB(200,255,255) &mdash; casi blanco azul</td></tr></table>
-<p>El resultado es un <strong>degradado rayado natural</strong> sobre el cuerpo sin UV mapping &mdash; la variaci&oacute;n visual emerge del orden de las partes en el modelo 3D.</p>`
+ short: "3 tones per mutation assigned cyclically based on each part&apos;s position",
+ detail: `<p>Gold and Diamond each define exactly <strong>3 Color3 values</strong>. The tone is assigned with the cyclic formula:</p>
+<p><code>colorIdx = ((i - 1) % 3) + 1</code> &rarr; part 1&rarr;tone 1, part 2&rarr;tone 2, part 3&rarr;tone 3, part 4&rarr;tone 1 again...</p>
+<table class="dtable"><tr><th>Mutation</th><th>Tone 1</th><th>Tone 2</th><th>Tone 3</th></tr>
+<tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; brilliant gold</td><td>RGB(255,185,15) &mdash; mid gold</td><td>RGB(218,165,32) &mdash; dark goldenrod</td></tr>
+<tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(185,242,255) &mdash; pale cyan</td><td>RGB(120,220,255) &mdash; diamond blue</td><td>RGB(200,255,255) &mdash; near-white blue</td></tr></table>
+<p>The result is a <strong>natural striped gradient</strong> across the body without any UV mapping &mdash; the visual variation emerges purely from the order of parts in the 3D model.</p>`
  },
  {
- short: "Rainbow: rueda HSV completa a ~33fps, tono de inicio aleatorio por personaje",
- detail: `<p>Rainbow no tiene colores fijos. Un hilo de fondo corre a <code>task.wait(0.03)</code> (~33fps) y avanza el tono continuamente:</p>
-<p><code>hue = (hue + 0.01) % 1</code> &rarr; ciclo completo dura exactamente <strong>3 segundos</strong> (1/0.01 &times; 0.03s = 3s).</p>
-<p>El color se calcula con <code>Color3.fromHSV(hue, 0.85, 1)</code>: saturaci&oacute;n 85% para colores vivos sin llegar al blanco-ne&oacute;n, brillo 1.0 para visibilidad m&aacute;xima en cualquier iluminaci&oacute;n.</p>
-<p>El tono inicial se randomiza con <code>math.random()</code> al spawnear &mdash; dos personajes Rainbow <strong>nunca ciclan sincronizados</strong>. A diferencia de Gold/Diamond, aplica el mismo color a <em>todas las partes simult&aacute;neamente</em>: la diversidad viene del tiempo, no de la posici&oacute;n.</p>`
+ short: "Rainbow: full HSV color wheel at ~33fps, randomized start hue per character",
+ detail: `<p>Rainbow has no fixed colors. A background thread runs at <code>task.wait(0.03)</code> (~33fps) and continuously advances the hue:</p>
+<p><code>hue = (hue + 0.01) % 1</code> &rarr; a full color wheel cycle takes exactly <strong>3 seconds</strong> (1/0.01 &times; 0.03s = 3s).</p>
+<p>Color is computed as <code>Color3.fromHSV(hue, 0.85, 1)</code>: 85% saturation keeps colors vivid without reaching neon-white, full brightness (1.0) ensures visibility in any lighting.</p>
+<p>The starting hue is randomized with <code>math.random()</code> on spawn &mdash; two Rainbow characters <strong>never cycle in sync</strong>. Unlike Gold/Diamond, it applies the same color to <em>all parts simultaneously</em>: diversity comes from time, not position.</p>`
  },
  {
- short: "Loop de auto-reparaci&oacute;n: reaplica colores cada 0.5s para resistir cualquier reset externo",
- detail: `<p>Gold y Diamond corren un <strong>hilo persistente en background</strong> que cada 0.5 segundos verifica si alguna parte coloreable cambi&oacute; de su color asignado. Si detecta deriva, la recolorea inmediatamente.</p>
-<p><strong>&iquest;Por qu&eacute; es necesario?</strong> El sistema D&iacute;a/Noche puede disparar <code>restoreBaseline()</code> que resetea todos los colores a originales durante transiciones. El loop de 0.5s detecta el reset en &le;500ms y gana la carrera siempre.</p>
-<p>En la pr&aacute;ctica: las mutaciones Gold y Diamond son <strong>siempre visibles</strong> sin importar la hora del d&iacute;a. El hilo se guarda en <code>activeEffects[model]</code> y se detiene limpiamente con <code>StopEffect(model)</code> cuando el personaje sale o su mutaci&oacute;n cambia.</p>`
+ short: "Self-healing loop: re-applies colors every 0.5s to resist any external reset",
+ detail: `<p>Gold and Diamond run a <strong>persistent background thread</strong> that every 0.5 seconds checks whether any colorable part has drifted from its assigned mutation color. If drift is detected, it recolors immediately.</p>
+<p><strong>Why is this needed?</strong> The Day/Night system can fire <code>restoreBaseline()</code> which resets all part colors to originals during lighting transitions. The 0.5s loop detects the reset in &le;500ms and always wins the race.</p>
+<p>In practice: Gold and Diamond mutations are <strong>always visible</strong> regardless of time of day. The thread is stored in <code>activeEffects[model]</code> and stopped cleanly via <code>StopEffect(model)</code> when the character leaves or its mutation changes.</p>`
  },
  {
- short: "Rolls ponderados: Normal 11.1% &mdash; Gold / Diamond / Rainbow 33.3% cada uno",
- detail: `<p>Las mutaciones se asignan v&iacute;a <code>MutationCatalog.RollMutation()</code>:</p>
-<p>1. N&uacute;mero aleatorio: <code>math.random(1, 900)</code></p>
-<p>2. Recorre mutaciones sumando pesos hasta que <code>roll &le; acumulado</code></p>
-<table class="dtable"><tr><th>Mutaci&oacute;n</th><th>Peso</th><th>Acumulado</th><th>Probabilidad</th><th>Ingreso &times;</th></tr>
+ short: "Weighted rolls: Normal 11.1% &mdash; Gold / Diamond / Rainbow 33.3% each",
+ detail: `<p>Mutations are assigned via <code>MutationCatalog.RollMutation()</code>:</p>
+<p>1. Random integer: <code>math.random(1, 900)</code></p>
+<p>2. Walk through mutations accumulating weights until <code>roll &le; cumulative</code></p>
+<table class="dtable"><tr><th>Mutation</th><th>Weight</th><th>Cumulative</th><th>Chance</th><th>Income &times;</th></tr>
 <tr><td><span class="dtag dtag-normal">Normal</span></td><td>100</td><td>100</td><td>11.1%</td><td>1&times;</td></tr>
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>300</td><td>400</td><td>33.3%</td><td>2&times;</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>300</td><td>700</td><td>33.3%</td><td>3&times;</td></tr>
 <tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>300</td><td>900</td><td>33.3%</td><td>10&times;</td></tr></table>
-<p>Normal es intencionalmente rara (11.1%) &mdash; el sistema est&aacute; dise&ntilde;ado para casi siempre generar una variante visualmente interesante. Rainbow multiplica los ingresos por <strong>10&times;</strong>, convirti&eacute;ndola en la mutaci&oacute;n m&aacute;s valiosa del juego.</p>`
+<p>Normal is intentionally rare (11.1%) &mdash; the system is designed to almost always produce a visually interesting variant. Rainbow multiplies income by <strong>10&times;</strong>, making it the most valuable mutation in the game.</p>`
  },
  {
- short: "Integraci&oacute;n D&iacute;a/Noche: captura y restaura el baseline en cada transici&oacute;n",
- detail: `<p>El sistema escucha <code>Lighting:GetPropertyChangedSignal("ClockTime")</code> y reacciona a cada transici&oacute;n d&iacute;a &harr; noche:</p>
-<p><strong>D&iacute;a &rarr; Noche:</strong> <code>captureBaseline()</code> &mdash; guarda todos los colores actuales en <code>baselineColors[model]</code>. El filtro nocturno es m&aacute;s permisivo, as&iacute; que m&aacute;s partes se colorean de noche que de d&iacute;a.</p>
-<p><strong>Noche &rarr; D&iacute;a:</strong> <code>restoreBaseline()</code> &mdash; restaura los colores originales. El loop de 0.5s reaplica Gold/Diamond en &le;500ms. Rainbow se reaplica en el siguiente tick de su propio loop.</p>
-<p><code>isDaytime()</code> comprueba <code>ClockTime &ge; 6 y &lt; 18</code>. A exactamente las 18:00 entra modo nocturno con filtro m&aacute;s permisivo, permitiendo colorear partes que de d&iacute;a se omiten por ser demasiado claras u oscuras.</p>`
+ short: "Day/Night integration: baseline capture &amp; restore on every lighting transition",
+ detail: `<p>The system listens to <code>Lighting:GetPropertyChangedSignal("ClockTime")</code> and reacts to every day &harr; night transition:</p>
+<p><strong>Day &rarr; Night:</strong> <code>captureBaseline()</code> &mdash; saves all current part colors to <code>baselineColors[model]</code>. The night filter is more permissive, so more parts get colored at night than during the day.</p>
+<p><strong>Night &rarr; Day:</strong> <code>restoreBaseline()</code> &mdash; restores original colors. The 0.5s loop re-applies Gold/Diamond within &le;500ms. Rainbow re-applies itself on the very next tick of its own loop.</p>
+<p><code>isDaytime()</code> checks <code>ClockTime &ge; 6 and &lt; 18</code>. At exactly 18:00 the system enters night mode with its more permissive filter &mdash; allowing parts to be colored that would be skipped during the stricter daytime pass.</p>`
  }
  ],
  commands: null
@@ -3289,67 +3289,69 @@
  name: "Day/Night Cycle System",
  badge: "Basic",
  badgeType: "basic",
- description: "Ciclo completo de 13 minutos con 3 fases (D&iacute;a, Tarde, Noche) y transiciones suavizadas con TweenService en cada propiedad de iluminaci&oacute;n de Roblox.",
+ description: "Full 13-minute cycle with 3 distinct phases (Day, Afternoon, Night) and TweenService-smoothed transitions across every Roblox Lighting property.",
  features: [
  {
- short: "3 fases continuas: D&iacute;a (6 min) &rarr; Tarde (2 min) &rarr; Noche (5 min) = 13 min/ciclo",
- detail: `<p>El ciclo se repite infinitamente en este orden fijo:</p>
-<table class="dtable"><tr><th>Fase</th><th>Duraci&oacute;n</th><th>ClockTime</th><th>Descripci&oacute;n</th></tr>
-<tr><td>D&iacute;a</td><td>360 s (6 min)</td><td>14.5 &rarr; 2:30 PM</td><td>Sol alto, luz blanca intensa, niebla lejana azul claro</td></tr>
-<tr><td>Tarde</td><td>120 s (2 min)</td><td>17.0 &rarr; 5:00 PM</td><td>Sol bajo, tonos naranjas/dorados, niebla de atardecer</td></tr>
-<tr><td>Noche</td><td>300 s (5 min)</td><td>0.0 &rarr; Medianoche</td><td>Luna llena activa, luz violeta azulada, niebla oscura</td></tr></table>
-<p>Duraci&oacute;n total: <code>360 + 120 + 300 = 780 segundos = 13 minutos</code> por ciclo completo.</p>`
+ short: "3 continuous phases: Day (6 min) &rarr; Afternoon (2 min) &rarr; Night (5 min) = 13 min/cycle",
+ detail: `<p>The cycle repeats infinitely in this fixed order:</p>
+<table class="dtable"><tr><th>Phase</th><th>Duration</th><th>ClockTime</th><th>Description</th></tr>
+<tr><td>Day</td><td>360 s (6 min)</td><td>14.5 &rarr; 2:30 PM</td><td>High sun, bright white light, distant blue-tinted fog</td></tr>
+<tr><td>Afternoon</td><td>120 s (2 min)</td><td>17.0 &rarr; 5:00 PM</td><td>Low sun, warm orange/golden tones, sunset fog</td></tr>
+<tr><td>Night</td><td>300 s (5 min)</td><td>0.0 &rarr; Midnight</td><td>Full moon active, blue-violet ambient, dark fog</td></tr></table>
+<p>Total cycle length: <code>360 + 120 + 300 = 780 seconds = 13 minutes</code>.</p>`
  },
  {
- short: "TweenService suaviza cada transici&oacute;n: 10% de la fase, m&iacute;nimo 2 segundos",
- detail: `<p>Las transiciones entre fases no son cortes bruscos. Cada cambio usa <code>TweenService</code> para interpolar <em>todas</em> las propiedades de <code>Lighting</code> suavemente.</p>
-<p>La duraci&oacute;n del tween se calcula con:</p>
-<p><code>transici&oacute;n = max(2, min(duraci&oacute;n, floor(duraci&oacute;n &times; 0.1)))</code></p>
-<table class="dtable"><tr><th>Fase</th><th>Duraci&oacute;n</th><th>Tween calculado</th></tr>
-<tr><td>D&iacute;a</td><td>360 s</td><td>max(2, floor(36)) = <strong>36 segundos</strong></td></tr>
-<tr><td>Tarde</td><td>120 s</td><td>max(2, floor(12)) = <strong>12 segundos</strong></td></tr>
-<tr><td>Noche</td><td>300 s</td><td>max(2, floor(30)) = <strong>30 segundos</strong></td></tr></table>
-<p>El <code>math.max(2, ...)</code> garantiza <strong>al menos 2 segundos de transici&oacute;n</strong> siempre &mdash; evita cambios visuales instant&aacute;neos incluso si las fases se acortaran.</p>`
+ short: "TweenService smooths every transition: 10% of phase duration, minimum 2 seconds",
+ detail: `<p>Phase transitions are not hard cuts. Each change uses <code>TweenService</code> to interpolate <em>all</em> <code>Lighting</code> properties smoothly.</p>
+<p>Tween duration is calculated with:</p>
+<p><code>transition = max(2, min(duration, floor(duration &times; 0.1)))</code></p>
+<table class="dtable"><tr><th>Phase</th><th>Duration</th><th>Calculated Tween</th></tr>
+<tr><td>Day</td><td>360 s</td><td>max(2, floor(36)) = <strong>36 seconds</strong></td></tr>
+<tr><td>Afternoon</td><td>120 s</td><td>max(2, floor(12)) = <strong>12 seconds</strong></td></tr>
+<tr><td>Night</td><td>300 s</td><td>max(2, floor(30)) = <strong>30 seconds</strong></td></tr></table>
+<p>The <code>math.max(2, ...)</code> guarantees <strong>at least 2 seconds of transition</strong> always &mdash; prevents abrupt visual snaps even if phases were shortened.</p>`
  },
  {
- short: "Cielo din&aacute;mico: el asset Sky de Roblox cambia coordinado con cada fase",
- detail: `<p>Adem&aacute;s de los tweens de propiedades, el sistema swapea el <strong>asset Sky</strong> de <code>Lighting</code> en cada transici&oacute;n:</p>
-<p>Cada fase tiene un Sky configurado con texturas distintas: nubes blancas de d&iacute;a, cielo naranja-rosado al atardecer, estrellas y luna de noche.</p>
-<p>El cambio del Sky se hace <em>durante</em> el tween de transici&oacute;n (no al final), as&iacute; que el cielo y la iluminaci&oacute;n cambian coordinados, sin discontinuidades visuales.</p>
-<p>Los assets est&aacute;n precargados en <code>Lighting</code> para que el swap sea instant&aacute;neo sin carga adicional.</p>`
+ short: "Dynamic sky: the Roblox Sky asset swaps in sync with each phase transition",
+ detail: `<p>In addition to property tweens, the system swaps the <strong>Sky asset</strong> inside <code>Lighting</code> on each transition:</p>
+<p>Each phase has a Sky configured with different textures: white daytime clouds, orange-pink sunset sky at afternoon, and a star/moon-filled sky at night.</p>
+<p>The Sky swap happens <em>during</em> the tween transition (not at the end), so the sky and lighting change together &mdash; no visual discontinuities.</p>
+<p>Assets are pre-loaded in <code>Lighting</code> so the swap is instant with no extra loading time.</p>`
  },
  {
- short: "RemoteEvent notifica a todos los clientes en cada cambio de fase",
- detail: `<p>Al iniciar cada nueva fase, el servidor dispara <code>DayNight:FireAllClients(phaseName)</code>.</p>
-<p>Los clientes pueden escuchar este evento para reaccionar a la hora del d&iacute;a:</p>
-<p>&bull; Cambiar m&uacute;sica de fondo por fase (ambiente diurno vs nocturno).</p>
-<p>&bull; Mostrar notificaci&oacute;n en pantalla ("&iexcl;Comenz&oacute; la noche!").</p>
-<p>&bull; Activar efectos visuales locales (overlay de oscuridad, etc.).</p>
-<p>&bull; <strong>Sincronizaci&oacute;n con el sistema de Mutaciones</strong> &mdash; el <code>MutationService</code> escucha este evento para saber cu&aacute;ndo disparar <code>captureBaseline()</code> y <code>restoreBaseline()</code>.</p>`
+ short: "RemoteEvent notifies all clients on every phase change",
+ detail: `<p>When each new phase begins, the server fires <code>DayNight:FireAllClients(phaseName)</code>.</p>
+<p>Clients can listen to this event to react to the time of day:</p>
+<p>&bull; Switch background music per phase (daytime vs. night ambiance).</p>
+<p>&bull; Show an on-screen notification ("Night has begun!").</p>
+<p>&bull; Trigger local visual effects (darkness overlay, etc.).</p>
+<p>&bull; <strong>Mutation system sync</strong> &mdash; <code>MutationService</code> listens to this event to know when to fire <code>captureBaseline()</code> and <code>restoreBaseline()</code>.</p>`
  },
  {
- short: "Configuraci&oacute;n completa de iluminaci&oacute;n: brillo, niebla, ambient, sol y luna por fase",
- detail: `<p>Cada fase tiene un set completo de propiedades de <code>Lighting</code>:</p>
-<table class="dtable"><tr><th>Propiedad</th><th>D&iacute;a</th><th>Tarde</th><th>Noche</th></tr>
+ short: "Full lighting config per phase: brightness, fog, ambient, sun and moon intensity",
+ detail: `<p>Each phase has a complete set of <code>Lighting</code> properties:</p>
+<table class="dtable"><tr><th>Property</th><th>Day</th><th>Afternoon</th><th>Night</th></tr>
 <tr><td>Brightness</td><td>2.0</td><td>1.5</td><td>2.5</td></tr>
 <tr><td>Ambient</td><td>RGB(241,241,241)</td><td>RGB(180,140,100)</td><td>RGB(150,150,190)</td></tr>
 <tr><td>OutdoorAmbient</td><td>RGB(212,212,212)</td><td>RGB(160,120,80)</td><td>RGB(170,160,190)</td></tr>
-<tr><td>FogEnd</td><td>10000 (muy lejana)</td><td>8000 (media)</td><td>10000 (lejana)</td></tr>
+<tr><td>FogEnd</td><td>10000 (very far)</td><td>8000 (medium)</td><td>10000 (far)</td></tr>
 <tr><td>SunIntensity</td><td>1.2</td><td>0.7</td><td>0.0</td></tr>
 <tr><td>MoonIntensity</td><td>0.0</td><td>0.0</td><td>1.0</td></tr></table>
-<p>La noche tiene <code>Brightness 2.5</code> (m&aacute;s que el d&iacute;a) intencionalmente para que el mapa sea visible y jugable en la oscuridad.</p>`
+<p>Night intentionally has <code>Brightness 2.5</code> (higher than day) so the map remains visible and playable in the dark.</p>`
  },
  {
- short: "GeographicLatitude y ColorShift por fase controlan el &aacute;ngulo e iluminaci&oacute;n del sol",
- detail: `<p><code>GeographicLatitude</code> controla el &aacute;ngulo con que el sol/luna cruza el cielo:</p>
-<p><strong>D&iacute;a (5&deg;):</strong> Latitud ecuatorial &mdash; el sol pasa casi por el c&eacute;nit, luz directa intensa. <code>ColorShift</code> azul-violeta suave da una atm&oacute;sfera de mediod&iacute;a tropical.</p>
-<p><strong>Tarde (41.7&deg;):</strong> Latitud media (similar a Europa del sur) &mdash; sol muy inclinado, sombras largas. <code>ColorShift_Top</code> naranja brillante + <code>ColorShift_Bottom</code> amarillo c&aacute;lido imitan el cielo de atardecer.</p>
-<p><strong>Noche (5&deg;):</strong> Vuelve a ecuatorial &mdash; la luna sigue trayectoria alta. <code>ColorShift</code> violeta oscuro arriba y m&aacute;s oscuro abajo crea la atm&oacute;sfera nocturna profunda.</p>`
+ short: "GeographicLatitude &amp; ColorShift per phase control sun angle and sky tint",
+ detail: `<p><code>GeographicLatitude</code> controls the angle at which the sun/moon crosses the sky:</p>
+<p><strong>Day (5&deg;):</strong> Equatorial latitude &mdash; sun passes near the zenith, intense direct light. Blue-violet <code>ColorShift</code> gives a tropical midday atmosphere.</p>
+<p><strong>Afternoon (41.7&deg;):</strong> Mid-latitude (similar to southern Europe) &mdash; heavily tilted sun, long shadows. Bright orange <code>ColorShift_Top</code> + warm yellow <code>ColorShift_Bottom</code> mimic a real sunset sky.</p>
+<p><strong>Night (5&deg;):</strong> Back to equatorial &mdash; the moon follows a high path. Dark violet <code>ColorShift</code> top and darker violet below creates the deep night atmosphere.</p>`
  }
  ],
  commands: null
  }
 ];
+
+ 
 
  
 

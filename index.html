@@ -827,7 +827,7 @@
  padding: 40px 20px;
  }
  }
- 
+ /* ── Systems Gallery ─────────────────── */
  .systems-grid {
  display: grid;
  grid-template-columns: repeat(2, 1fr);
@@ -961,7 +961,7 @@
  margin-bottom: 4px;
  }
  
- 
+ /* ── Expandable feature items ───── */
  .sys-feat-item { display:flex; flex-direction:column; gap:0; border-radius:10px; overflow:hidden; }
  .sys-feat-row { display:flex; align-items:center; gap:8px; }
  .sys-feat-row::before { content:'▸'; color:var(--accent); font-size:0.65rem; flex-shrink:0; }
@@ -1731,7 +1731,7 @@
  videoWrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${sys.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;" allow="autoplay;fullscreen;accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`;
  });
  container.appendChild(card);
- 
+ // Wire up expand buttons for this card
  card.querySelectorAll('.sys-expand-btn').forEach(btn => {
  btn.addEventListener('click', (e) => {
  e.stopPropagation();
@@ -1774,4 +1774,3 @@
  </script>
 </body>
 </html>
-

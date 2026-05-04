@@ -35,104 +35,150 @@
  color: var(--text-main);
  line-height: 1.6;
  overflow-x: hidden;
- -webkit-font-smoothing: antialiased;
- }
- .grain {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- pointer-events: none;
- z-index: 9999;
- opacity: 0.03;
- background-image: url("https://grainy-gradients.vercel.app/noise.svg");
- }
- .cyber-grid {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background-image:
- linear-gradient(rgba(204, 255, 0, 0.02) 1px, transparent 1px),
- linear-gradient(90deg, rgba(204, 255, 0, 0.02) 1px, transparent 1px);
- background-size: 60px 60px;
- z-index: -1;
- -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
- mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
- }
- ::-webkit-scrollbar {
- width: 4px;
- }
- ::-webkit-scrollbar-track {
- background: var(--bg);
- }
- ::-webkit-scrollbar-thumb {
- background: rgba(255, 255, 255, 0.1);
- border-radius: 10px;
- }
- ::-webkit-scrollbar-thumb:hover {
- background: var(--primary);
- }
- .mesh-bg {
- position: fixed;
- top: 0;
- left: 0;
- width: 100vw;
- height: 100vh;
- z-index: -2;
- background: var(--bg);
- overflow: hidden;
- }
- .mesh-blob {
- position: absolute;
- width: 800px;
- height: 800px;
- border-radius: 50%;
- filter: blur(150px);
- opacity: 0.2;
- animation: float 30s infinite alternate ease-in-out;
- }
- .blob-1 {
- background: var(--primary);
- top: -10%;
- left: -5%;
- animation-duration: 30s;
- }
- .blob-2 {
- background: var(--accent);
- bottom: -10%;
- right: -5%;
- animation-delay: -10s;
- animation-duration: 35s;
- }
- @keyframes float {
- 0% {
- transform: translate(0, 0) scale(1);
- }
- 100% {
- transform: translate(100px, 100px) scale(1.2);
- }
- }
- .cursor-dot {
- width: 6px;
- height: 6px;
- background: var(--primary);
- position: fixed;
- pointer-events: none;
- z-index: 10000;
- border-radius: 50%;
- top: 0;
- left: 0;
- box-shadow: 0 0 15px var(--primary);
- }
- .cursor-outline {
- width: 40px;
- height: 40px;
- border: 1px solid rgba(255, 255, 255, 0.2);
- position: fixed;
- pointer-events: none;
+<script>
+
+(function () {
+	emailjs.init("Qa_eRk88SCXHFwSxr");
+})();
+
+const dot = document.querySelector('.cursor-dot');
+const outline = document.querySelector('.cursor-outline');
+
+let mouse = { x: 0, y: 0 };
+let dotPos = { x: 0, y: 0 };
+let outlinePos = { x: 0, y: 0 };
+
+window.addEventListener('mousemove', (e) => {
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+});
+
+function updateCursor() {
+	dotPos.x += (mouse.x - dotPos.x) * 0.2;
+	dotPos.y += (mouse.y - dotPos.y) * 0.2;
+	dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
+
+	outlinePos.x += (mouse.x - outlinePos.x) * 0.1;
+	outlinePos.y += (mouse.y - outlinePos.y) * 0.1;
+	outline.style.transform = `translate3d(${outlinePos.x}px, ${outlinePos.y}px, 0) translate(-50%, -50%)`;
+
+	requestAnimationFrame(updateCursor);
+}
+
+updateCursor();
+
+document.querySelectorAll('a, button, .category-card, .service-card').forEach(el => {
+	el.addEventListener('mouseenter', () => {
+		outline.style.width = '60px';
+		outline.style.height = '60px';
+		outline.style.background = 'rgba(255, 255, 255, 0.05)';
+		outline.style.borderColor = 'transparent';
+	});
+
+	el.addEventListener('mouseleave', () => {
+		outline.style.width = '40px';
+		outline.style.height = '40px';
+		outline.style.background = 'transparent';
+		outline.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+	});
+});
+
+document.querySelectorAll('.bento-item').forEach(item => {
+	const glow = document.createElement('div');
+	glow.className = 'card-glow';
+	item.appendChild(glow);
+
+	item.addEventListener('mousemove', (e) => {
+		const rect = item.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		item.style.setProperty('--x', `${x}px`);
+		item.style.setProperty('--y', `${y}px`);
+	});
+});
+
+window.addEventListener('scroll', () => {
+	document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+const services = document.querySelectorAll('.service-card');
+const hiddenInput = document.getElementById('selectedService');
+
+services.forEach(card => {
+	card.addEventListener('click', () => {
+		services.forEach(s => s.classList.remove('active'));
+		card.classList.add('active');
+		hiddenInput.value = card.dataset.service;
+	});
+});
+
+const animationProjects = [
+	{ name: "Mexico Event ", youtubeId: "C4rNl8lzMYU", fallbackId: "maxresdefault.jpg" },
+	{ name: "Las Combinaciones Walk ", youtubeId: "N4cDoc1CF-o", fallbackId: "maxresdefault.jpg" },
+	{ name: "ExtraditaBlessd Anim ", youtubeId: "ss6E67uTmts", fallbackId: "maxresdefault.jpg" },
+	{ name: "Ant Walk ", youtubeId: "nvdQOFVZ1s0", fallbackId: "maxresdefault.jpg" },
+	{ name: "ExtraditaBlessd Walk ", youtubeId: "44nA9eghCJ0", fallbackId: "maxresdefault.jpg" },
+	{ name: "OctavioMesa And Devil Idle ", youtubeId: "heRcohMJ-Wg", fallbackId: "maxresdefault.jpg" },
+	{ name: "Empanadita Bicicleteira Walk ", youtubeId: "f9bNzV_MRlU", fallbackId: "maxresdefault.jpg" },
+	{ name: "Empanadita Bicicleteira Idle ", youtubeId: "rXdnognlLU0", fallbackId: "maxresdefault.jpg" },
+	{ name: "Lechona Idle and Walk ", youtubeId: "PuPCGzUK2ao", fallbackId: "maxresdefault.jpg" },
+	{ name: "Monster Walk ", youtubeId: "-oUKHncfbrg", fallbackId: "hqdefault.jpg" },
+	{ name: "Manzini Happini Idle ", youtubeId: "7HrWSKQyxYc", fallbackId: "hqdefault.jpg" },
+	{ name: "Manzini Happini Walk ", youtubeId: "BUWmnf-xdi0", fallbackId: "hqdefault.jpg" },
+	{ name: "Naruto Makini Walk ", youtubeId: "fBVJJFrUjGw", fallbackId: "hqdefault.jpg" },
+	{ name: "Strawberry Saurus Idle and Walk ", youtubeId: "fDoMAY026tA", fallbackId: "hqdefault.jpg" },
+	{ name: "Orangini Walk ", youtubeId: "A-na79SPDPg", fallbackId: "hqdefault.jpg" },
+	{ name: "Matteito Idle ", youtubeId: "kctyOLaloLk", fallbackId: "maxresdefault.jpg" },
+	{ name: "Lil 67 Idle ", youtubeId: "AzszEffW6gI", fallbackId: "maxresdefault.jpg" },
+	{ name: "Ballerina Capuccina Idle ", youtubeId: "RiyGBNFY9Dg", fallbackId: "maxresdefault.jpg" }
+];
+
+function loadAnimationGallery() {
+	const container = document.getElementById('animation-gallery');
+	if (!container) return;
+
+	animationProjects.forEach((proj) => {
+		const card = document.createElement('div');
+		card.className = 'bento-item gallery-card';
+		const primaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/${proj.fallbackId}`;
+		const secondaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/0.jpg`;
+
+		card.innerHTML = `
+			<div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
+				<img class="yt-thumb" src="${primaryThumb}" data-secondary="${secondaryThumb}" style="width:100%;height:100%;object-fit:cover;">
+				<div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;box-shadow:0 0 50px var(--primary), inset 0 0 20px rgba(255,255,255,0.3);transition:all 0.3s ease;">
+					<div style="width:0;height:0;border-left:22px solid #000;border-top:14px solid transparent;border-bottom:14px solid transparent;margin-left:5px;"></div>
+				</div>
+			</div>
+			<div style="position:absolute; bottom:30px; left:30px; z-index:10; pointer-events:none;">
+				<h3 style="font-family:var(--font-head); font-size:1.4rem; text-shadow:0 4px 20px rgba(0,0,0,0.8);">${proj.name}</h3>
+			</div>`;
+
+		const img = card.querySelector('.yt-thumb');
+		img.onerror = function () {
+			const secondary = this.getAttribute('data-secondary');
+			if (secondary && this.src !== secondary) {
+				this.src = secondary;
+			}
+		};
+
+		card.addEventListener('click', () => {
+			card.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${proj.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;border-radius:24px;" allow="autoplay;fullscreen"></iframe>`;
+		});
+
+		card.addEventListener('mouseenter', function () {
+			this.style.transform = 'translateY(-12px) scale(1.02)';
+		});
+
+		card.addEventListener('mouseleave', function () {
+			this.style.transform = 'translateY(0) scale(1)';
+		});
+
+		container.appendChild(card);
+	});
+}
+
+const modelFiles = [
  z-index: 10000;
  border-radius: 50%;
  top: 0;
@@ -1365,7 +1411,7 @@
  container.appendChild(card);
  });
  }
- const guiFiles = [
+const guiFiles = [
  "Basic Health GUI.jpeg",
  "Basic Money GUi.jpeg",
  "Basic Speed GUI.jpeg",
@@ -1377,7 +1423,8 @@
  "Studs Style Shop Icon.jpeg",
  "Studs Style Trades Icon.jpeg"
  ];
- function loadGuiGallery() {
+ 
+function loadGuiGallery() {
  const container = document.getElementById('gui-gallery');
  if (!container) return;
  guiFiles.forEach((filename) => {
@@ -1402,8 +1449,9 @@
  });
  container.appendChild(card);
  });
- }
- function showSection(sectionId) {
+}
+
+function showSection(sectionId) {
  document.querySelectorAll('.page-section').forEach(s => {
  s.style.display = 'none';
  s.classList.remove('active');
@@ -1418,7 +1466,8 @@
  if (link) link.classList.add('active');
  window.scrollTo({ top: 0, behavior: 'smooth' });
  }
- const systemProjects = [
+
+const systemProjects = [
  {
  youtubeId: "MGasKei79EA",
  fallbackId: "maxresdefault.jpg",
@@ -1680,8 +1729,8 @@
  }
 ];
  
- 
- function loadSystemsGallery() {
+
+function loadSystemsGallery() {
  const container = document.getElementById('systems-gallery');
  if (!container) return;
  systemProjects.forEach(sys => {
@@ -1744,14 +1793,16 @@
  });
  });
  });
- }
- document.addEventListener('DOMContentLoaded', () => {
+}
+
+document.addEventListener('DOMContentLoaded', () => {
  loadAnimationGallery();
  loadModelsGallery();
  loadGuiGallery();
  loadSystemsGallery();
  });
- const hireForm = document.getElementById('hireForm');
+ 
+const hireForm = document.getElementById('hireForm');
  if (hireForm) {
  hireForm.addEventListener('submit', async (e) => {
  e.preventDefault();

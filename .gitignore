@@ -17,3 +17,10 @@ email_template.html
 iniciar_servidor.bat
 nulecho
 tornado.md
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example

@@ -1,1418 +1,1582 @@
-﻿<!DOCTYPE html>
+﻿<!doctype html>
 <html lang="en">
-<head>
- <meta charset="UTF-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>SHADOW_DEV | Creative Portfolio</title>
- <link
- href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
- rel="stylesheet">
- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
- <style>
- :root {
- --primary: #ccff00;
- --secondary: #ff4d94;
- --accent: #00eaff;
- --bg: #08090b;
- --surface: rgba(17, 18, 22, 0.6);
- --border: rgba(255, 255, 255, 0.08);
- --text-main: #f5f5f7;
- --text-dim: #86868b;
- --glass: blur(20px) saturate(180%);
- --font-head: 'Space Grotesk', sans-serif;
- --font-body: 'Plus Jakarta Sans', sans-serif;
- --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- * {
- margin: 0;
- padding: 0;
- box-sizing: border-box;
- cursor: none !important;
- }
-
- body {
- font-family: var(--font-body);
- background: var(--bg);
- color: var(--text-main);
- line-height: 1.6;
- overflow-x: hidden;
- -webkit-font-smoothing: antialiased;
- }
-
- .grain {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- pointer-events: none;
- z-index: 9999;
- opacity: 0.03;
- background-image: url("https://grainy-gradients.vercel.app/noise.svg");
- }
-
- .cyber-grid {
- position: fixed;
- top: 0;
- left: 0;
- width: 100%;
- height: 100%;
- background-image:
- linear-gradient(rgba(204, 255, 0, 0.02) 1px, transparent 1px),
- linear-gradient(90deg, rgba(204, 255, 0, 0.02) 1px, transparent 1px);
- background-size: 60px 60px;
- z-index: -1;
- -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
- mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
- }
-
- ::-webkit-scrollbar {
- width: 4px;
- }
-
- ::-webkit-scrollbar-track {
- background: var(--bg);
- }
-
- ::-webkit-scrollbar-thumb {
- background: rgba(255, 255, 255, 0.1);
- border-radius: 10px;
- }
-
- ::-webkit-scrollbar-thumb:hover {
- background: var(--primary);
- }
-
- .mesh-bg {
- position: fixed;
- top: 0;
- left: 0;
- width: 100vw;
- height: 100vh;
- z-index: -2;
- background: var(--bg);
- overflow: hidden;
- }
-
- .mesh-blob {
- position: absolute;
- width: 800px;
- height: 800px;
- border-radius: 50%;
- filter: blur(150px);
- opacity: 0.2;
- animation: float 30s infinite alternate ease-in-out;
- }
-
- .blob-1 {
- background: var(--primary);
- top: -10%;
- left: -5%;
- animation-duration: 30s;
- }
-
- .blob-2 {
- background: var(--accent);
- bottom: -10%;
- right: -5%;
- animation-delay: -10s;
- animation-duration: 35s;
- }
-
- @keyframes float {
- 0% {
- transform: translate(0, 0) scale(1);
- }
- 100% {
- transform: translate(100px, 100px) scale(1.2);
- }
- }
-
- .cursor-dot {
- width: 6px;
- height: 6px;
- background: var(--primary);
- position: fixed;
- pointer-events: none;
- z-index: 10000;
- border-radius: 50%;
- top: 0;
- left: 0;
- box-shadow: 0 0 15px var(--primary);
- }
-
- .cursor-outline {
- width: 40px;
- height: 40px;
- border: 1px solid rgba(255, 255, 255, 0.2);
- position: fixed;
- pointer-events: none;
- z-index: 10000;
- border-radius: 50%;
- top: 0;
- left: 0;
- transition: width 0.4s, height 0.4s, background 0.4s;
- }
-
- header {
- position: fixed;
- top: 30px;
- left: 50%;
- transform: translateX(-50%);
- width: 90%;
- max-width: 1200px;
- z-index: 1000;
- background: rgba(10, 11, 14, 0.4);
- -webkit-backdrop-filter: var(--glass);
- backdrop-filter: var(--glass);
- border: 1px solid var(--border);
- border-radius: 100px;
- padding: 8px 32px;
- transition: var(--transition);
- }
-
- header.scrolled {
- top: 15px;
- background: rgba(8, 9, 11, 0.8);
- border-color: rgba(255, 255, 255, 0.1);
- }
-
- nav {
- display: flex;
- justify-content: space-between;
- align-items: center;
- }
-
- .logo {
- font-family: var(--font-head);
- font-size: 1.4rem;
- font-weight: 800;
- color: #fff;
- letter-spacing: -1px;
- }
-
- .nav-links {
- display: flex;
- gap: 8px;
- list-style: none;
- }
-
- .nav-links a {
- font-family: var(--font-body);
- font-weight: 500;
- font-size: 0.9rem;
- color: var(--text-dim);
- text-decoration: none;
- padding: 10px 20px;
- border-radius: 50px;
- transition: var(--transition);
- }
-
- .nav-links a:hover,
- .nav-links a.active {
- color: #fff;
- background: rgba(255, 255, 255, 0.05);
- }
-
- .discord-btn {
- background: #fff;
- color: #000;
- padding: 10px 24px;
- border-radius: 50px;
- font-weight: 700;
- text-decoration: none;
- font-family: var(--font-body);
- transition: var(--transition);
- font-size: 0.9rem;
- box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
- }
-
- .discord-btn:hover {
- transform: scale(1.08);
- box-shadow: 0 0 50px rgba(255, 255, 255, 0.3), inset 0 0 20px rgba(204, 255, 0, 0.1);
- }
-
- .page-section {
- display: none;
- min-height: 100vh;
- padding-top: 160px;
- padding-bottom: 100px;
- opacity: 0;
- transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
- animation: pageEnter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
- }
-
- @keyframes pageEnter {
- from {
- opacity: 0;
- transform: translateY(20px);
- }
- to {
- opacity: 1;
- transform: translateY(0);
- }
- }
-
- .page-section.active {
- display: block;
- opacity: 1;
- animation: pageEnter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
- }
-
- input[type="text"],
- input[type="email"],
- input[type="tel"],
- textarea {
- width: 100%;
- padding: 18px;
- margin-bottom: 20px;
- background: rgba(255, 255, 255, 0.02);
- border: 1px solid rgba(204, 255, 0, 0.2);
- border-radius: 16px;
- color: var(--text-main);
- font-family: var(--font-body);
- font-size: 1rem;
- transition: var(--transition);
- box-shadow: 0 0 15px rgba(0, 234, 255, 0.05);
- }
-
- input[type="text"]:focus,
- input[type="email"]:focus,
- input[type="tel"]:focus,
- textarea:focus {
- outline: none;
- background: rgba(255, 255, 255, 0.05);
- border-color: var(--primary);
- box-shadow: 0 0 30px rgba(204, 255, 0, 0.2),
- 0 0 50px rgba(204, 255, 0, 0.1),
- inset 0 0 20px rgba(204, 255, 0, 0.05);
- }
-
- input::placeholder,
- textarea::placeholder {
- color: rgba(255, 255, 255, 0.3);
- }
-
- a {
- position: relative;
- transition: var(--transition);
- text-decoration: none;
- }
-
- a:hover {
- color: var(--primary);
- }
-
- .nav-links a {
- position: relative;
- padding-bottom: 4px;
- overflow: hidden;
- color: var(--text-dim);
- transition: color 0.4s ease;
- }
-
- .nav-links a::after {
- content: '';
- position: absolute;
- bottom: 0;
- left: -100%;
- width: 100%;
- height: 2px;
- background: linear-gradient(90deg, var(--primary), var(--accent));
- transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- .nav-links a:hover::after,
- .nav-links a.active::after {
- left: 0;
- }
-
- .nav-links a.active {
- color: var(--primary);
- text-shadow: 0 0 15px rgba(204, 255, 0, 0.3);
- }
-
- .hero h1 {
- font-family: var(--font-head);
- font-size: clamp(3rem, 10vw, 7.5rem);
- line-height: 0.9;
- margin-bottom: 30px;
- letter-spacing: -4px;
- font-weight: 800;
- background: linear-gradient(135deg, #ccff00 0%, #00eaff 50%, #ff4d94 100%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
- background-size: 200% 200%;
- animation: gradientShift 8s ease infinite;
- filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.3)) drop-shadow(0 0 60px rgba(0, 234, 255, 0.2));
- }
-
- .hero h1 span {
- display: inline-block;
- animation: slideInDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
- }
-
- .hero h1 span:nth-child(1) {
- animation-delay: 0s;
- }
-
- .hero h1 span:nth-child(2) {
- animation-delay: 0.05s;
- }
-
- .hero h1 span:nth-child(3) {
- animation-delay: 0.1s;
- }
-
- .hero h1 span:nth-child(4) {
- animation-delay: 0.15s;
- }
-
- .hero h1 span:nth-child(5) {
- animation-delay: 0.2s;
- }
-
- .hero h1 span:nth-child(6) {
- animation-delay: 0.25s;
- }
-
- .hero h1 span:nth-child(7) {
- animation-delay: 0.3s;
- }
-
- .hero h1 span:nth-child(8) {
- animation-delay: 0.35s;
- }
-
- .hero h1 span:nth-child(9) {
- animation-delay: 0.4s;
- }
-
- .hero h1 span:nth-child(10) {
- animation-delay: 0.45s;
- }
-
- .subtitle {
- font-size: 1rem;
- letter-spacing: 3px;
- text-transform: uppercase;
- color: var(--primary);
- margin-bottom: 30px;
- font-weight: 600;
- animation: slideInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
- text-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
- }
-
- .hero h1 span:nth-child(11) {
- animation-delay: 0.5s;
- }
-
- .hero h1 span:nth-child(12) {
- animation-delay: 0.55s;
- }
-
- .hero h1 span:nth-child(13) {
- animation-delay: 0.6s;
- }
-
- .hero h1 span:nth-child(14) {
- animation-delay: 0.1s;
- }
-
- .hero h1 span:nth-child(15) {
- animation-delay: 0.15s;
- }
-
- .hero h1 span:nth-child(16) {
- animation-delay: 0.2s;
- }
-
- .hero h1 span:nth-child(17) {
- animation-delay: 0.25s;
- }
-
- .hero h1 span:nth-child(18) {
- animation-delay: 0.3s;
- }
-
- .hero h1 span:nth-child(19) {
- animation-delay: 0.35s;
- }
-
- .hero h1 span:nth-child(20) {
- animation-delay: 0.4s;
- }
-
- .hero h1 span:nth-child(21) {
- animation-delay: 0.45s;
- }
-
- @keyframes gradientShift {
- 0% {
- background-position: 0% 50%;
- }
- 50% {
- background-position: 100% 50%;
- }
- 100% {
- background-position: 0% 50%;
- }
- }
-
- @keyframes shimmer {
- 0% {
- left: -100%;
- }
- 100% {
- left: 100%;
- }
- }
-
- @keyframes shadowPulse {
- 0%,
- 100% {
- filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0)) drop-shadow(0 0 10px rgba(0, 234, 255, 0));
- }
- 50% {
- filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.4)) drop-shadow(0 0 30px rgba(0, 234, 255, 0.2));
- }
- }
-
- @keyframes haloGlow {
- 0%,
- 100% {
- box-shadow: 0 0 20px rgba(204, 255, 0, 0.1),
- 0 0 40px rgba(0, 234, 255, 0.05),
- inset 0 0 20px rgba(255, 255, 255, 0.05);
- }
- 50% {
- box-shadow: 0 0 40px rgba(204, 255, 0, 0.3),
- 0 0 80px rgba(0, 234, 255, 0.15),
- inset 0 0 30px rgba(255, 255, 255, 0.1);
- }
- }
-
- @keyframes slideInUp {
- from {
- opacity: 0;
- transform: translateY(30px);
- }
- to {
- opacity: 1;
- transform: translateY(0);
- }
- }
-
- @keyframes slideInDown {
- from {
- opacity: 0;
- transform: translateY(-30px);
- }
- to {
- opacity: 1;
- transform: translateY(0);
- }
- }
-
- .hero p {
- font-size: 1.2rem;
- color: var(--text-dim);
- max-width: 650px;
- margin-bottom: 60px;
- }
-
- .bento-grid {
- display: grid;
- grid-template-columns: repeat(4, 1fr);
- gap: 20px;
- }
-
- .bento-item {
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 24px;
- padding: 40px;
- -webkit-backdrop-filter: var(--glass);
- backdrop-filter: var(--glass);
- transition: var(--transition);
- position: relative;
- overflow: hidden;
- box-shadow: 0 0 20px rgba(204, 255, 0, 0.05);
- }
-
- .bento-item:hover {
- border-color: rgba(255, 255, 255, 0.2);
- transform: translateY(-8px);
- background: rgba(255, 255, 255, 0.05);
- box-shadow: 0 0 40px rgba(0, 234, 255, 0.15), 0 20px 40px rgba(0, 0, 0, 0.3);
- }
-
- .card-glow {
- position: absolute;
- inset: 0;
- pointer-events: none;
- background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 0.05), transparent 80%);
- opacity: 0;
- transition: opacity 0.4s;
- }
-
- .bento-item:hover .card-glow {
- opacity: 1;
- }
-
- .category-card {
- cursor: pointer;
- text-align: center;
- transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
- position: relative;
- overflow: hidden;
- border-radius: 32px;
- }
-
- .category-card::before {
- content: '';
- position: absolute;
- top: -50%;
- left: -50%;
- width: 200%;
- height: 200%;
- background: radial-gradient(circle, rgba(204, 255, 0, 0.1) 0%, transparent 70%);
- animation: float 20s infinite ease-in-out;
- opacity: 0;
- transition: opacity 0.4s ease;
- }
-
- .category-card:hover::before {
- opacity: 1;
- }
-
- .category-card i {
- font-size: 2.5rem;
- margin-bottom: 20px;
- display: block;
- transition: var(--transition);
- filter: drop-shadow(0 0 15px rgba(204, 255, 0, 0.2));
- }
-
- .category-card:hover i {
- transform: scale(1.3) rotate(5deg);
- filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.4)) drop-shadow(0 0 15px rgba(0, 234, 255, 0.2));
- }
-
- .category-card h3 {
- font-family: var(--font-head);
- margin-bottom: 8px;
- font-size: 1.4rem;
- transition: var(--transition);
- }
-
- .category-card:hover {
- transform: translateY(-12px) scale(1.05);
- box-shadow: 0 20px 50px rgba(204, 255, 0, 0.15), 0 0 40px rgba(0, 234, 255, 0.1);
- }
-
- .category-card:hover h3 {
- color: var(--primary);
- text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
- }
-
- .work-grid {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 30px;
- margin-top: 40px;
- }
-
- .work-card {
- border-radius: 32px;
- padding: 0;
- transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- .work-card:hover {
- transform: translateY(-12px);
- box-shadow: 0 30px 70px rgba(0, 234, 255, 0.2), 0 0 50px rgba(204, 255, 0, 0.08);
- }
-
- .work-img {
- height: 300px;
- background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
- display: flex;
- align-items: center;
- justify-content: center;
- font-size: 5rem;
- border-bottom: 1px solid var(--border);
- transition: all 0.4s ease;
- }
-
- .work-card:hover .work-img {
- background: linear-gradient(135deg, #1a1a2e, #2d2d44);
- }
-
- .gallery-grid {
- display: grid;
- grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
- gap: 24px;
- margin-top: 60px;
- }
-
- .gallery-card {
- position: relative;
- height: 380px;
- cursor: pointer;
- transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
- border-radius: 32px;
- overflow: hidden;
- box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
- }
-
- .gallery-card::after {
- content: '';
- position: absolute;
- top: 0;
- left: 0;
- right: 0;
- bottom: 0;
- background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
- z-index: 1;
- pointer-events: none;
- transition: opacity 0.4s ease;
- }
-
- .gallery-card:hover::after {
- opacity: 0.5;
- }
-
- .gallery-card:hover {
- transform: translateY(-16px) scale(1.05);
- box-shadow: 0 40px 100px rgba(0, 234, 255, 0.3), 0 0 80px rgba(204, 255, 0, 0.2);
- filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.1));
- }
-
- .gallery-card .yt-thumb {
- transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
- filter: saturate(1) brightness(1);
- }
-
- .gallery-card:hover .yt-thumb {
- transform: scale(1.1);
- filter: saturate(1.2) brightness(1.1);
- }
-
- .form-box {
- max-width: 900px;
- margin: 0 auto;
- background: var(--surface);
- border: 1px solid var(--border);
- border-radius: 40px;
- padding: 60px;
- -webkit-backdrop-filter: var(--glass);
- backdrop-filter: var(--glass);
- box-shadow: 0 0 60px rgba(0, 234, 255, 0.1), 0 0 30px rgba(204, 255, 0, 0.05);
- }
-
- .service-selector {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 16px;
- margin-bottom: 40px;
- }
-
- .service-card {
- background: rgba(255, 255, 255, 0.02);
- border: 1px solid var(--border);
- border-radius: 20px;
- padding: 20px;
- cursor: pointer;
- transition: var(--transition);
- box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
- }
-
- .service-card:hover {
- border-color: var(--primary);
- background: rgba(204, 255, 0, 0.08);
- box-shadow: 0 0 40px rgba(204, 255, 0, 0.25), inset 0 0 20px rgba(204, 255, 0, 0.05);
- transform: scale(1.05) translateY(-4px);
- }
-
- .service-card.active {
- border-color: var(--primary);
- background: rgba(204, 255, 0, 0.1);
- box-shadow: 0 0 50px rgba(204, 255, 0, 0.3);
- }
-
- input,
- textarea {
- width: 100%;
- padding: 20px;
- background: rgba(255, 255, 255, 0.02);
- border: 1px solid var(--border);
- border-radius: 16px;
- color: #fff;
- font-family: var(--font-body);
- font-size: 1rem;
- transition: var(--transition);
- box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
- }
-
- input:focus,
- textarea:focus {
- outline: none;
- border-color: var(--primary);
- background: rgba(204, 255, 0, 0.02);
- box-shadow: 0 0 30px rgba(204, 255, 0, 0.2), inset 0 0 15px rgba(204, 255, 0, 0.05);
- }
-
- .submit-btn {
- width: 100%;
- padding: 24px;
- background: var(--primary);
- color: #000;
- border: none;
- border-radius: 100px;
- font-family: var(--font-head);
- font-size: 1.2rem;
- font-weight: 800;
- transition: var(--transition);
- box-shadow: 0 0 30px rgba(204, 255, 0, 0.3),
- 0 0 60px rgba(204, 255, 0, 0.1),
- inset 0 0 20px rgba(255, 255, 255, 0.2);
- position: relative;
- cursor: pointer;
- letter-spacing: 2px;
- overflow: hidden;
- }
-
- .submit-btn::before {
- content: '';
- position: absolute;
- top: 0;
- left: -100%;
- width: 100%;
- height: 100%;
- background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
- transition: left 0.6s;
- }
-
- .submit-btn:hover::before {
- left: 100%;
- }
-
- .submit-btn:hover {
- transform: translateY(-6px) scale(1.05);
- box-shadow: 0 20px 70px rgba(204, 255, 0, 0.5),
- 0 0 100px rgba(204, 255, 0, 0.3),
- inset 0 0 30px rgba(255, 255, 255, 0.3);
- }
-
- .submit-btn:active {
- transform: translateY(-2px) scale(1.02);
- }
-
- .section-header {
- text-align: center;
- margin-bottom: 60px;
- }
-
- .section-tag {
- font-size: 0.8rem;
- color: var(--primary);
- text-transform: uppercase;
- letter-spacing: 4px;
- font-weight: 700;
- margin-bottom: 10px;
- display: block;
- text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
- animation: slideInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- .section-title {
- font-family: var(--font-head);
- font-size: 3.5rem;
- letter-spacing: -2px;
- background: linear-gradient(135deg, #ccff00 0%, #00eaff 100%);
- -webkit-background-clip: text;
- -webkit-text-fill-color: transparent;
- background-clip: text;
- filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.2)) drop-shadow(0 0 40px rgba(0, 234, 255, 0.1));
- animation: slideInDown 0.8s cubic-bezier(0.22, 1, 0.36, 1);
- }
-
- @media (max-width: 1000px) {
- .bento-grid {
- grid-template-columns: repeat(2, 1fr);
- }
- }
-
- .stat-number {
- font-size: 3rem;
- font-weight: 700;
- text-shadow: 0 0 30px rgba(204, 255, 0, 0.3), 0 0 60px rgba(0, 234, 255, 0.2);
- }
-
- .stat-label {
- color: var(--text-dim);
- text-transform: uppercase;
- font-size: 0.8rem;
- letter-spacing: 2px;
- }
-
- .stat-number.primary {
- color: var(--primary);
- animation: glowPulse 3s ease-in-out infinite;
- }
-
- .stat-number.secondary {
- color: var(--secondary);
- animation: glowPulse 3.5s ease-in-out infinite;
- }
-
- .stat-number.accent {
- color: var(--accent);
- animation: glowPulse 4s ease-in-out infinite;
- }
-
- @keyframes glowPulse {
- 0%,
- 100% {
- text-shadow: 0 0 20px rgba(204, 255, 0, 0.3), 0 0 40px rgba(0, 234, 255, 0.2);
- }
- 50% {
- text-shadow: 0 0 40px rgba(204, 255, 0, 0.5), 0 0 80px rgba(0, 234, 255, 0.3);
- }
- }
-
- .grid-mt-20 {
- margin-top: 20px;
- grid-template-columns: repeat(4, 1fr);
- }
-
- .para-dim {
- color: var(--text-dim);
- }
-
- .textarea-tall {
- height: 200px;
- margin-bottom: 40px;
- }
-
- .success-container {
- display: none;
- text-align: center;
- padding: 40px;
- }
-
- .success-title {
- color: var(--primary);
- font-size: 3rem;
- margin-bottom: 10px;
- }
-
- .success-text {
- font-size: 1.2rem;
- }
-
- .return-btn {
- background: none;
- border: none;
- color: var(--text-dim);
- cursor: pointer;
- margin-bottom: 40px;
- font-weight: 700;
- }
-
- .section-title-form {
- font-family: var(--font-head);
- font-size: 4rem;
- margin-bottom: 10px;
- letter-spacing: -2px;
- }
-
- .form-description {
- color: var(--text-dim);
- margin-bottom: 60px;
- font-size: 1.1rem;
- }
-
- @media (max-width: 700px) {
- .bento-grid,
- .work-grid {
- grid-template-columns: 1fr;
- }
- .nav-links {
- display: none;
- }
- .section-title {
- font-size: 2.5rem;
- }
- .form-box {
- padding: 40px 20px;
- }
- }
-
- .systems-grid {
- display: grid;
- grid-template-columns: repeat(2, 1fr);
- gap: 30px;
- margin-top: 40px;
- }
-
- .system-card {
- border-radius: 32px;
- overflow: hidden;
- transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
- position: relative;
- }
-
- .system-card:hover {
- transform: translateY(-8px);
- box-shadow: 0 30px 60px rgba(0,234,255,0.12), 0 0 40px rgba(204,255,0,0.06);
- }
-
- .sys-video-wrap {
- aspect-ratio: 16 / 9;
- position: relative;
- overflow: hidden;
- background: #000;
- cursor: pointer;
- }
-
- .sys-video-wrap img {
- width: 100%;
- height: 100%;
- object-fit: contain;
- transition: transform 0.4s ease;
- }
-
- .sys-video-wrap:hover img {
- transform: scale(1.03);
- }
-
- .sys-play-btn {
- position: absolute;
- top: 50%;
- left: 50%;
- transform: translate(-50%, -50%);
- width: 64px;
- height: 64px;
- background: var(--primary);
- border-radius: 50%;
- display: flex;
- align-items: center;
- justify-content: center;
- z-index: 2;
- pointer-events: none;
- box-shadow: 0 0 40px var(--primary), inset 0 0 20px rgba(255,255,255,0.3);
- transition: all 0.3s ease;
- }
-
- .sys-video-wrap:hover .sys-play-btn {
- transform: translate(-50%, -50%) scale(1.12);
- box-shadow: 0 0 60px var(--primary), 0 0 100px rgba(204,255,0,0.3), inset 0 0 20px rgba(255,255,255,0.3);
- }
-
- .sys-info {
- padding: 26px 28px 28px;
- border-top: 1px solid var(--border);
- }
-
- .sys-badge {
- display: inline-block;
- padding: 3px 12px;
- border-radius: 50px;
- font-size: 0.72rem;
- font-weight: 700;
- letter-spacing: 2px;
- text-transform: uppercase;
- margin-bottom: 12px;
- }
-
- .badge-basic {
- background: rgba(204,255,0,0.08);
- color: var(--primary);
- border: 1px solid rgba(204,255,0,0.25);
- }
-
- .badge-advanced {
- background: rgba(255,77,148,0.08);
- color: var(--secondary);
- border: 1px solid rgba(255,77,148,0.25);
- }
-
- .sys-title {
- font-family: var(--font-head);
- font-size: 1.35rem;
- font-weight: 700;
- color: var(--text-main);
- margin-bottom: 10px;
- letter-spacing: -0.5px;
- }
-
- .sys-desc {
- font-size: 0.88rem;
- color: var(--text-dim);
- line-height: 1.65;
- margin-bottom: 16px;
- }
-
- .sys-features {
- display: flex;
- flex-direction: column;
- gap: 5px;
- margin-bottom: 16px;
- }
-
- .sys-feature {
- display: flex;
- align-items: flex-start;
- gap: 8px;
- font-size: 0.84rem;
- color: rgba(245,245,247,0.65);
- line-height: 1.4;
- }
-
- .sys-feature::before {
- content: '▸';
- color: var(--accent);
- font-size: 0.65rem;
- flex-shrink: 0;
- margin-top: 3px;
- }
-
- .sys-cmds {
- padding: 14px 16px;
- background: rgba(0,234,255,0.03);
- border: 1px solid rgba(0,234,255,0.1);
- border-radius: 14px;
- }
-
- .sys-cmd-label {
- font-size: 0.7rem;
- color: var(--accent);
- text-transform: uppercase;
- letter-spacing: 2px;
- font-weight: 700;
- margin-bottom: 8px;
- }
-
- .sys-cmd-item {
- font-family: var(--font-head);
- font-size: 0.79rem;
- color: rgba(255,255,255,0.55);
- margin-bottom: 4px;
- }
-
- .sys-feat-item { display:flex; flex-direction:column; gap:0; border-radius:10px; overflow:hidden; }
-
- .sys-feat-row { display:flex; align-items:center; gap:8px; }
-
- .sys-feat-row::before { content:'▸'; color:var(--accent); font-size:0.65rem; flex-shrink:0; }
-
- .sys-feat-text { font-size:0.84rem; color:rgba(245,245,247,0.65); line-height:1.4; flex:1; }
-
- .sys-expand-btn { margin-left:auto; flex-shrink:0; background:rgba(204,255,0,0.06); border:1px solid rgba(204,255,0,0.2); color:var(--primary); font-family:var(--font-head); font-size:0.68rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:3px 10px; border-radius:50px; cursor:pointer; transition:all 0.25s ease; white-space:nowrap; }
-
- .sys-expand-btn:hover { background:rgba(204,255,0,0.15); border-color:var(--primary); box-shadow:0 0 12px rgba(204,255,0,0.2); }
-
- .sys-expand-btn.open { background:var(--primary); color:#000; border-color:var(--primary); }
-
- .sys-feat-detail { max-height:0; overflow:hidden; transition:max-height 0.4s cubic-bezier(0.22,1,0.36,1),padding 0.3s ease; padding:0 10px 0 16px; background:rgba(204,255,0,0.02); border-left:2px solid rgba(204,255,0,0.15); margin-left:16px; }
-
- .sys-feat-detail.open { max-height:1200px; padding:10px 10px 14px 16px; }
-
- .sys-feat-detail p { font-size:0.82rem; color:rgba(245,245,247,0.5); line-height:1.65; margin-bottom:8px; }
-
- .sys-feat-detail p:last-child { margin-bottom:0; }
-
- .sys-feat-detail code { display:inline-block; background:rgba(0,234,255,0.07); border:1px solid rgba(0,234,255,0.18); border-radius:6px; padding:2px 7px; font-family:var(--font-head); font-size:0.78rem; color:var(--accent); }
-
- .sys-feat-detail .dtable { width:100%; border-collapse:collapse; margin:8px 0; font-size:0.78rem; }
-
- .sys-feat-detail .dtable th { text-align:left; color:var(--primary); font-weight:700; padding:4px 8px; border-bottom:1px solid rgba(204,255,0,0.15); }
-
- .sys-feat-detail .dtable td { padding:4px 8px; color:rgba(245,245,247,0.5); border-bottom:1px solid rgba(255,255,255,0.04); }
-
- .dtag { display:inline-block; padding:2px 8px; border-radius:50px; font-size:0.7rem; font-weight:700; margin:2px; }
-
- .dtag-gold { background:rgba(255,215,0,0.15); color:#ffd700; border:1px solid rgba(255,215,0,0.35); }
-
- .dtag-diamond { background:rgba(120,220,255,0.15); color:#78dcff; border:1px solid rgba(120,220,255,0.35); }
-
- .dtag-rainbow { background:rgba(255,77,148,0.12); color:#ff4d94; border:1px solid rgba(255,77,148,0.35); }
-
- .dtag-normal { background:rgba(255,255,255,0.06); color:rgba(255,255,255,0.45); border:1px solid rgba(255,255,255,0.14); }
-
-@media (max-width: 900px) {
- .systems-grid {
- grid-template-columns: 1fr;
- }
- }
- </style>
-</head>
-<body>
- <div class="grain"></div>
- <div class="cyber-grid"></div>
- <div class="mesh-bg">
- <div class="mesh-blob blob-1"></div>
- <div class="mesh-blob blob-2"></div>
- </div>
- <div class="cursor-dot"></div>
- <div class="cursor-outline"></div>
- <header>
- <nav>
- <div class="logo">SHADOW_DEV</div>
- <ul class="nav-links">
- <li><a onclick="showSection('home')" id="nav-home" class="active">Home</a></li>
- <li><a onclick="showSection('animator')" id="nav-animator">Animator</a></li>
- <li><a onclick="showSection('scripter')" id="nav-scripter">Scripter</a></li>
- <li><a onclick="showSection('uidesign')" id="nav-uidesign">UI</a></li>
- <li><a onclick="showSection('modelador')" id="nav-modelador">3D</a></li>
- <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
- </ul>
- <a href="https://discord.gg/STzVuTs7" target="_blank" rel="noopener" class="discord-btn">Discord</a>
- </nav>
- </header>
- <section id="home" class="page-section active">
- <div class="container">
- <div class="hero-content">
- <div class="subtitle">Creative Tech Disruptor</div>
- <h1>
- <span>P</span><span>r</span><span>o</span><span>f</span><span>e</span><span>s</span><span>s</span><span>i</span><span>o</span><span>m</span><span>a</span><span>l</span><br>
- <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span><span>p</span><span>e</span><span>r</span>
- </h1>
- <p>Pushing the boundaries of digital interaction through high-end scripting, cinematic 3D animation, and
- fluid UI experiences.</p>
- <div class="bento-grid">
- <div class="bento-item">
- <div class="stat-number primary">5+</div>
- <div class="stat-label">Years XP</div>
- </div>
- <div class="bento-item">
- <div class="stat-number secondary">100+</div>
- <div class="stat-label">Animations</div>
- </div>
- <div class="bento-item">
- <div class="stat-number accent">24/7</div>
- <div class="stat-label">Innovation</div>
- </div>
- <div class="bento-item">
- <div class="stat-number primary">100%</div>
- <div class="stat-label">Uptime</div>
- </div>
- </div>
- <div class="bento-grid grid-mt-20">
- <div class="bento-item category-card" onclick="showSection('animator')">
- <i></i>
- <h3>Animator</h3>
- <p>Motion Graphics</p>
- </div>
- <div class="bento-item category-card" onclick="showSection('scripter')">
- <i></i>
- <h3>Scripter</h3>
- <p>Architecture</p>
- </div>
- <div class="bento-item category-card" onclick="showSection('uidesign')">
- <i></i>
- <h3>UI Design</h3>
- <p>Experiences</p>
- </div>
- <div class="bento-item category-card" onclick="showSection('modelador')">
- <i></i>
- <h3>Modelador</h3>
- <p>3D Assets</p>
- </div>
- </div>
- </div>
- </div>
- </section>
- <section id="animator" class="page-section">
- <div class="container">
- <div class="section-header">
- <div class="section-tag">Showcase</div>
- <h2 class="section-title">Animation Portfolio</h2>
- <p class="section-description">High-fidelity character motion and cinematic storytelling. Crafted for
- impact.</p>
- </div>
- <div class="gallery-grid" id="animation-gallery"></div>
- </div>
- </section>
- <section id="scripter" class="page-section">
- <div class="container">
- <div class="section-header">
- <div class="section-tag">Dev Engine</div>
- <h2 class="section-title">Scripting Mastery</h2>
- <p class="section-description">Clean, optimized, and powerful logic for complex systems.</p>
- </div>
- <div class="systems-grid" id="systems-gallery"></div>
- </div>
- </section>
- <section id="uidesign" class="page-section">
- <div class="container">
- <div class="section-header">
- <div class="section-tag">Experiences</div>
- <h2 class="section-title">UI Design Gallery</h2>
- <p class="section-description">Modern, user-centric interfaces designed for seamless digital
- interaction.</p>
- </div>
- <div class="gallery-grid" id="gui-gallery"></div>
- </div>
- </section>
- <section id="modelador" class="page-section">
- <div class="container">
- <div class="section-header">
- <div class="section-tag">3D Mastery</div>
- <h2 class="section-title">Modelador Portfolio</h2>
- <p class="section-description">High-fidelity 3D assets and character designs for immersive worlds.
- </p>
- </div>
- <div class="gallery-grid" id="models-gallery"></div>
- </div>
- </section>
- <section id="hire" class="page-section">
- <div class="container">
- <div class="form-box">
- <button onclick="showSection('home')" class="return-btn">← RETURN HOME</button>
- <h1 class="section-title-form">Initialize Build</h1>
- <p class="form-description">Select a specialized service and transmit your requirements.</p>
- <form id="hireForm">
- <div class="service-selector">
- <div class="service-card active" data-service="Animation">
- <i></i>
- <h4>Animator</h4>
- <p>Cinematic motion graphics & character life.</p>
- </div>
- <div class="service-card" data-service="Scripting">
- <i></i>
- <h4>Scripter</h4>
- <p>Advanced architecture & robust systems.</p>
- </div>
- <div class="service-card" data-service="UI Design">
- <i></i>
- <h4>UI Design</h4>
- <p>Premium interfaces & fluid user experiences.</p>
- </div>
- <div class="service-card" data-service="3D Modeling">
- <i></i>
- <h4>Modelador</h4>
- <p>Elite 3D assets & environmental design.</p>
- </div>
- </div>
- <input type="hidden" name="service" id="selectedService" value="Animation">
- <div class="form-row">
- <input type="text" name="name" placeholder="Full Name / Brand" required>
- <input type="text" name="discord" placeholder="Discord Handle" required>
- </div>
- <div class="form-row">
- <input type="email" name="email" placeholder="Email Address" required>
- </div>
- <textarea name="message" placeholder="Transmission details... describe your project goals."
- class="textarea-tall" required></textarea>
- <button type="submit" class="submit-btn">SEND PROPOSAL</button>
- </form>
- <div id="successMessage" class="success-container">
- <h2 class="success-title">TRANSMITTED</h2>
- <p class="success-text">Proposal received. Standby for contact.</p>
- </div>
- </div>
- </div>
- </section>
- <script>
- (function () { emailjs.init("Qa_eRk88SCXHFwSxr"); })();
-
- const dot = document.querySelector('.cursor-dot');
- const outline = document.querySelector('.cursor-outline');
- let mouse = { x: 0, y: 0 };
- let dotPos = { x: 0, y: 0 };
- let outlinePos = { x: 0, y: 0 };
- window.addEventListener('mousemove', (e) => {
- mouse.x = e.clientX;
- mouse.y = e.clientY;
- });
-
- function updateCursor() {
- dotPos.x += (mouse.x - dotPos.x) * 0.2;
- dotPos.y += (mouse.y - dotPos.y) * 0.2;
- dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
- outlinePos.x += (mouse.x - outlinePos.x) * 0.1;
- outlinePos.y += (mouse.y - outlinePos.y) * 0.1;
- outline.style.transform = `translate3d(${outlinePos.x}px, ${outlinePos.y}px, 0) translate(-50%, -50%)`;
- requestAnimationFrame(updateCursor);
- }
-
- updateCursor();
-
- document.querySelectorAll('a, button, .category-card, .service-card').forEach(el => {
- el.addEventListener('mouseenter', () => {
- outline.style.width = '60px'; outline.style.height = '60px';
- outline.style.background = 'rgba(255, 255, 255, 0.05)';
- outline.style.borderColor = 'transparent';
- });
- el.addEventListener('mouseleave', () => {
- outline.style.width = '40px'; outline.style.height = '40px';
- outline.style.background = 'transparent';
- outline.style.borderColor = 'rgba(255, 255, 255, 0.2)';
- });
- });
-
- document.querySelectorAll('.bento-item').forEach(item => {
- const glow = document.createElement('div');
- glow.className = 'card-glow';
- item.appendChild(glow);
- item.addEventListener('mousemove', (e) => {
- const rect = item.getBoundingClientRect();
- const x = e.clientX - rect.left;
- const y = e.clientY - rect.top;
- item.style.setProperty('--x', `${x}px`);
- item.style.setProperty('--y', `${y}px`);
- });
- });
-
- window.addEventListener('scroll', () => {
- document.querySelector('header').classList.toggle('scrolled', window.scrollY > 50);
- });
-
- const services = document.querySelectorAll('.service-card');
- const hiddenInput = document.getElementById('selectedService');
- services.forEach(card => {
- card.addEventListener('click', () => {
- services.forEach(s => s.classList.remove('active'));
- card.classList.add('active');
- hiddenInput.value = card.dataset.service;
- });
- });
-
- const animationProjects = [
- { name: "Mexico Event ", youtubeId: "C4rNl8lzMYU", fallbackId: "maxresdefault.jpg" },
- { name: "Las Combinaciones Walk ", youtubeId: "N4cDoc1CF-o", fallbackId: "maxresdefault.jpg" },
- { name: "ExtraditaBlessd Anim ", youtubeId: "ss6E67uTmts", fallbackId: "maxresdefault.jpg" },
- { name: "Ant Walk ", youtubeId: "nvdQOFVZ1s0", fallbackId: "maxresdefault.jpg" },
- { name: "ExtraditaBlessd Walk ", youtubeId: "44nA9eghCJ0", fallbackId: "maxresdefault.jpg" },
- { name: "OctavioMesa And Devil Idle ", youtubeId: "heRcohMJ-Wg", fallbackId: "maxresdefault.jpg" },
- { name: "Empanadita Bicicleteira Walk ", youtubeId: "f9bNzV_MRlU", fallbackId: "maxresdefault.jpg" },
- { name: "Empanadita Bicicleteira Idle ", youtubeId: "rXdnognlLU0", fallbackId: "maxresdefault.jpg" },
- { name: "Lechona Idle and Walk ", youtubeId: "PuPCGzUK2ao", fallbackId: "maxresdefault.jpg" },
- { name: "Monster Walk ", youtubeId: "-oUKHncfbrg", fallbackId: "hqdefault.jpg" },
- { name: "Manzini Happini Idle ", youtubeId: "7HrWSKQyxYc", fallbackId: "hqdefault.jpg" },
- { name: "Manzini Happini Walk ", youtubeId: "BUWmnf-xdi0", fallbackId: "hqdefault.jpg" },
- { name: "Naruto Makini Walk ", youtubeId: "fBVJJFrUjGw", fallbackId: "hqdefault.jpg" },
- { name: "Strawberry Saurus Idle and Walk ", youtubeId: "fDoMAY026tA", fallbackId: "hqdefault.jpg" },
- { name: "Orangini Walk ", youtubeId: "A-na79SPDPg", fallbackId: "hqdefault.jpg" },
- { name: "Matteito Idle ", youtubeId: "kctyOLaloLk", fallbackId: "maxresdefault.jpg" },
- { name: "Lil 67 Idle ", youtubeId: "AzszEffW6gI", fallbackId: "maxresdefault.jpg" },
- { name: "Ballerina Capuccina Idle ", youtubeId: "RiyGBNFY9Dg", fallbackId: "maxresdefault.jpg" }
- ];
-
- function loadAnimationGallery() {
- const container = document.getElementById('animation-gallery');
- if (!container) return;
- animationProjects.forEach((proj) => {
- const card = document.createElement('div');
- card.className = 'bento-item gallery-card';
- const primaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/${proj.fallbackId}`;
- const secondaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/0.jpg`;
- card.innerHTML = `
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>SHADOW_DEV | Creative Portfolio</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap"
+            rel="stylesheet"
+        />
+        <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+        <style>
+            :root {
+                --primary: #ccff00;
+                --secondary: #ff4d94;
+                --accent: #00eaff;
+                --bg: #08090b;
+                --surface: rgba(17, 18, 22, 0.6);
+                --border: rgba(255, 255, 255, 0.08);
+                --text-main: #f5f5f7;
+                --text-dim: #86868b;
+                --glass: blur(20px) saturate(180%);
+                --font-head: "Space Grotesk", sans-serif;
+                --font-body: "Plus Jakarta Sans", sans-serif;
+                --transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                cursor: none !important;
+            }
+
+            body {
+                font-family: var(--font-body);
+                background: var(--bg);
+                color: var(--text-main);
+                line-height: 1.6;
+                overflow-x: hidden;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            .grain {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+                opacity: 0.03;
+                background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+            }
+
+            .cyber-grid {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-image:
+                    linear-gradient(rgba(204, 255, 0, 0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(204, 255, 0, 0.02) 1px, transparent 1px);
+                background-size: 60px 60px;
+                z-index: -1;
+                -webkit-mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+                mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            }
+
+            ::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            ::-webkit-scrollbar-track {
+                background: var(--bg);
+            }
+
+            ::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+            }
+
+            ::-webkit-scrollbar-thumb:hover {
+                background: var(--primary);
+            }
+
+            .mesh-bg {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                z-index: -2;
+                background: var(--bg);
+                overflow: hidden;
+            }
+
+            .mesh-blob {
+                position: absolute;
+                width: 800px;
+                height: 800px;
+                border-radius: 50%;
+                filter: blur(150px);
+                opacity: 0.2;
+                animation: float 30s infinite alternate ease-in-out;
+            }
+
+            .blob-1 {
+                background: var(--primary);
+                top: -10%;
+                left: -5%;
+                animation-duration: 30s;
+            }
+
+            .blob-2 {
+                background: var(--accent);
+                bottom: -10%;
+                right: -5%;
+                animation-delay: -10s;
+                animation-duration: 35s;
+            }
+
+            @keyframes float {
+                0% {
+                    transform: translate(0, 0) scale(1);
+                }
+                100% {
+                    transform: translate(100px, 100px) scale(1.2);
+                }
+            }
+
+            .cursor-dot {
+                width: 6px;
+                height: 6px;
+                background: var(--primary);
+                position: fixed;
+                pointer-events: none;
+                z-index: 10000;
+                border-radius: 50%;
+                top: 0;
+                left: 0;
+                box-shadow: 0 0 15px var(--primary);
+            }
+
+            .cursor-outline {
+                width: 40px;
+                height: 40px;
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                position: fixed;
+                pointer-events: none;
+                z-index: 10000;
+                border-radius: 50%;
+                top: 0;
+                left: 0;
+                transition:
+                    width 0.4s,
+                    height 0.4s,
+                    background 0.4s;
+            }
+
+            header {
+                position: fixed;
+                top: 30px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 90%;
+                max-width: 1200px;
+                z-index: 1000;
+                background: rgba(10, 11, 14, 0.4);
+                -webkit-backdrop-filter: var(--glass);
+                backdrop-filter: var(--glass);
+                border: 1px solid var(--border);
+                border-radius: 100px;
+                padding: 8px 32px;
+                transition: var(--transition);
+            }
+
+            header.scrolled {
+                top: 15px;
+                background: rgba(8, 9, 11, 0.8);
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+
+            .logo {
+                font-family: var(--font-head);
+                font-size: 1.4rem;
+                font-weight: 800;
+                color: #fff;
+                letter-spacing: -1px;
+            }
+
+            .nav-links {
+                display: flex;
+                gap: 8px;
+                list-style: none;
+            }
+
+            .nav-links a {
+                font-family: var(--font-body);
+                font-weight: 500;
+                font-size: 0.9rem;
+                color: var(--text-dim);
+                text-decoration: none;
+                padding: 10px 20px;
+                border-radius: 50px;
+                transition: var(--transition);
+            }
+
+            .nav-links a:hover,
+            .nav-links a.active {
+                color: #fff;
+                background: rgba(255, 255, 255, 0.05);
+            }
+
+            .discord-btn {
+                background: #fff;
+                color: #000;
+                padding: 10px 24px;
+                border-radius: 50px;
+                font-weight: 700;
+                text-decoration: none;
+                font-family: var(--font-body);
+                transition: var(--transition);
+                font-size: 0.9rem;
+                box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            }
+
+            .discord-btn:hover {
+                transform: scale(1.08);
+                box-shadow:
+                    0 0 50px rgba(255, 255, 255, 0.3),
+                    inset 0 0 20px rgba(204, 255, 0, 0.1);
+            }
+
+            .page-section {
+                display: none;
+                min-height: 100vh;
+                padding-top: 160px;
+                padding-bottom: 100px;
+                opacity: 0;
+                transition: opacity 1s cubic-bezier(0.22, 1, 0.36, 1);
+                animation: pageEnter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+
+            @keyframes pageEnter {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .page-section.active {
+                display: block;
+                opacity: 1;
+                animation: pageEnter 0.8s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="tel"],
+            textarea {
+                width: 100%;
+                padding: 18px;
+                margin-bottom: 20px;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid rgba(204, 255, 0, 0.2);
+                border-radius: 16px;
+                color: var(--text-main);
+                font-family: var(--font-body);
+                font-size: 1rem;
+                transition: var(--transition);
+                box-shadow: 0 0 15px rgba(0, 234, 255, 0.05);
+            }
+
+            input[type="text"]:focus,
+            input[type="email"]:focus,
+            input[type="tel"]:focus,
+            textarea:focus {
+                outline: none;
+                background: rgba(255, 255, 255, 0.05);
+                border-color: var(--primary);
+                box-shadow:
+                    0 0 30px rgba(204, 255, 0, 0.2),
+                    0 0 50px rgba(204, 255, 0, 0.1),
+                    inset 0 0 20px rgba(204, 255, 0, 0.05);
+            }
+
+            input::placeholder,
+            textarea::placeholder {
+                color: rgba(255, 255, 255, 0.3);
+            }
+
+            a {
+                position: relative;
+                transition: var(--transition);
+                text-decoration: none;
+            }
+
+            a:hover {
+                color: var(--primary);
+            }
+
+            .nav-links a {
+                position: relative;
+                padding-bottom: 4px;
+                overflow: hidden;
+                color: var(--text-dim);
+                transition: color 0.4s ease;
+            }
+
+            .nav-links a::after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: -100%;
+                width: 100%;
+                height: 2px;
+                background: linear-gradient(90deg, var(--primary), var(--accent));
+                transition: left 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .nav-links a:hover::after,
+            .nav-links a.active::after {
+                left: 0;
+            }
+
+            .nav-links a.active {
+                color: var(--primary);
+                text-shadow: 0 0 15px rgba(204, 255, 0, 0.3);
+            }
+
+            .hero h1 {
+                font-family: var(--font-head);
+                font-size: clamp(3rem, 10vw, 7.5rem);
+                line-height: 0.9;
+                margin-bottom: 30px;
+                letter-spacing: -4px;
+                font-weight: 800;
+                background: linear-gradient(135deg, #ccff00 0%, #00eaff 50%, #ff4d94 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                background-size: 200% 200%;
+                animation: gradientShift 8s ease infinite;
+                filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.3)) drop-shadow(0 0 60px rgba(0, 234, 255, 0.2));
+            }
+
+            .hero h1 span {
+                display: inline-block;
+                animation: slideInDown 0.6s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+            }
+
+            .hero h1 span:nth-child(1) {
+                animation-delay: 0s;
+            }
+
+            .hero h1 span:nth-child(2) {
+                animation-delay: 0.05s;
+            }
+
+            .hero h1 span:nth-child(3) {
+                animation-delay: 0.1s;
+            }
+
+            .hero h1 span:nth-child(4) {
+                animation-delay: 0.15s;
+            }
+
+            .hero h1 span:nth-child(5) {
+                animation-delay: 0.2s;
+            }
+
+            .hero h1 span:nth-child(6) {
+                animation-delay: 0.25s;
+            }
+
+            .hero h1 span:nth-child(7) {
+                animation-delay: 0.3s;
+            }
+
+            .hero h1 span:nth-child(8) {
+                animation-delay: 0.35s;
+            }
+
+            .hero h1 span:nth-child(9) {
+                animation-delay: 0.4s;
+            }
+
+            .hero h1 span:nth-child(10) {
+                animation-delay: 0.45s;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+                letter-spacing: 3px;
+                text-transform: uppercase;
+                color: var(--primary);
+                margin-bottom: 30px;
+                font-weight: 600;
+                animation: slideInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+                text-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+            }
+
+            .hero h1 span:nth-child(11) {
+                animation-delay: 0.5s;
+            }
+
+            .hero h1 span:nth-child(12) {
+                animation-delay: 0.55s;
+            }
+
+            .hero h1 span:nth-child(13) {
+                animation-delay: 0.6s;
+            }
+
+            .hero h1 span:nth-child(14) {
+                animation-delay: 0.1s;
+            }
+
+            .hero h1 span:nth-child(15) {
+                animation-delay: 0.15s;
+            }
+
+            .hero h1 span:nth-child(16) {
+                animation-delay: 0.2s;
+            }
+
+            .hero h1 span:nth-child(17) {
+                animation-delay: 0.25s;
+            }
+
+            .hero h1 span:nth-child(18) {
+                animation-delay: 0.3s;
+            }
+
+            .hero h1 span:nth-child(19) {
+                animation-delay: 0.35s;
+            }
+
+            .hero h1 span:nth-child(20) {
+                animation-delay: 0.4s;
+            }
+
+            .hero h1 span:nth-child(21) {
+                animation-delay: 0.45s;
+            }
+
+            @keyframes gradientShift {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 50%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+
+            @keyframes shimmer {
+                0% {
+                    left: -100%;
+                }
+                100% {
+                    left: 100%;
+                }
+            }
+
+            @keyframes shadowPulse {
+                0%,
+                100% {
+                    filter: drop-shadow(0 0 5px rgba(204, 255, 0, 0)) drop-shadow(0 0 10px rgba(0, 234, 255, 0));
+                }
+                50% {
+                    filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.4)) drop-shadow(0 0 30px rgba(0, 234, 255, 0.2));
+                }
+            }
+
+            @keyframes haloGlow {
+                0%,
+                100% {
+                    box-shadow:
+                        0 0 20px rgba(204, 255, 0, 0.1),
+                        0 0 40px rgba(0, 234, 255, 0.05),
+                        inset 0 0 20px rgba(255, 255, 255, 0.05);
+                }
+                50% {
+                    box-shadow:
+                        0 0 40px rgba(204, 255, 0, 0.3),
+                        0 0 80px rgba(0, 234, 255, 0.15),
+                        inset 0 0 30px rgba(255, 255, 255, 0.1);
+                }
+            }
+
+            @keyframes slideInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            @keyframes slideInDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+                color: var(--text-dim);
+                max-width: 650px;
+                margin-bottom: 60px;
+            }
+
+            .bento-grid {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                gap: 20px;
+            }
+
+            .bento-item {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 24px;
+                padding: 40px;
+                -webkit-backdrop-filter: var(--glass);
+                backdrop-filter: var(--glass);
+                transition: var(--transition);
+                position: relative;
+                overflow: hidden;
+                box-shadow: 0 0 20px rgba(204, 255, 0, 0.05);
+            }
+
+            .bento-item:hover {
+                border-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-8px);
+                background: rgba(255, 255, 255, 0.05);
+                box-shadow:
+                    0 0 40px rgba(0, 234, 255, 0.15),
+                    0 20px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .card-glow {
+                position: absolute;
+                inset: 0;
+                pointer-events: none;
+                background: radial-gradient(circle at var(--x) var(--y), rgba(255, 255, 255, 0.05), transparent 80%);
+                opacity: 0;
+                transition: opacity 0.4s;
+            }
+
+            .bento-item:hover .card-glow {
+                opacity: 1;
+            }
+
+            .category-card {
+                cursor: pointer;
+                text-align: center;
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                position: relative;
+                overflow: hidden;
+                border-radius: 32px;
+            }
+
+            .category-card::before {
+                content: "";
+                position: absolute;
+                top: -50%;
+                left: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(204, 255, 0, 0.1) 0%, transparent 70%);
+                animation: float 20s infinite ease-in-out;
+                opacity: 0;
+                transition: opacity 0.4s ease;
+            }
+
+            .category-card:hover::before {
+                opacity: 1;
+            }
+
+            .category-card i {
+                font-size: 2.5rem;
+                margin-bottom: 20px;
+                display: block;
+                transition: var(--transition);
+                filter: drop-shadow(0 0 15px rgba(204, 255, 0, 0.2));
+            }
+
+            .category-card:hover i {
+                transform: scale(1.3) rotate(5deg);
+                filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.4)) drop-shadow(0 0 15px rgba(0, 234, 255, 0.2));
+            }
+
+            .category-card h3 {
+                font-family: var(--font-head);
+                margin-bottom: 8px;
+                font-size: 1.4rem;
+                transition: var(--transition);
+            }
+
+            .category-card:hover {
+                transform: translateY(-12px) scale(1.05);
+                box-shadow:
+                    0 20px 50px rgba(204, 255, 0, 0.15),
+                    0 0 40px rgba(0, 234, 255, 0.1);
+            }
+
+            .category-card:hover h3 {
+                color: var(--primary);
+                text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
+            }
+
+            .work-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .work-card {
+                border-radius: 32px;
+                padding: 0;
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .work-card:hover {
+                transform: translateY(-12px);
+                box-shadow:
+                    0 30px 70px rgba(0, 234, 255, 0.2),
+                    0 0 50px rgba(204, 255, 0, 0.08);
+            }
+
+            .work-img {
+                height: 300px;
+                background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 5rem;
+                border-bottom: 1px solid var(--border);
+                transition: all 0.4s ease;
+            }
+
+            .work-card:hover .work-img {
+                background: linear-gradient(135deg, #1a1a2e, #2d2d44);
+            }
+
+            .gallery-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+                gap: 24px;
+                margin-top: 60px;
+            }
+
+            .gallery-card {
+                position: relative;
+                height: 380px;
+                cursor: pointer;
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                border-radius: 32px;
+                overflow: hidden;
+                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            }
+
+            .gallery-card::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.3) 100%);
+                z-index: 1;
+                pointer-events: none;
+                transition: opacity 0.4s ease;
+            }
+
+            .gallery-card:hover::after {
+                opacity: 0.5;
+            }
+
+            .gallery-card:hover {
+                transform: translateY(-16px) scale(1.05);
+                box-shadow:
+                    0 40px 100px rgba(0, 234, 255, 0.3),
+                    0 0 80px rgba(204, 255, 0, 0.2);
+                filter: drop-shadow(0 0 30px rgba(204, 255, 0, 0.1));
+            }
+
+            .gallery-card .yt-thumb {
+                transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+                filter: saturate(1) brightness(1);
+            }
+
+            .gallery-card:hover .yt-thumb {
+                transform: scale(1.1);
+                filter: saturate(1.2) brightness(1.1);
+            }
+
+            .form-box {
+                max-width: 900px;
+                margin: 0 auto;
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 40px;
+                padding: 60px;
+                -webkit-backdrop-filter: var(--glass);
+                backdrop-filter: var(--glass);
+                box-shadow:
+                    0 0 60px rgba(0, 234, 255, 0.1),
+                    0 0 30px rgba(204, 255, 0, 0.05);
+            }
+
+            .service-selector {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+                margin-bottom: 40px;
+            }
+
+            .service-card {
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid var(--border);
+                border-radius: 20px;
+                padding: 20px;
+                cursor: pointer;
+                transition: var(--transition);
+                box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .service-card:hover {
+                border-color: var(--primary);
+                background: rgba(204, 255, 0, 0.08);
+                box-shadow:
+                    0 0 40px rgba(204, 255, 0, 0.25),
+                    inset 0 0 20px rgba(204, 255, 0, 0.05);
+                transform: scale(1.05) translateY(-4px);
+            }
+
+            .service-card.active {
+                border-color: var(--primary);
+                background: rgba(204, 255, 0, 0.1);
+                box-shadow: 0 0 50px rgba(204, 255, 0, 0.3);
+            }
+
+            input,
+            textarea {
+                width: 100%;
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.02);
+                border: 1px solid var(--border);
+                border-radius: 16px;
+                color: #fff;
+                font-family: var(--font-body);
+                font-size: 1rem;
+                transition: var(--transition);
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            }
+
+            input:focus,
+            textarea:focus {
+                outline: none;
+                border-color: var(--primary);
+                background: rgba(204, 255, 0, 0.02);
+                box-shadow:
+                    0 0 30px rgba(204, 255, 0, 0.2),
+                    inset 0 0 15px rgba(204, 255, 0, 0.05);
+            }
+
+            .submit-btn {
+                width: 100%;
+                padding: 24px;
+                background: var(--primary);
+                color: #000;
+                border: none;
+                border-radius: 100px;
+                font-family: var(--font-head);
+                font-size: 1.2rem;
+                font-weight: 800;
+                transition: var(--transition);
+                box-shadow:
+                    0 0 30px rgba(204, 255, 0, 0.3),
+                    0 0 60px rgba(204, 255, 0, 0.1),
+                    inset 0 0 20px rgba(255, 255, 255, 0.2);
+                position: relative;
+                cursor: pointer;
+                letter-spacing: 2px;
+                overflow: hidden;
+            }
+
+            .submit-btn::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+                transition: left 0.6s;
+            }
+
+            .submit-btn:hover::before {
+                left: 100%;
+            }
+
+            .submit-btn:hover {
+                transform: translateY(-6px) scale(1.05);
+                box-shadow:
+                    0 20px 70px rgba(204, 255, 0, 0.5),
+                    0 0 100px rgba(204, 255, 0, 0.3),
+                    inset 0 0 30px rgba(255, 255, 255, 0.3);
+            }
+
+            .submit-btn:active {
+                transform: translateY(-2px) scale(1.02);
+            }
+
+            .section-header {
+                text-align: center;
+                margin-bottom: 60px;
+            }
+
+            .section-tag {
+                font-size: 0.8rem;
+                color: var(--primary);
+                text-transform: uppercase;
+                letter-spacing: 4px;
+                font-weight: 700;
+                margin-bottom: 10px;
+                display: block;
+                text-shadow: 0 0 20px rgba(204, 255, 0, 0.3);
+                animation: slideInUp 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .section-title {
+                font-family: var(--font-head);
+                font-size: 3.5rem;
+                letter-spacing: -2px;
+                background: linear-gradient(135deg, #ccff00 0%, #00eaff 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+                filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.2)) drop-shadow(0 0 40px rgba(0, 234, 255, 0.1));
+                animation: slideInDown 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            @media (max-width: 1000px) {
+                .bento-grid {
+                    grid-template-columns: repeat(2, 1fr);
+                }
+            }
+
+            .stat-number {
+                font-size: 3rem;
+                font-weight: 700;
+                text-shadow:
+                    0 0 30px rgba(204, 255, 0, 0.3),
+                    0 0 60px rgba(0, 234, 255, 0.2);
+            }
+
+            .stat-label {
+                color: var(--text-dim);
+                text-transform: uppercase;
+                font-size: 0.8rem;
+                letter-spacing: 2px;
+            }
+
+            .stat-number.primary {
+                color: var(--primary);
+                animation: glowPulse 3s ease-in-out infinite;
+            }
+
+            .stat-number.secondary {
+                color: var(--secondary);
+                animation: glowPulse 3.5s ease-in-out infinite;
+            }
+
+            .stat-number.accent {
+                color: var(--accent);
+                animation: glowPulse 4s ease-in-out infinite;
+            }
+
+            @keyframes glowPulse {
+                0%,
+                100% {
+                    text-shadow:
+                        0 0 20px rgba(204, 255, 0, 0.3),
+                        0 0 40px rgba(0, 234, 255, 0.2);
+                }
+                50% {
+                    text-shadow:
+                        0 0 40px rgba(204, 255, 0, 0.5),
+                        0 0 80px rgba(0, 234, 255, 0.3);
+                }
+            }
+
+            .grid-mt-20 {
+                margin-top: 20px;
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .para-dim {
+                color: var(--text-dim);
+            }
+
+            .textarea-tall {
+                height: 200px;
+                margin-bottom: 40px;
+            }
+
+            .success-container {
+                display: none;
+                text-align: center;
+                padding: 40px;
+            }
+
+            .success-title {
+                color: var(--primary);
+                font-size: 3rem;
+                margin-bottom: 10px;
+            }
+
+            .success-text {
+                font-size: 1.2rem;
+            }
+
+            .return-btn {
+                background: none;
+                border: none;
+                color: var(--text-dim);
+                cursor: pointer;
+                margin-bottom: 40px;
+                font-weight: 700;
+            }
+
+            .section-title-form {
+                font-family: var(--font-head);
+                font-size: 4rem;
+                margin-bottom: 10px;
+                letter-spacing: -2px;
+            }
+
+            .form-description {
+                color: var(--text-dim);
+                margin-bottom: 60px;
+                font-size: 1.1rem;
+            }
+
+            @media (max-width: 700px) {
+                .bento-grid,
+                .work-grid {
+                    grid-template-columns: 1fr;
+                }
+                .nav-links {
+                    display: none;
+                }
+                .section-title {
+                    font-size: 2.5rem;
+                }
+                .form-box {
+                    padding: 40px 20px;
+                }
+            }
+
+            .systems-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .system-card {
+                border-radius: 32px;
+                overflow: hidden;
+                transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+                position: relative;
+            }
+
+            .system-card:hover {
+                transform: translateY(-8px);
+                box-shadow:
+                    0 30px 60px rgba(0, 234, 255, 0.12),
+                    0 0 40px rgba(204, 255, 0, 0.06);
+            }
+
+            .sys-video-wrap {
+                aspect-ratio: 16 / 9;
+                position: relative;
+                overflow: hidden;
+                background: #000;
+                cursor: pointer;
+            }
+
+            .sys-video-wrap img {
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
+                transition: transform 0.4s ease;
+            }
+
+            .sys-video-wrap:hover img {
+                transform: scale(1.03);
+            }
+
+            .sys-play-btn {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: 64px;
+                height: 64px;
+                background: var(--primary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                z-index: 2;
+                pointer-events: none;
+                box-shadow:
+                    0 0 40px var(--primary),
+                    inset 0 0 20px rgba(255, 255, 255, 0.3);
+                transition: all 0.3s ease;
+            }
+
+            .sys-video-wrap:hover .sys-play-btn {
+                transform: translate(-50%, -50%) scale(1.12);
+                box-shadow:
+                    0 0 60px var(--primary),
+                    0 0 100px rgba(204, 255, 0, 0.3),
+                    inset 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            .sys-info {
+                padding: 26px 28px 28px;
+                border-top: 1px solid var(--border);
+            }
+
+            .sys-badge {
+                display: inline-block;
+                padding: 3px 12px;
+                border-radius: 50px;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                margin-bottom: 12px;
+            }
+
+            .badge-basic {
+                background: rgba(204, 255, 0, 0.08);
+                color: var(--primary);
+                border: 1px solid rgba(204, 255, 0, 0.25);
+            }
+
+            .badge-advanced {
+                background: rgba(255, 77, 148, 0.08);
+                color: var(--secondary);
+                border: 1px solid rgba(255, 77, 148, 0.25);
+            }
+
+            .sys-title {
+                font-family: var(--font-head);
+                font-size: 1.35rem;
+                font-weight: 700;
+                color: var(--text-main);
+                margin-bottom: 10px;
+                letter-spacing: -0.5px;
+            }
+
+            .sys-desc {
+                font-size: 0.88rem;
+                color: var(--text-dim);
+                line-height: 1.65;
+                margin-bottom: 16px;
+            }
+
+            .sys-features {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-bottom: 16px;
+            }
+
+            .sys-feature {
+                display: flex;
+                align-items: flex-start;
+                gap: 8px;
+                font-size: 0.84rem;
+                color: rgba(245, 245, 247, 0.65);
+                line-height: 1.4;
+            }
+
+            .sys-feature::before {
+                content: "▸";
+                color: var(--accent);
+                font-size: 0.65rem;
+                flex-shrink: 0;
+                margin-top: 3px;
+            }
+
+            .sys-cmds {
+                padding: 14px 16px;
+                background: rgba(0, 234, 255, 0.03);
+                border: 1px solid rgba(0, 234, 255, 0.1);
+                border-radius: 14px;
+            }
+
+            .sys-cmd-label {
+                font-size: 0.7rem;
+                color: var(--accent);
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                font-weight: 700;
+                margin-bottom: 8px;
+            }
+
+            .sys-cmd-item {
+                font-family: var(--font-head);
+                font-size: 0.79rem;
+                color: rgba(255, 255, 255, 0.55);
+                margin-bottom: 4px;
+            }
+
+            .sys-feat-item {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+                border-radius: 10px;
+                overflow: hidden;
+            }
+
+            .sys-feat-row {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+            }
+
+            .sys-feat-row::before {
+                content: "▸";
+                color: var(--accent);
+                font-size: 0.65rem;
+                flex-shrink: 0;
+            }
+
+            .sys-feat-text {
+                font-size: 0.84rem;
+                color: rgba(245, 245, 247, 0.65);
+                line-height: 1.4;
+                flex: 1;
+            }
+
+            .sys-expand-btn {
+                margin-left: auto;
+                flex-shrink: 0;
+                background: rgba(204, 255, 0, 0.06);
+                border: 1px solid rgba(204, 255, 0, 0.2);
+                color: var(--primary);
+                font-family: var(--font-head);
+                font-size: 0.68rem;
+                font-weight: 700;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                padding: 3px 10px;
+                border-radius: 50px;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                white-space: nowrap;
+            }
+
+            .sys-expand-btn:hover {
+                background: rgba(204, 255, 0, 0.15);
+                border-color: var(--primary);
+                box-shadow: 0 0 12px rgba(204, 255, 0, 0.2);
+            }
+
+            .sys-expand-btn.open {
+                background: var(--primary);
+                color: #000;
+                border-color: var(--primary);
+            }
+
+            .sys-feat-detail {
+                max-height: 0;
+                overflow: hidden;
+                transition:
+                    max-height 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+                    padding 0.3s ease;
+                padding: 0 10px 0 16px;
+                background: rgba(204, 255, 0, 0.02);
+                border-left: 2px solid rgba(204, 255, 0, 0.15);
+                margin-left: 16px;
+            }
+
+            .sys-feat-detail.open {
+                max-height: 1200px;
+                padding: 10px 10px 14px 16px;
+            }
+
+            .sys-feat-detail p {
+                font-size: 0.82rem;
+                color: rgba(245, 245, 247, 0.5);
+                line-height: 1.65;
+                margin-bottom: 8px;
+            }
+
+            .sys-feat-detail p:last-child {
+                margin-bottom: 0;
+            }
+
+            .sys-feat-detail code {
+                display: inline-block;
+                background: rgba(0, 234, 255, 0.07);
+                border: 1px solid rgba(0, 234, 255, 0.18);
+                border-radius: 6px;
+                padding: 2px 7px;
+                font-family: var(--font-head);
+                font-size: 0.78rem;
+                color: var(--accent);
+            }
+
+            .sys-feat-detail .dtable {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 8px 0;
+                font-size: 0.78rem;
+            }
+
+            .sys-feat-detail .dtable th {
+                text-align: left;
+                color: var(--primary);
+                font-weight: 700;
+                padding: 4px 8px;
+                border-bottom: 1px solid rgba(204, 255, 0, 0.15);
+            }
+
+            .sys-feat-detail .dtable td {
+                padding: 4px 8px;
+                color: rgba(245, 245, 247, 0.5);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            }
+
+            .dtag {
+                display: inline-block;
+                padding: 2px 8px;
+                border-radius: 50px;
+                font-size: 0.7rem;
+                font-weight: 700;
+                margin: 2px;
+            }
+
+            .dtag-gold {
+                background: rgba(255, 215, 0, 0.15);
+                color: #ffd700;
+                border: 1px solid rgba(255, 215, 0, 0.35);
+            }
+
+            .dtag-diamond {
+                background: rgba(120, 220, 255, 0.15);
+                color: #78dcff;
+                border: 1px solid rgba(120, 220, 255, 0.35);
+            }
+
+            .dtag-rainbow {
+                background: rgba(255, 77, 148, 0.12);
+                color: #ff4d94;
+                border: 1px solid rgba(255, 77, 148, 0.35);
+            }
+
+            .dtag-normal {
+                background: rgba(255, 255, 255, 0.06);
+                color: rgba(255, 255, 255, 0.45);
+                border: 1px solid rgba(255, 255, 255, 0.14);
+            }
+
+            @media (max-width: 900px) {
+                .systems-grid {
+                    grid-template-columns: 1fr;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="grain"></div>
+        <div class="cyber-grid"></div>
+        <div class="mesh-bg">
+            <div class="mesh-blob blob-1"></div>
+            <div class="mesh-blob blob-2"></div>
+        </div>
+        <div class="cursor-dot"></div>
+        <div class="cursor-outline"></div>
+        <header>
+            <nav>
+                <div class="logo">SHADOW_DEV</div>
+                <ul class="nav-links">
+                    <li><a onclick="showSection('home')" id="nav-home" class="active">Home</a></li>
+                    <li><a onclick="showSection('animator')" id="nav-animator">Animator</a></li>
+                    <li><a onclick="showSection('scripter')" id="nav-scripter">Scripter</a></li>
+                    <li><a onclick="showSection('uidesign')" id="nav-uidesign">UI</a></li>
+                    <li><a onclick="showSection('modelador')" id="nav-modelador">3D</a></li>
+                    <li><a onclick="showSection('hire')" id="nav-hire">Hire</a></li>
+                </ul>
+                <a href="https://discord.gg/STzVuTs7" target="_blank" rel="noopener" class="discord-btn">Discord</a>
+            </nav>
+        </header>
+        <section id="home" class="page-section active">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="subtitle">Creative Tech Disruptor</div>
+                    <h1>
+                        <span>P</span><span>r</span><span>o</span><span>f</span><span>e</span><span>s</span
+                        ><span>s</span><span>i</span><span>o</span><span>m</span><span>a</span><span>l</span><br />
+                        <span>D</span><span>e</span><span>v</span><span>e</span><span>l</span><span>o</span
+                        ><span>p</span><span>e</span><span>r</span>
+                    </h1>
+                    <p>
+                        Pushing the boundaries of digital interaction through high-end scripting, cinematic 3D
+                        animation, and fluid UI experiences.
+                    </p>
+                    <div class="bento-grid">
+                        <div class="bento-item">
+                            <div class="stat-number primary">5+</div>
+                            <div class="stat-label">Years XP</div>
+                        </div>
+                        <div class="bento-item">
+                            <div class="stat-number secondary">100+</div>
+                            <div class="stat-label">Animations</div>
+                        </div>
+                        <div class="bento-item">
+                            <div class="stat-number accent">24/7</div>
+                            <div class="stat-label">Innovation</div>
+                        </div>
+                        <div class="bento-item">
+                            <div class="stat-number primary">100%</div>
+                            <div class="stat-label">Uptime</div>
+                        </div>
+                    </div>
+                    <div class="bento-grid grid-mt-20">
+                        <div class="bento-item category-card" onclick="showSection('animator')">
+                            <i></i>
+                            <h3>Animator</h3>
+                            <p>Motion Graphics</p>
+                        </div>
+                        <div class="bento-item category-card" onclick="showSection('scripter')">
+                            <i></i>
+                            <h3>Scripter</h3>
+                            <p>Architecture</p>
+                        </div>
+                        <div class="bento-item category-card" onclick="showSection('uidesign')">
+                            <i></i>
+                            <h3>UI Design</h3>
+                            <p>Experiences</p>
+                        </div>
+                        <div class="bento-item category-card" onclick="showSection('modelador')">
+                            <i></i>
+                            <h3>Modelador</h3>
+                            <p>3D Assets</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="animator" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Showcase</div>
+                    <h2 class="section-title">Animation Portfolio</h2>
+                    <p class="section-description">
+                        High-fidelity character motion and cinematic storytelling. Crafted for impact.
+                    </p>
+                </div>
+                <div class="gallery-grid" id="animation-gallery"></div>
+            </div>
+        </section>
+        <section id="scripter" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Dev Engine</div>
+                    <h2 class="section-title">Scripting Mastery</h2>
+                    <p class="section-description">Clean, optimized, and powerful logic for complex systems.</p>
+                </div>
+                <div class="systems-grid" id="systems-gallery"></div>
+            </div>
+        </section>
+        <section id="uidesign" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">Experiences</div>
+                    <h2 class="section-title">UI Design Gallery</h2>
+                    <p class="section-description">
+                        Modern, user-centric interfaces designed for seamless digital interaction.
+                    </p>
+                </div>
+                <div class="gallery-grid" id="gui-gallery"></div>
+            </div>
+        </section>
+        <section id="modelador" class="page-section">
+            <div class="container">
+                <div class="section-header">
+                    <div class="section-tag">3D Mastery</div>
+                    <h2 class="section-title">Modelador Portfolio</h2>
+                    <p class="section-description">
+                        High-fidelity 3D assets and character designs for immersive worlds.
+                    </p>
+                </div>
+                <div class="gallery-grid" id="models-gallery"></div>
+            </div>
+        </section>
+        <section id="hire" class="page-section">
+            <div class="container">
+                <div class="form-box">
+                    <button onclick="showSection('home')" class="return-btn">← RETURN HOME</button>
+                    <h1 class="section-title-form">Initialize Build</h1>
+                    <p class="form-description">Select a specialized service and transmit your requirements.</p>
+                    <form id="hireForm">
+                        <div class="service-selector">
+                            <div class="service-card active" data-service="Animation">
+                                <i></i>
+                                <h4>Animator</h4>
+                                <p>Cinematic motion graphics & character life.</p>
+                            </div>
+                            <div class="service-card" data-service="Scripting">
+                                <i></i>
+                                <h4>Scripter</h4>
+                                <p>Advanced architecture & robust systems.</p>
+                            </div>
+                            <div class="service-card" data-service="UI Design">
+                                <i></i>
+                                <h4>UI Design</h4>
+                                <p>Premium interfaces & fluid user experiences.</p>
+                            </div>
+                            <div class="service-card" data-service="3D Modeling">
+                                <i></i>
+                                <h4>Modelador</h4>
+                                <p>Elite 3D assets & environmental design.</p>
+                            </div>
+                        </div>
+                        <input type="hidden" name="service" id="selectedService" value="Animation" />
+                        <div class="form-row">
+                            <input type="text" name="name" placeholder="Full Name / Brand" required />
+                            <input type="text" name="discord" placeholder="Discord Handle" required />
+                        </div>
+                        <div class="form-row">
+                            <input type="email" name="email" placeholder="Email Address" required />
+                        </div>
+                        <textarea
+                            name="message"
+                            placeholder="Transmission details... describe your project goals."
+                            class="textarea-tall"
+                            required
+                        ></textarea>
+                        <button type="submit" class="submit-btn">SEND PROPOSAL</button>
+                    </form>
+                    <div id="successMessage" class="success-container">
+                        <h2 class="success-title">TRANSMITTED</h2>
+                        <p class="success-text">Proposal received. Standby for contact.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <script>
+            (function () {
+                emailjs.init("Qa_eRk88SCXHFwSxr");
+            })();
+
+            const dot = document.querySelector(".cursor-dot");
+            const outline = document.querySelector(".cursor-outline");
+            let mouse = { x: 0, y: 0 };
+            let dotPos = { x: 0, y: 0 };
+            let outlinePos = { x: 0, y: 0 };
+            window.addEventListener("mousemove", (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            });
+
+            function updateCursor() {
+                dotPos.x += (mouse.x - dotPos.x) * 0.2;
+                dotPos.y += (mouse.y - dotPos.y) * 0.2;
+                dot.style.transform = `translate3d(${dotPos.x}px, ${dotPos.y}px, 0) translate(-50%, -50%)`;
+                outlinePos.x += (mouse.x - outlinePos.x) * 0.1;
+                outlinePos.y += (mouse.y - outlinePos.y) * 0.1;
+                outline.style.transform = `translate3d(${outlinePos.x}px, ${outlinePos.y}px, 0) translate(-50%, -50%)`;
+                requestAnimationFrame(updateCursor);
+            }
+
+            updateCursor();
+
+            document.querySelectorAll("a, button, .category-card, .service-card").forEach((el) => {
+                el.addEventListener("mouseenter", () => {
+                    outline.style.width = "60px";
+                    outline.style.height = "60px";
+                    outline.style.background = "rgba(255, 255, 255, 0.05)";
+                    outline.style.borderColor = "transparent";
+                });
+                el.addEventListener("mouseleave", () => {
+                    outline.style.width = "40px";
+                    outline.style.height = "40px";
+                    outline.style.background = "transparent";
+                    outline.style.borderColor = "rgba(255, 255, 255, 0.2)";
+                });
+            });
+
+            document.querySelectorAll(".bento-item").forEach((item) => {
+                const glow = document.createElement("div");
+                glow.className = "card-glow";
+                item.appendChild(glow);
+                item.addEventListener("mousemove", (e) => {
+                    const rect = item.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    item.style.setProperty("--x", `${x}px`);
+                    item.style.setProperty("--y", `${y}px`);
+                });
+            });
+
+            window.addEventListener("scroll", () => {
+                document.querySelector("header").classList.toggle("scrolled", window.scrollY > 50);
+            });
+
+            const services = document.querySelectorAll(".service-card");
+            const hiddenInput = document.getElementById("selectedService");
+            services.forEach((card) => {
+                card.addEventListener("click", () => {
+                    services.forEach((s) => s.classList.remove("active"));
+                    card.classList.add("active");
+                    hiddenInput.value = card.dataset.service;
+                });
+            });
+
+            const animationProjects = [
+                { name: "Mexico Event ", youtubeId: "C4rNl8lzMYU", fallbackId: "maxresdefault.jpg" },
+                { name: "Las Combinaciones Walk ", youtubeId: "N4cDoc1CF-o", fallbackId: "maxresdefault.jpg" },
+                { name: "ExtraditaBlessd Anim ", youtubeId: "ss6E67uTmts", fallbackId: "maxresdefault.jpg" },
+                { name: "Ant Walk ", youtubeId: "nvdQOFVZ1s0", fallbackId: "maxresdefault.jpg" },
+                { name: "ExtraditaBlessd Walk ", youtubeId: "44nA9eghCJ0", fallbackId: "maxresdefault.jpg" },
+                { name: "OctavioMesa And Devil Idle ", youtubeId: "heRcohMJ-Wg", fallbackId: "maxresdefault.jpg" },
+                { name: "Empanadita Bicicleteira Walk ", youtubeId: "f9bNzV_MRlU", fallbackId: "maxresdefault.jpg" },
+                { name: "Empanadita Bicicleteira Idle ", youtubeId: "rXdnognlLU0", fallbackId: "maxresdefault.jpg" },
+                { name: "Lechona Idle and Walk ", youtubeId: "PuPCGzUK2ao", fallbackId: "maxresdefault.jpg" },
+                { name: "Monster Walk ", youtubeId: "-oUKHncfbrg", fallbackId: "hqdefault.jpg" },
+                { name: "Manzini Happini Idle ", youtubeId: "7HrWSKQyxYc", fallbackId: "hqdefault.jpg" },
+                { name: "Manzini Happini Walk ", youtubeId: "BUWmnf-xdi0", fallbackId: "hqdefault.jpg" },
+                { name: "Naruto Makini Walk ", youtubeId: "fBVJJFrUjGw", fallbackId: "hqdefault.jpg" },
+                { name: "Strawberry Saurus Idle and Walk ", youtubeId: "fDoMAY026tA", fallbackId: "hqdefault.jpg" },
+                { name: "Orangini Walk ", youtubeId: "A-na79SPDPg", fallbackId: "hqdefault.jpg" },
+                { name: "Matteito Idle ", youtubeId: "kctyOLaloLk", fallbackId: "maxresdefault.jpg" },
+                { name: "Lil 67 Idle ", youtubeId: "AzszEffW6gI", fallbackId: "maxresdefault.jpg" },
+                { name: "Ballerina Capuccina Idle ", youtubeId: "RiyGBNFY9Dg", fallbackId: "maxresdefault.jpg" },
+            ];
+
+            function loadAnimationGallery() {
+                const container = document.getElementById("animation-gallery");
+                if (!container) return;
+                animationProjects.forEach((proj) => {
+                    const card = document.createElement("div");
+                    card.className = "bento-item gallery-card";
+                    const primaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/${proj.fallbackId}`;
+                    const secondaryThumb = `https://i.ytimg.com/vi/${proj.youtubeId}/0.jpg`;
+                    card.innerHTML = `
  <div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);">
  <img class="yt-thumb" src="${primaryThumb}" data-secondary="${secondaryThumb}" style="width:100%;height:100%;object-fit:cover;">
  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:70px;height:70px;background:var(--primary);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;box-shadow:0 0 50px var(--primary), inset 0 0 20px rgba(255,255,255,0.3);transition:all 0.3s ease;">
@@ -1422,106 +1586,170 @@
  <div style="position:absolute; bottom:30px; left:30px; z-index:10; pointer-events:none;">
  <h3 style="font-family:var(--font-head); font-size:1.4rem; text-shadow:0 4px 20px rgba(0,0,0,0.8);">${proj.name}</h3>
  </div>`;
- const img = card.querySelector('.yt-thumb');
- img.onerror = function () {
- const secondary = this.getAttribute('data-secondary');
- if (secondary && this.src !== secondary) {
- this.src = secondary;
- }
- };
- card.addEventListener('click', () => {
- card.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${proj.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;border-radius:24px;" allow="autoplay;fullscreen"></iframe>`;
- });
- card.addEventListener('mouseenter', function () {
- this.style.transform = 'translateY(-12px) scale(1.02)';
- });
- card.addEventListener('mouseleave', function () {
- this.style.transform = 'translateY(0) scale(1)';
- });
- container.appendChild(card);
- });
- }
+                    const img = card.querySelector(".yt-thumb");
+                    img.onerror = function () {
+                        const secondary = this.getAttribute("data-secondary");
+                        if (secondary && this.src !== secondary) {
+                            this.src = secondary;
+                        }
+                    };
+                    card.addEventListener("click", () => {
+                        card.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${proj.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;border-radius:24px;" allow="autoplay;fullscreen"></iframe>`;
+                    });
+                    card.addEventListener("mouseenter", function () {
+                        this.style.transform = "translateY(-12px) scale(1.02)";
+                    });
+                    card.addEventListener("mouseleave", function () {
+                        this.style.transform = "translateY(0) scale(1)";
+                    });
+                    container.appendChild(card);
+                });
+            }
 
- const modelFiles = [
- "Ballerina Capuccina.jpeg",
- "Buffalo.jpeg",
- "Diamond Tung tungsito.jpeg",
- "Emerald Tralaleritou.jpeg",
- "Emerald TungTungsito.jpeg",
- "Garamita.jpeg",
- "Lil 67.jpeg",
- "Matteitou.jpeg",
- "Ruby Tralaleritou.jpeg",
- "Saturno Saturnita.jpeg",
- "Sharkie.jpeg",
- "Strawberry Lil Elephant.jpeg",
- "Sweet Little Camel.jpeg",
- "Tralaleritou Gold.jpeg",
- "Tralaleritou Ocean.jpeg",
- "Tralaleritou.jpeg",
- "Tung tungsito sahur.jpeg",
- "+57.jpeg",
- "2026 Lucky Block.jpeg",
- "Ara.jpeg",
- "Arepita Huevita.jpeg",
- "Ave Maria.jpeg",
- "Banco Combi.jpeg",
- "Bancolombia Down.jpeg",
- "Bianchi.jpeg",
- "Blessd.jpeg",
- "Bombunsito.jpeg",
- "Bombunsitos.jpeg",
- "Bonyurtini Delish.jpeg",
- "Cajitas.jpeg",
- "Calzoski.jpeg",
- "Capibarini Aguacatini.jpeg",
- "Clock Clock 26.jpeg",
- "Empanadita Combi.jpeg",
- "Empanadita.jpeg",
- "ExtraditaBlessd.jpeg",
- "Fernanfloo.jpeg",
- "Guacamo and Atojito.jpeg",
- "Gustambo.jpeg",
- "Hit Mango.jpeg",
- "Hormiga Culona.jpeg",
- "It was ur fault.jpeg",
- "Kris R.jpeg",
- "Las 12 MidNight.jpeg",
- "Luchando los Dias.jpeg",
- "Mazamorra.jpeg",
- "Mojarrelón.jpeg",
- "Morning Café.jpeg",
- "Navideña Combi.jpeg",
- "Nooo my nequi Crew.jpeg",
- "Nooo the Light.jpeg",
- "Noooo my Nequi.jpeg",
- "Octavio Mesa and the Devil.jpeg",
- "Parceritos Combis.jpeg",
- "Parcero Combi.jpeg",
- "Parcero Festive.jpeg",
- "Petroski.jpeg",
- "Pony Malta.jpeg",
- "Priest Jaramillo.jpeg",
- "Sillita Paisita.jpeg",
- "Super Coco.jpeg",
- "Tazarini con Quesini.jpeg",
- "The Parceritos.jpeg",
- "Tintico.jpeg",
- "Velita del 7.jpeg",
- "Velitas.jpeg"
- ];
+            const modelFiles = [
+                "Ballerina Capuccina.jpeg",
+                "Buffalo.jpeg",
+                "Diamond Tung tungsito.jpeg",
+                "Emerald Tralaleritou.jpeg",
+                "Emerald TungTungsito.jpeg",
+                "Garamita.jpeg",
+                "Lil 67.jpeg",
+                "Matteitou.jpeg",
+                "Ruby Tralaleritou.jpeg",
+                "Saturno Saturnita.jpeg",
+                "Sharkie.jpeg",
+                "Strawberry Lil Elephant.jpeg",
+                "Sweet Little Camel.jpeg",
+                "Tralaleritou Gold.jpeg",
+                "Tralaleritou Ocean.jpeg",
+                "Tralaleritou.jpeg",
+                "Tung tungsito sahur.jpeg",
+                "+57.jpeg",
+                "2026 Lucky Block.jpeg",
+                "Ara.jpeg",
+                "Arepita Huevita.jpeg",
+                "Ave Maria.jpeg",
+                "Banco Combi.jpeg",
+                "Bancolombia Down.jpeg",
+                "Bianchi.jpeg",
+                "Blessd.jpeg",
+                "Bombunsito.jpeg",
+                "Bombunsitos.jpeg",
+                "Bonyurtini Delish.jpeg",
+                "Cajitas.jpeg",
+                "Calzoski.jpeg",
+                "Capibarini Aguacatini.jpeg",
+                "Clock Clock 26.jpeg",
+                "Empanadita Combi.jpeg",
+                "Empanadita.jpeg",
+                "ExtraditaBlessd.jpeg",
+                "Fernanfloo.jpeg",
+                "Guacamo and Atojito.jpeg",
+                "Gustambo.jpeg",
+                "Hit Mango.jpeg",
+                "Hormiga Culona.jpeg",
+                "It was ur fault.jpeg",
+                "Kris R.jpeg",
+                "Las 12 MidNight.jpeg",
+                "Luchando los Dias.jpeg",
+                "Mazamorra.jpeg",
+                "Mojarrelón.jpeg",
+                "Morning Café.jpeg",
+                "Navideña Combi.jpeg",
+                "Nooo my nequi Crew.jpeg",
+                "Nooo the Light.jpeg",
+                "Noooo my Nequi.jpeg",
+                "Octavio Mesa and the Devil.jpeg",
+                "Parceritos Combis.jpeg",
+                "Parcero Combi.jpeg",
+                "Parcero Festive.jpeg",
+                "Petroski.jpeg",
+                "Pony Malta.jpeg",
+                "Priest Jaramillo.jpeg",
+                "Sillita Paisita.jpeg",
+                "Super Coco.jpeg",
+                "Tazarini con Quesini.jpeg",
+                "The Parceritos.jpeg",
+                "Tintico.jpeg",
+                "Velita del 7.jpeg",
+                "Velitas.jpeg",
+            ];
 
- function loadModelsGallery() {
- const container = document.getElementById('models-gallery');
- if (!container) return;
- const emojis = ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''];
- modelFiles.forEach((filename) => {
- const card = document.createElement('div');
- card.className = 'bento-item gallery-card';
- const imagePath = `Models/${filename}`;
- const name = filename.replace('.jpeg', '').replace('.jpg', '');
- const emoji = emojis[modelFiles.indexOf(filename) % emojis.length];
- card.innerHTML = `
+            function loadModelsGallery() {
+                const container = document.getElementById("models-gallery");
+                if (!container) return;
+                const emojis = [
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                    "",
+                ];
+                modelFiles.forEach((filename) => {
+                    const card = document.createElement("div");
+                    card.className = "bento-item gallery-card";
+                    const imagePath = `Models/${filename}`;
+                    const name = filename.replace(".jpeg", "").replace(".jpg", "");
+                    const emoji = emojis[modelFiles.indexOf(filename) % emojis.length];
+                    card.innerHTML = `
  <div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); display:flex; align-items:center; justify-content:center;">
  <img class="yt-thumb" src="${imagePath}" style="width:95%;height:95%;object-fit:contain;">
  <div style="position:absolute; bottom:0; left:0; right:0; height:75px; background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);"></div>
@@ -1529,39 +1757,39 @@
  <div style="position:absolute; bottom:15px; left:18px; right:18px; z-index:10; pointer-events:none;">
  <h3 style="font-family:var(--font-head); font-size:1.2rem; text-shadow:0 4px 20px rgba(0,0,0,0.8); word-break:break-word !important; overflow-wrap:break-word !important; line-height:1.3 !important; margin:0 !important; white-space:normal !important; overflow:visible !important; text-overflow:clip !important; display:block !important;">${emoji} ${name}</h3>
  </div>`;
- card.addEventListener('mouseenter', function () {
- this.style.transform = 'translateY(-12px) scale(1.05)';
- });
- card.addEventListener('mouseleave', function () {
- this.style.transform = 'translateY(0) scale(1)';
- });
- container.appendChild(card);
- });
- }
+                    card.addEventListener("mouseenter", function () {
+                        this.style.transform = "translateY(-12px) scale(1.05)";
+                    });
+                    card.addEventListener("mouseleave", function () {
+                        this.style.transform = "translateY(0) scale(1)";
+                    });
+                    container.appendChild(card);
+                });
+            }
 
- const guiFiles = [
- "Basic Health GUI.jpeg",
- "Basic Money GUi.jpeg",
- "Basic Speed GUI.jpeg",
- "Colombian Style Index Icon.jpeg",
- "Colombian Style Rebirth Icon.jpeg",
- "Colombian Style Store Icon.jpeg",
- "Studs Style Index Icon.jpeg",
- "Studs Style Rebirth Icon.jpeg",
- "Studs Style Shop Icon.jpeg",
- "Studs Style Trades Icon.jpeg"
- ];
+            const guiFiles = [
+                "Basic Health GUI.jpeg",
+                "Basic Money GUi.jpeg",
+                "Basic Speed GUI.jpeg",
+                "Colombian Style Index Icon.jpeg",
+                "Colombian Style Rebirth Icon.jpeg",
+                "Colombian Style Store Icon.jpeg",
+                "Studs Style Index Icon.jpeg",
+                "Studs Style Rebirth Icon.jpeg",
+                "Studs Style Shop Icon.jpeg",
+                "Studs Style Trades Icon.jpeg",
+            ];
 
- function loadGuiGallery() {
- const container = document.getElementById('gui-gallery');
- if (!container) return;
- guiFiles.forEach((filename) => {
- const card = document.createElement('div');
- card.className = 'bento-item gallery-card';
- const imagePath = `GUI/${filename}`;
- const name = filename.replace('.jpeg', '').replace('.jpg', '');
- const emoji = ['', '', '', '', '', '', '', '', '', ''][guiFiles.indexOf(filename) % 10];
- card.innerHTML = `
+            function loadGuiGallery() {
+                const container = document.getElementById("gui-gallery");
+                if (!container) return;
+                guiFiles.forEach((filename) => {
+                    const card = document.createElement("div");
+                    card.className = "bento-item gallery-card";
+                    const imagePath = `GUI/${filename}`;
+                    const name = filename.replace(".jpeg", "").replace(".jpg", "");
+                    const emoji = ["", "", "", "", "", "", "", "", "", ""][guiFiles.indexOf(filename) % 10];
+                    card.innerHTML = `
  <div style="height:100%; border-radius:24px; overflow:hidden; position:relative; background:linear-gradient(135deg, #1a1a2e 0%, #0a0a0a 100%); display:flex; align-items:center; justify-content:center;">
  <img class="yt-thumb" src="${imagePath}" style="width:95%;height:95%;object-fit:contain;">
  <div style="position:absolute; bottom:0; left:0; right:0; height:75px; background:linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.9) 100%);"></div>
@@ -1569,44 +1797,45 @@
  <div style="position:absolute; bottom:15px; left:18px; right:18px; z-index:10; pointer-events:none;">
  <h3 style="font-family:var(--font-head); font-size:1.2rem; text-shadow:0 4px 20px rgba(0,0,0,0.8); word-break:break-word !important; overflow-wrap:break-word !important; line-height:1.3 !important; margin:0 !important; white-space:normal !important; overflow:visible !important; text-overflow:clip !important; display:block !important;">${emoji} ${name}</h3>
  </div>`;
- card.addEventListener('mouseenter', function () {
- this.style.transform = 'translateY(-12px) scale(1.05)';
- });
- card.addEventListener('mouseleave', function () {
- this.style.transform = 'translateY(0) scale(1)';
- });
- container.appendChild(card);
- });
- }
+                    card.addEventListener("mouseenter", function () {
+                        this.style.transform = "translateY(-12px) scale(1.05)";
+                    });
+                    card.addEventListener("mouseleave", function () {
+                        this.style.transform = "translateY(0) scale(1)";
+                    });
+                    container.appendChild(card);
+                });
+            }
 
- function showSection(sectionId) {
- document.querySelectorAll('.page-section').forEach(s => {
- s.style.display = 'none';
- s.classList.remove('active');
- });
- const t = document.getElementById(sectionId);
- if (t) {
- t.style.display = 'block';
- setTimeout(() => t.classList.add('active'), 20);
- }
- document.querySelectorAll('.nav-links a').forEach(l => l.classList.remove('active'));
- const link = document.getElementById('nav-' + sectionId);
- if (link) link.classList.add('active');
- window.scrollTo({ top: 0, behavior: 'smooth' });
- }
+            function showSection(sectionId) {
+                document.querySelectorAll(".page-section").forEach((s) => {
+                    s.style.display = "none";
+                    s.classList.remove("active");
+                });
+                const t = document.getElementById(sectionId);
+                if (t) {
+                    t.style.display = "block";
+                    setTimeout(() => t.classList.add("active"), 20);
+                }
+                document.querySelectorAll(".nav-links a").forEach((l) => l.classList.remove("active"));
+                const link = document.getElementById("nav-" + sectionId);
+                if (link) link.classList.add("active");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            }
 
- const systemProjects = [
- {
- youtubeId: "MGasKei79EA",
- fallbackId: "maxresdefault.jpg",
- name: "Tornado Storm System",
- badge: "Basic",
- badgeType: "basic",
- description: "Full storm/tornado simulation with a live thermodynamic HUD, EF0&ndash;EF5 progressive damage, and real physics interaction with players, vehicles, and world structures.",
- features: [
- {
- short: "Live HUD: CAPE, wind, dew point, severity &amp; 2-column forecast panel",
- detail: `<p>The thermodynamic panel displays <strong>2 columns in real time</strong>: <em>CURRENT</em> (active state) and <em>FORECAST</em> (predicted values). Visible metrics:</p>
+            const systemProjects = [
+                {
+                    youtubeId: "MGasKei79EA",
+                    fallbackId: "maxresdefault.jpg",
+                    name: "Tornado Storm System",
+                    badge: "Basic",
+                    badgeType: "basic",
+                    description:
+                        "Full storm/tornado simulation with a live thermodynamic HUD, EF0&ndash;EF5 progressive damage, and real physics interaction with players, vehicles, and world structures.",
+                    features: [
+                        {
+                            short: "Live HUD: CAPE, wind, dew point, severity &amp; 2-column forecast panel",
+                            detail: `<p>The thermodynamic panel displays <strong>2 columns in real time</strong>: <em>CURRENT</em> (active state) and <em>FORECAST</em> (predicted values). Visible metrics:</p>
 <table class="dtable"><tr><th>Metric</th><th>Description</th></tr>
 <tr><td><code>CAPE</code></td><td>Convective Available Potential Energy &mdash; determines how intense the tornado can become</td></tr>
 <tr><td>Temperature / Dew Point</td><td>Their difference indicates available humidity to feed the storm</td></tr>
@@ -1614,162 +1843,164 @@
 <tr><td>Cardinal Wind + Arrow</td><td>Wind direction with a dynamically oriented arrow indicator</td></tr>
 <tr><td>Severity / Risk</td><td>Risk level in text, updated according to the calculated CAPE value</td></tr>
 <tr><td>Strong Tornado Probability</td><td>Percentage shown in the FORECAST column</td></tr></table>
-<p>If no tornados are active, key thermo metrics display <code>&quot; .... &quot;</code> as a placeholder. Also includes a simple leaderboard and event status text.</p>`
- },
- {
- short: "3 tornado types with distinct physics: Rope, Cone and Wedge",
- detail: `<p>Each type defines different base radius, height, and visual presence parameters:</p>
+<p>If no tornados are active, key thermo metrics display <code>&quot; .... &quot;</code> as a placeholder. Also includes a simple leaderboard and event status text.</p>`,
+                        },
+                        {
+                            short: "3 tornado types with distinct physics: Rope, Cone and Wedge",
+                            detail: `<p>Each type defines different base radius, height, and visual presence parameters:</p>
 <table class="dtable"><tr><th>Type</th><th>Base Radius</th><th>Height</th><th>Character</th></tr>
 <tr><td><strong>Rope</strong></td><td>Small</td><td>Medium</td><td>Narrow and sinuous &mdash; smaller damage area but fast rotation and a threatening, whip-like appearance</td></tr>
 <tr><td><strong>Cone</strong></td><td>Intermediate</td><td>Medium-High</td><td>Balanced &mdash; most common in auto spawns, good balance between area coverage and speed</td></tr>
 <tr><td><strong>Wedge</strong></td><td>Large</td><td>High</td><td>Wide and massive &mdash; largest damage area, maximum visual presence, the most destructive type</td></tr></table>
-<p>Specified when spawning: <code>!storm spawn rope 3</code> creates a Rope EF3. If the type is omitted, the system picks randomly based on the current CAPE value.</p>`
- },
- {
- short: "EF0&ndash;EF5 scale: progressive damage across 6 intensity levels",
- detail: `<p>The system implements the <strong>Enhanced Fujita Scale (EF)</strong> with 6 levels. EF intensity determines per-tick damage to players, vehicles, and props:</p>
+<p>Specified when spawning: <code>!storm spawn rope 3</code> creates a Rope EF3. If the type is omitted, the system picks randomly based on the current CAPE value.</p>`,
+                        },
+                        {
+                            short: "EF0&ndash;EF5 scale: progressive damage across 6 intensity levels",
+                            detail: `<p>The system implements the <strong>Enhanced Fujita Scale (EF)</strong> with 6 levels. EF intensity determines per-tick damage to players, vehicles, and props:</p>
 <table class="dtable"><tr><th>Level</th><th>Wind Speed</th><th>Damage/Tick</th><th>Main Effect</th></tr>
 <tr><td>EF0</td><td>65&ndash;85 mph</td><td>Light</td><td>Small props move, players pushed by wind force</td></tr>
 <tr><td>EF1</td><td>86&ndash;110 mph</td><td>Moderate</td><td>Weak structures damaged, vehicles displaced</td></tr>
 <tr><td>EF2</td><td>111&ndash;135 mph</td><td>Significant</td><td>Medium props detach and fly through the air</td></tr>
 <tr><td>EF3</td><td>136&ndash;165 mph</td><td>Severe</td><td>Solid structures damaged, vehicles launched</td></tr>
 <tr><td>EF4</td><td>166&ndash;200 mph</td><td>Devastating</td><td>Nearly everything destroyed, massive player damage</td></tr>
-<tr><td>EF5</td><td>200+ mph</td><td>Maximum</td><td>Total destruction &mdash; extreme damage, props ripped off immediately</td></tr></table>`
- },
- {
- short: "Manual spawn via command + auto mode with unique IDs per tornado",
- detail: `<p>Every spawned tornado receives a <strong>unique numeric ID</strong> to reference it individually:</p>
+<tr><td>EF5</td><td>200+ mph</td><td>Maximum</td><td>Total destruction &mdash; extreme damage, props ripped off immediately</td></tr></table>`,
+                        },
+                        {
+                            short: "Manual spawn via command + auto mode with unique IDs per tornado",
+                            detail: `<p>Every spawned tornado receives a <strong>unique numeric ID</strong> to reference it individually:</p>
 <p><code>!storm spawn cone 4</code> &rarr; creates a Cone EF4, receives ID #1. <code>!storm stop 1</code> destroys only that one without affecting other active tornados.</p>
 <p><code>!storm stop all</code> destroys every active tornado at once.</p>
 <p><strong>Auto mode:</strong> <code>!storm auto on</code> enables periodic spawns. The system picks type and EF randomly based on the current CAPE &mdash; higher CAPE = higher probability of EF4/EF5. <code>!storm auto off</code> stops new spawns without destroying already-active tornados.</p>
-<p><code>!storm list</code> shows a snapshot of all active tornados: ID, type, EF level, and current position.</p>`
- },
- {
- short: "Real physics: players, vehicles &amp; props all react &mdash; health regen disabled",
- detail: `<p>The system <strong>disables automatic health regeneration</strong> so damage is permanent for the duration of the storm. Each entity type reacts differently:</p>
+<p><code>!storm list</code> shows a snapshot of all active tornados: ID, type, EF level, and current position.</p>`,
+                        },
+                        {
+                            short: "Real physics: players, vehicles &amp; props all react &mdash; health regen disabled",
+                            detail: `<p>The system <strong>disables automatic health regeneration</strong> so damage is permanent for the duration of the storm. Each entity type reacts differently:</p>
 <p><strong>Players:</strong> Wind force displaces the character + suction/spin effect pulls them toward the core. Damage is scaled by distance to the core and EF level.</p>
 <p><strong>Vehicles:</strong> Physics impulse (<code>VectorForce</code>) proportional to EF. From EF3 upward, vehicles can be launched into the air.</p>
-<p><strong>Props &amp; Structures:</strong> Accumulate stress progressively. Once the threshold is exceeded they unanchor (<code>Anchored = false</code>) and can break depending on intensity.</p>`
- },
- {
- short: "3 day presets with different thermodynamics + live random reroll",
- detail: `<p>Day presets (<code>!storm day 1/2/3</code>) configure a complete thermodynamic state with predefined CAPE, temperature, humidity, and wind values:</p>
+<p><strong>Props &amp; Structures:</strong> Accumulate stress progressively. Once the threshold is exceeded they unanchor (<code>Anchored = false</code>) and can break depending on intensity.</p>`,
+                        },
+                        {
+                            short: "3 day presets with different thermodynamics + live random reroll",
+                            detail: `<p>Day presets (<code>!storm day 1/2/3</code>) configure a complete thermodynamic state with predefined CAPE, temperature, humidity, and wind values:</p>
 <p><strong>Day 1:</strong> Moderate conditions &mdash; low/medium CAPE, reduced tornado probability. Ideal for warmup.</p>
 <p><strong>Day 2:</strong> Unstable conditions &mdash; high CAPE, elevated strong-tornado probability. The standard gameplay preset.</p>
 <p><strong>Day 3:</strong> Extreme storm &mdash; maximum CAPE, very high probability of multiple EF4/EF5 tornados.</p>
-<p><code>!storm reroll</code> <em>randomly regenerates</em> all thermo values within the active preset&apos;s range &mdash; without changing the base preset. Creates unique conditions every match.</p>`
- }
- ],
- commands: [
- "!storm spawn [rope|cone|wedge] [ef]",
- "!storm stop &lt;id|all&gt;",
- "!storm auto on / !storm auto off",
- "!storm list / !storm thermo",
- "!storm day [1|2|3] / !storm reroll"
- ]
- },
- {
- youtubeId: "tXSqWSp15NQ",
- fallbackId: "maxresdefault.jpg",
- name: "Character Index System",
- badge: "Basic",
- badgeType: "basic",
- description: "Collection window showing all game characters sorted by rarity and mutation, with animated 3D ViewportFrame previews and live server inventory sync.",
- features: [
- {
- short: "Animated 3D ViewportFrame preview with unique Idle animation per character",
- detail: `<p>Each card uses a <strong>ViewportFrame</strong> that renders the 3D model directly inside the GUI. The process when opening each card:</p>
+<p><code>!storm reroll</code> <em>randomly regenerates</em> all thermo values within the active preset&apos;s range &mdash; without changing the base preset. Creates unique conditions every match.</p>`,
+                        },
+                    ],
+                    commands: [
+                        "!storm spawn [rope|cone|wedge] [ef]",
+                        "!storm stop &lt;id|all&gt;",
+                        "!storm auto on / !storm auto off",
+                        "!storm list / !storm thermo",
+                        "!storm day [1|2|3] / !storm reroll",
+                    ],
+                },
+                {
+                    youtubeId: "tXSqWSp15NQ",
+                    fallbackId: "maxresdefault.jpg",
+                    name: "Character Index System",
+                    badge: "Basic",
+                    badgeType: "basic",
+                    description:
+                        "Collection window showing all game characters sorted by rarity and mutation, with animated 3D ViewportFrame previews and live server inventory sync.",
+                    features: [
+                        {
+                            short: "Animated 3D ViewportFrame preview with unique Idle animation per character",
+                            detail: `<p>Each card uses a <strong>ViewportFrame</strong> that renders the 3D model directly inside the GUI. The process when opening each card:</p>
 <p>1. Clones the model from <code>ReplicatedStorage/Characters/Models/{name}</code>.</p>
 <p>2. Finds the Idle animation at <code>ReplicatedStorage/Characters/Animations/{name}/Idle</code>.</p>
 <p>3. Plays it in a loop using a local <code>AnimationController</code> inside the viewport.</p>
 <p>4. The viewport&apos;s <code>Camera</code> is automatically positioned to frame the character correctly.</p>
-<p>Active ViewportFrames are tracked in <code>activeViewports[]</code> so they are cleaned up on Index close &mdash; no orphaned instances left in memory.</p>`
- },
- {
- short: "Rarity sort: Common &rarr; Rare &rarr; Epic &rarr; Legendary &rarr; Mythic &rarr; Divine",
- detail: `<p>Characters are sorted by a fixed rarity index defined in code:</p>
+<p>Active ViewportFrames are tracked in <code>activeViewports[]</code> so they are cleaned up on Index close &mdash; no orphaned instances left in memory.</p>`,
+                        },
+                        {
+                            short: "Rarity sort: Common &rarr; Rare &rarr; Epic &rarr; Legendary &rarr; Mythic &rarr; Divine",
+                            detail: `<p>Characters are sorted by a fixed rarity index defined in code:</p>
 <p><code>RARITY_ORDER = { "Common", "Rare", "Epic", "Legendary", "Mythic", "Divine" }</code></p>
 <p>Common first, Divine last. Ties within the same rarity are broken <strong>alphabetically by name</strong>.</p>
-<p>Colors, text, and borders per rarity are read dynamically from <code>RarityCatalog</code> &mdash; adding a new rarity only requires updating that module, no changes to the Index itself.</p>`
- },
- {
- short: "4 mutation tabs with unique color palettes: Normal, Gold, Diamond, Rainbow",
- detail: `<p>The tab bar is generated dynamically when the Index opens. Each tab has unique active/inactive colors:</p>
+<p>Colors, text, and borders per rarity are read dynamically from <code>RarityCatalog</code> &mdash; adding a new rarity only requires updating that module, no changes to the Index itself.</p>`,
+                        },
+                        {
+                            short: "4 mutation tabs with unique color palettes: Normal, Gold, Diamond, Rainbow",
+                            detail: `<p>The tab bar is generated dynamically when the Index opens. Each tab has unique active/inactive colors:</p>
 <table class="dtable"><tr><th>Tab</th><th>Active Background</th><th>Active Text</th></tr>
 <tr><td><span class="dtag dtag-normal">Normal</span></td><td>White</td><td>Black</td></tr>
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; golden</td><td>Black</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(120,220,255) &mdash; diamond blue</td><td>Black</td></tr>
 <tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>Multicolor RGB gradient</td><td>White</td></tr></table>
-<p>Clicking a tab calls <code>switchTab(mutName)</code> which filters characters and re-renders only those with that mutation available. The active tab shows an accent <code>UIStroke</code>.</p>`
- },
- {
- short: "Live sync: RemoteFunction on open + auto RemoteEvent on inventory changes",
- detail: `<p>The Index uses <strong>two communication channels</strong> with the server to keep data always current:</p>
+<p>Clicking a tab calls <code>switchTab(mutName)</code> which filters characters and re-renders only those with that mutation available. The active tab shows an accent <code>UIStroke</code>.</p>`,
+                        },
+                        {
+                            short: "Live sync: RemoteFunction on open + auto RemoteEvent on inventory changes",
+                            detail: `<p>The Index uses <strong>two communication channels</strong> with the server to keep data always current:</p>
 <p><strong>On open:</strong> <code>GetInventoryData:InvokeServer()</code> &mdash; a RemoteFunction that requests the full inventory. The result is stored in <code>cachedInventory</code> to avoid redundant requests while the Index is open.</p>
 <p><strong>Live changes:</strong> <code>InventoryUpdated</code> &mdash; a RemoteEvent fired by the server when the inventory changes. If the Index is open, it clears the cache and calls <code>populateIndex()</code> to automatically re-render everything.</p>
-<p><strong>Selection:</strong> Clicking a character fires <code>SelectedCharacterChanged:FireServer()</code> to notify the server which character the player currently has active.</p>`
- },
- {
- short: "Income per second shown on every card, adjusted for the active mutation tab",
- detail: `<p>Each card shows the character&apos;s <code>GenerationPerSecond</code> for that specific mutation. Values update automatically when switching tabs:</p>
+<p><strong>Selection:</strong> Clicking a character fires <code>SelectedCharacterChanged:FireServer()</code> to notify the server which character the player currently has active.</p>`,
+                        },
+                        {
+                            short: "Income per second shown on every card, adjusted for the active mutation tab",
+                            detail: `<p>Each card shows the character&apos;s <code>GenerationPerSecond</code> for that specific mutation. Values update automatically when switching tabs:</p>
 <table class="dtable"><tr><th>Mutation</th><th>Multiplier</th><th>Example (base 100 G/s)</th></tr>
 <tr><td><span class="dtag dtag-normal">Normal</span></td><td>1&times;</td><td>$100/s</td></tr>
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>2&times;</td><td>$200/s</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>3&times;</td><td>$300/s</td></tr>
 <tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>10&times;</td><td>$1,000/s</td></tr></table>
-<p>This lets players quickly compare how much each variant generates before deciding which one to activate.</p>`
- },
- {
- short: "Clean lifecycle: open, close, and full automatic memory cleanup",
- detail: `<p>The system actively manages memory to prevent instance accumulation:</p>
+<p>This lets players quickly compare how much each variant generates before deciding which one to activate.</p>`,
+                        },
+                        {
+                            short: "Clean lifecycle: open, close, and full automatic memory cleanup",
+                            detail: `<p>The system actively manages memory to prevent instance accumulation:</p>
 <p><strong>On open:</strong> Destroys any previous <code>indexGui</code> before cloning a new one (prevents duplicates if the player opens it twice quickly). Resets <code>selectedMutation = "Normal"</code>.</p>
 <p><strong>On close:</strong> Destroys <code>indexGui</code>, clears <code>activeViewports[]</code> (viewport AnimationControllers), clears <code>cachedInventory</code> and <code>tabButtonRefs</code>, and removes the <code>SelectedCharacter</code> attribute from the Player.</p>
-<p>Every Index opening starts from a completely clean state with no memory from the previous session &mdash; prevents memory leaks in long play sessions.</p>`
- }
- ],
- commands: null
- },
- {
- youtubeId: "EmZhZKw0bng",
- fallbackId: "maxresdefault.jpg",
- name: "Advanced Mutation System",
- badge: "Advanced",
- badgeType: "advanced",
- description: "The most complex system in the codebase. Each character has 4 weighted mutation variants that change its appearance, income multiplier, and visual behavior &mdash; with a 4-layer smart body filter that automatically ignores facial features and micro-parts.",
- features: [
- {
- short: "Smart body filter: 4 verification layers before coloring any part",
- detail: `<p>Before applying any color, every part of the model passes through <code>shouldColorPart()</code> &mdash; a filter with <strong>4 independent layers</strong>. Failing any layer leaves that part uncolored:</p>
+<p>Every Index opening starts from a completely clean state with no memory from the previous session &mdash; prevents memory leaks in long play sessions.</p>`,
+                        },
+                    ],
+                    commands: null,
+                },
+                {
+                    youtubeId: "EmZhZKw0bng",
+                    fallbackId: "maxresdefault.jpg",
+                    name: "Advanced Mutation System",
+                    badge: "Advanced",
+                    badgeType: "advanced",
+                    description:
+                        "The most complex system in the codebase. Each character has 4 weighted mutation variants that change its appearance, income multiplier, and visual behavior &mdash; with a 4-layer smart body filter that automatically ignores facial features and micro-parts.",
+                    features: [
+                        {
+                            short: "Smart body filter: 4 verification layers before coloring any part",
+                            detail: `<p>Before applying any color, every part of the model passes through <code>shouldColorPart()</code> &mdash; a filter with <strong>4 independent layers</strong>. Failing any layer leaves that part uncolored:</p>
 <p><strong>Layer 1 &mdash; Hard blacklist:</strong> Parts with exact names <code>Face</code>, <code>face</code>, <code>FaceDecal</code>, or <code>Decal</code> &rarr; always skipped.</p>
 <p><strong>Layer 2 &mdash; Substring patterns (case-insensitive):</strong> Any part whose name contains: <code>eye</code>, <code>pupil</code>, <code>iris</code>, <code>teeth</code>, <code>tongue</code>, <code>mouth</code>, <code>brow</code>, <code>eyelash</code>, <code>glasses</code>, <code>nose</code>, <code>nostril</code>, <code>blush</code>, <code>freckle</code>, <code>whisker</code>, <code>beard</code>, or <code>mustache</code> &rarr; skipped.</p>
 <p><strong>Layer 3 &mdash; Volume check:</strong> Any <code>BasePart</code> with volume &lt; <code>0.001</code> studs&sup3; &rarr; skipped (micro invisible detail parts).</p>
-<p><strong>Layer 4 &mdash; Day-only color guard (active 6:00&ndash;18:00):</strong> Parts that are nearly black (R/G/B &lt; 0.08) with volume &lt; 0.5, or nearly white (R/G/B &gt; 0.95) with volume &lt; 0.3 &rarr; skipped. Prevents accidentally tinting eye whites or dark pupils during daytime lighting.</p>`
- },
- {
- short: "3 tones per mutation assigned cyclically based on each part&apos;s position",
- detail: `<p>Gold and Diamond each define exactly <strong>3 Color3 values</strong>. The tone is assigned with the cyclic formula:</p>
+<p><strong>Layer 4 &mdash; Day-only color guard (active 6:00&ndash;18:00):</strong> Parts that are nearly black (R/G/B &lt; 0.08) with volume &lt; 0.5, or nearly white (R/G/B &gt; 0.95) with volume &lt; 0.3 &rarr; skipped. Prevents accidentally tinting eye whites or dark pupils during daytime lighting.</p>`,
+                        },
+                        {
+                            short: "3 tones per mutation assigned cyclically based on each part&apos;s position",
+                            detail: `<p>Gold and Diamond each define exactly <strong>3 Color3 values</strong>. The tone is assigned with the cyclic formula:</p>
 <p><code>colorIdx = ((i - 1) % 3) + 1</code> &rarr; part 1&rarr;tone 1, part 2&rarr;tone 2, part 3&rarr;tone 3, part 4&rarr;tone 1 again...</p>
 <table class="dtable"><tr><th>Mutation</th><th>Tone 1</th><th>Tone 2</th><th>Tone 3</th></tr>
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>RGB(255,215,0) &mdash; brilliant gold</td><td>RGB(255,185,15) &mdash; mid gold</td><td>RGB(218,165,32) &mdash; dark goldenrod</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>RGB(185,242,255) &mdash; pale cyan</td><td>RGB(120,220,255) &mdash; diamond blue</td><td>RGB(200,255,255) &mdash; near-white blue</td></tr></table>
-<p>The result is a <strong>natural striped gradient</strong> across the body without any UV mapping &mdash; the visual variation emerges purely from the order of parts in the 3D model.</p>`
- },
- {
- short: "Rainbow: full HSV color wheel at ~33fps, randomized start hue per character",
- detail: `<p>Rainbow has no fixed colors. A background thread runs at <code>task.wait(0.03)</code> (~33fps) and continuously advances the hue:</p>
+<p>The result is a <strong>natural striped gradient</strong> across the body without any UV mapping &mdash; the visual variation emerges purely from the order of parts in the 3D model.</p>`,
+                        },
+                        {
+                            short: "Rainbow: full HSV color wheel at ~33fps, randomized start hue per character",
+                            detail: `<p>Rainbow has no fixed colors. A background thread runs at <code>task.wait(0.03)</code> (~33fps) and continuously advances the hue:</p>
 <p><code>hue = (hue + 0.01) % 1</code> &rarr; a full color wheel cycle takes exactly <strong>3 seconds</strong> (1/0.01 &times; 0.03s = 3s).</p>
 <p>Color is computed as <code>Color3.fromHSV(hue, 0.85, 1)</code>: 85% saturation keeps colors vivid without reaching neon-white, full brightness (1.0) ensures visibility in any lighting.</p>
-<p>The starting hue is randomized with <code>math.random()</code> on spawn &mdash; two Rainbow characters <strong>never cycle in sync</strong>. Unlike Gold/Diamond, it applies the same color to <em>all parts simultaneously</em>: diversity comes from time, not position.</p>`
- },
- {
- short: "Self-healing loop: re-applies colors every 0.5s to resist any external reset",
- detail: `<p>Gold and Diamond run a <strong>persistent background thread</strong> that every 0.5 seconds checks whether any colorable part has drifted from its assigned mutation color. If drift is detected, it recolors immediately.</p>
+<p>The starting hue is randomized with <code>math.random()</code> on spawn &mdash; two Rainbow characters <strong>never cycle in sync</strong>. Unlike Gold/Diamond, it applies the same color to <em>all parts simultaneously</em>: diversity comes from time, not position.</p>`,
+                        },
+                        {
+                            short: "Self-healing loop: re-applies colors every 0.5s to resist any external reset",
+                            detail: `<p>Gold and Diamond run a <strong>persistent background thread</strong> that every 0.5 seconds checks whether any colorable part has drifted from its assigned mutation color. If drift is detected, it recolors immediately.</p>
 <p><strong>Why is this needed?</strong> The Day/Night system can fire <code>restoreBaseline()</code> which resets all part colors to originals during lighting transitions. The 0.5s loop detects the reset in &le;500ms and always wins the race.</p>
-<p>In practice: Gold and Diamond mutations are <strong>always visible</strong> regardless of time of day. The thread is stored in <code>activeEffects[model]</code> and stopped cleanly via <code>StopEffect(model)</code> when the character leaves or its mutation changes.</p>`
- },
- {
- short: "Weighted rolls: Normal 11.1% &mdash; Gold / Diamond / Rainbow 33.3% each",
- detail: `<p>Mutations are assigned via <code>MutationCatalog.RollMutation()</code>:</p>
+<p>In practice: Gold and Diamond mutations are <strong>always visible</strong> regardless of time of day. The thread is stored in <code>activeEffects[model]</code> and stopped cleanly via <code>StopEffect(model)</code> when the character leaves or its mutation changes.</p>`,
+                        },
+                        {
+                            short: "Weighted rolls: Normal 11.1% &mdash; Gold / Diamond / Rainbow 33.3% each",
+                            detail: `<p>Mutations are assigned via <code>MutationCatalog.RollMutation()</code>:</p>
 <p>1. Random integer: <code>math.random(1, 900)</code></p>
 <p>2. Walk through mutations accumulating weights until <code>roll &le; cumulative</code></p>
 <table class="dtable"><tr><th>Mutation</th><th>Weight</th><th>Cumulative</th><th>Chance</th><th>Income &times;</th></tr>
@@ -1777,65 +2008,66 @@
 <tr><td><span class="dtag dtag-gold">Gold</span></td><td>300</td><td>400</td><td>33.3%</td><td>2&times;</td></tr>
 <tr><td><span class="dtag dtag-diamond">Diamond</span></td><td>300</td><td>700</td><td>33.3%</td><td>3&times;</td></tr>
 <tr><td><span class="dtag dtag-rainbow">Rainbow</span></td><td>300</td><td>900</td><td>33.3%</td><td>10&times;</td></tr></table>
-<p>Normal is intentionally rare (11.1%) &mdash; the system is designed to almost always produce a visually interesting variant. Rainbow multiplies income by <strong>10&times;</strong>, making it the most valuable mutation in the game.</p>`
- },
- {
- short: "Day/Night integration: baseline capture &amp; restore on every lighting transition",
- detail: `<p>The system listens to <code>Lighting:GetPropertyChangedSignal("ClockTime")</code> and reacts to every day &harr; night transition:</p>
+<p>Normal is intentionally rare (11.1%) &mdash; the system is designed to almost always produce a visually interesting variant. Rainbow multiplies income by <strong>10&times;</strong>, making it the most valuable mutation in the game.</p>`,
+                        },
+                        {
+                            short: "Day/Night integration: baseline capture &amp; restore on every lighting transition",
+                            detail: `<p>The system listens to <code>Lighting:GetPropertyChangedSignal("ClockTime")</code> and reacts to every day &harr; night transition:</p>
 <p><strong>Day &rarr; Night:</strong> <code>captureBaseline()</code> &mdash; saves all current part colors to <code>baselineColors[model]</code>. The night filter is more permissive, so more parts get colored at night than during the day.</p>
 <p><strong>Night &rarr; Day:</strong> <code>restoreBaseline()</code> &mdash; restores original colors. The 0.5s loop re-applies Gold/Diamond within &le;500ms. Rainbow re-applies itself on the very next tick of its own loop.</p>
-<p><code>isDaytime()</code> checks <code>ClockTime &ge; 6 and &lt; 18</code>. At exactly 18:00 the system enters night mode with its more permissive filter &mdash; allowing parts to be colored that would be skipped during the stricter daytime pass.</p>`
- }
- ],
- commands: null
- },
- {
- youtubeId: "DKJkGkN_Ugc",
- fallbackId: "maxresdefault.jpg",
- name: "Day/Night Cycle System",
- badge: "Basic",
- badgeType: "basic",
- description: "Full 13-minute cycle with 3 distinct phases (Day, Afternoon, Night) and TweenService-smoothed transitions across every Roblox Lighting property.",
- features: [
- {
- short: "3 continuous phases: Day (6 min) &rarr; Afternoon (2 min) &rarr; Night (5 min) = 13 min/cycle",
- detail: `<p>The cycle repeats infinitely in this fixed order:</p>
+<p><code>isDaytime()</code> checks <code>ClockTime &ge; 6 and &lt; 18</code>. At exactly 18:00 the system enters night mode with its more permissive filter &mdash; allowing parts to be colored that would be skipped during the stricter daytime pass.</p>`,
+                        },
+                    ],
+                    commands: null,
+                },
+                {
+                    youtubeId: "DKJkGkN_Ugc",
+                    fallbackId: "maxresdefault.jpg",
+                    name: "Day/Night Cycle System",
+                    badge: "Basic",
+                    badgeType: "basic",
+                    description:
+                        "Full 13-minute cycle with 3 distinct phases (Day, Afternoon, Night) and TweenService-smoothed transitions across every Roblox Lighting property.",
+                    features: [
+                        {
+                            short: "3 continuous phases: Day (6 min) &rarr; Afternoon (2 min) &rarr; Night (5 min) = 13 min/cycle",
+                            detail: `<p>The cycle repeats infinitely in this fixed order:</p>
 <table class="dtable"><tr><th>Phase</th><th>Duration</th><th>ClockTime</th><th>Description</th></tr>
 <tr><td>Day</td><td>360 s (6 min)</td><td>14.5 &rarr; 2:30 PM</td><td>High sun, bright white light, distant blue-tinted fog</td></tr>
 <tr><td>Afternoon</td><td>120 s (2 min)</td><td>17.0 &rarr; 5:00 PM</td><td>Low sun, warm orange/golden tones, sunset fog</td></tr>
 <tr><td>Night</td><td>300 s (5 min)</td><td>0.0 &rarr; Midnight</td><td>Full moon active, blue-violet ambient, dark fog</td></tr></table>
-<p>Total cycle length: <code>360 + 120 + 300 = 780 seconds = 13 minutes</code>.</p>`
- },
- {
- short: "TweenService smooths every transition: 10% of phase duration, minimum 2 seconds",
- detail: `<p>Phase transitions are not hard cuts. Each change uses <code>TweenService</code> to interpolate <em>all</em> <code>Lighting</code> properties smoothly.</p>
+<p>Total cycle length: <code>360 + 120 + 300 = 780 seconds = 13 minutes</code>.</p>`,
+                        },
+                        {
+                            short: "TweenService smooths every transition: 10% of phase duration, minimum 2 seconds",
+                            detail: `<p>Phase transitions are not hard cuts. Each change uses <code>TweenService</code> to interpolate <em>all</em> <code>Lighting</code> properties smoothly.</p>
 <p>Tween duration is calculated with:</p>
 <p><code>transition = max(2, min(duration, floor(duration &times; 0.1)))</code></p>
 <table class="dtable"><tr><th>Phase</th><th>Duration</th><th>Calculated Tween</th></tr>
 <tr><td>Day</td><td>360 s</td><td>max(2, floor(36)) = <strong>36 seconds</strong></td></tr>
 <tr><td>Afternoon</td><td>120 s</td><td>max(2, floor(12)) = <strong>12 seconds</strong></td></tr>
 <tr><td>Night</td><td>300 s</td><td>max(2, floor(30)) = <strong>30 seconds</strong></td></tr></table>
-<p>The <code>math.max(2, ...)</code> guarantees <strong>at least 2 seconds of transition</strong> always &mdash; prevents abrupt visual snaps even if phases were shortened.</p>`
- },
- {
- short: "Dynamic sky: the Roblox Sky asset swaps in sync with each phase transition",
- detail: `<p>In addition to property tweens, the system swaps the <strong>Sky asset</strong> inside <code>Lighting</code> on each transition:</p>
+<p>The <code>math.max(2, ...)</code> guarantees <strong>at least 2 seconds of transition</strong> always &mdash; prevents abrupt visual snaps even if phases were shortened.</p>`,
+                        },
+                        {
+                            short: "Dynamic sky: the Roblox Sky asset swaps in sync with each phase transition",
+                            detail: `<p>In addition to property tweens, the system swaps the <strong>Sky asset</strong> inside <code>Lighting</code> on each transition:</p>
 <p>Each phase has a Sky configured with different textures: white daytime clouds, orange-pink sunset sky at afternoon, and a star/moon-filled sky at night.</p>
 <p>The Sky swap happens <em>during</em> the tween transition (not at the end), so the sky and lighting change together &mdash; no visual discontinuities.</p>
-<p>Assets are pre-loaded in <code>Lighting</code> so the swap is instant with no extra loading time.</p>`
- },
- {
- short: "RemoteEvent notifies all clients on every phase change",
- detail: `<p>When each new phase begins, the server fires <code>DayNight:FireAllClients(phaseName)</code>.</p>
+<p>Assets are pre-loaded in <code>Lighting</code> so the swap is instant with no extra loading time.</p>`,
+                        },
+                        {
+                            short: "RemoteEvent notifies all clients on every phase change",
+                            detail: `<p>When each new phase begins, the server fires <code>DayNight:FireAllClients(phaseName)</code>.</p>
 <p>Clients can listen to this event to react to the time of day:</p>
 <p>&bull; Switch background music per phase (daytime vs. night ambiance).</p>
 <p>&bull; Show an on-screen notification ("Night has begun!").</p>
 <p>&bull; Trigger local visual effects (darkness overlay, etc.).</p>
-<p>&bull; <strong>Mutation system sync</strong> &mdash; <code>MutationService</code> listens to this event to know when to fire <code>captureBaseline()</code> and <code>restoreBaseline()</code>.</p>`
- },
- {
- short: "Full lighting config per phase: brightness, fog, ambient, sun and moon intensity",
- detail: `<p>Each phase has a complete set of <code>Lighting</code> properties:</p>
+<p>&bull; <strong>Mutation system sync</strong> &mdash; <code>MutationService</code> listens to this event to know when to fire <code>captureBaseline()</code> and <code>restoreBaseline()</code>.</p>`,
+                        },
+                        {
+                            short: "Full lighting config per phase: brightness, fog, ambient, sun and moon intensity",
+                            detail: `<p>Each phase has a complete set of <code>Lighting</code> properties:</p>
 <table class="dtable"><tr><th>Property</th><th>Day</th><th>Afternoon</th><th>Night</th></tr>
 <tr><td>Brightness</td><td>2.0</td><td>1.5</td><td>2.5</td></tr>
 <tr><td>Ambient</td><td>RGB(241,241,241)</td><td>RGB(180,140,100)</td><td>RGB(150,150,190)</td></tr>
@@ -1843,48 +2075,51 @@
 <tr><td>FogEnd</td><td>10000 (very far)</td><td>8000 (medium)</td><td>10000 (far)</td></tr>
 <tr><td>SunIntensity</td><td>1.2</td><td>0.7</td><td>0.0</td></tr>
 <tr><td>MoonIntensity</td><td>0.0</td><td>0.0</td><td>1.0</td></tr></table>
-<p>Night intentionally has <code>Brightness 2.5</code> (higher than day) so the map remains visible and playable in the dark.</p>`
- },
- {
- short: "GeographicLatitude &amp; ColorShift per phase control sun angle and sky tint",
- detail: `<p><code>GeographicLatitude</code> controls the angle at which the sun/moon crosses the sky:</p>
+<p>Night intentionally has <code>Brightness 2.5</code> (higher than day) so the map remains visible and playable in the dark.</p>`,
+                        },
+                        {
+                            short: "GeographicLatitude &amp; ColorShift per phase control sun angle and sky tint",
+                            detail: `<p><code>GeographicLatitude</code> controls the angle at which the sun/moon crosses the sky:</p>
 <p><strong>Day (5&deg;):</strong> Equatorial latitude &mdash; sun passes near the zenith, intense direct light. Blue-violet <code>ColorShift</code> gives a tropical midday atmosphere.</p>
 <p><strong>Afternoon (41.7&deg;):</strong> Mid-latitude (similar to southern Europe) &mdash; heavily tilted sun, long shadows. Bright orange <code>ColorShift_Top</code> + warm yellow <code>ColorShift_Bottom</code> mimic a real sunset sky.</p>
-<p><strong>Night (5&deg;):</strong> Back to equatorial &mdash; the moon follows a high path. Dark violet <code>ColorShift</code> top and darker violet below creates the deep night atmosphere.</p>`
- }
- ],
- commands: null
- }
-];
- 
- 
- function loadSystemsGallery() {
- const container = document.getElementById('systems-gallery');
- if (!container) return;
- systemProjects.forEach(sys => {
- const card = document.createElement('div');
- card.className = 'bento-item system-card';
- const primaryThumb = `https://i.ytimg.com/vi/${sys.youtubeId}/${sys.fallbackId}`;
- const secondaryThumb = `https://i.ytimg.com/vi/${sys.youtubeId}/0.jpg`;
- const commandsHTML = sys.commands ? `
+<p><strong>Night (5&deg;):</strong> Back to equatorial &mdash; the moon follows a high path. Dark violet <code>ColorShift</code> top and darker violet below creates the deep night atmosphere.</p>`,
+                        },
+                    ],
+                    commands: null,
+                },
+            ];
+
+            function loadSystemsGallery() {
+                const container = document.getElementById("systems-gallery");
+                if (!container) return;
+                systemProjects.forEach((sys) => {
+                    const card = document.createElement("div");
+                    card.className = "bento-item system-card";
+                    const primaryThumb = `https://i.ytimg.com/vi/${sys.youtubeId}/${sys.fallbackId}`;
+                    const secondaryThumb = `https://i.ytimg.com/vi/${sys.youtubeId}/0.jpg`;
+                    const commandsHTML = sys.commands
+                        ? `
  <div class="sys-cmds">
  <div class="sys-cmd-label">Commands</div>
- ${sys.commands.map(c => `<div class="sys-cmd-item">${c}</div>`).join('')}
- </div>` : '';
- const featuresHTML = sys.features.map((f, fi) => {
- if (typeof f === 'string') {
- return `<div class="sys-feature">${f}</div>`;
- }
- const uid = `feat-${sys.youtubeId}-${fi}`;
- return `<div class="sys-feat-item">
+ ${sys.commands.map((c) => `<div class="sys-cmd-item">${c}</div>`).join("")}
+ </div>`
+                        : "";
+                    const featuresHTML = sys.features
+                        .map((f, fi) => {
+                            if (typeof f === "string") {
+                                return `<div class="sys-feature">${f}</div>`;
+                            }
+                            const uid = `feat-${sys.youtubeId}-${fi}`;
+                            return `<div class="sys-feat-item">
  <div class="sys-feat-row">
  <span class="sys-feat-text">${f.short}</span>
  <button class="sys-expand-btn" data-target="${uid}">+ Info</button>
  </div>
  <div class="sys-feat-detail" id="${uid}">${f.detail}</div>
  </div>`;
- }).join('')
- card.innerHTML = `
+                        })
+                        .join("");
+                    card.innerHTML = `
  <div class="sys-video-wrap" data-ytid="${sys.youtubeId}">
  <img class="yt-thumb" src="${primaryThumb}" data-secondary="${secondaryThumb}" alt="${sys.name}">
  <div class="sys-play-btn">
@@ -1898,57 +2133,57 @@
  <div class="sys-features">${featuresHTML}</div>
  ${commandsHTML}
  </div>`;
- const img = card.querySelector('.yt-thumb');
- img.onerror = function() {
- const secondary = this.getAttribute('data-secondary');
- if (secondary && this.src !== secondary) this.src = secondary;
- };
- const videoWrap = card.querySelector('.sys-video-wrap');
- videoWrap.addEventListener('click', () => {
- videoWrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${sys.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;" allow="autoplay;fullscreen;accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`;
- });
- container.appendChild(card);
- card.querySelectorAll('.sys-expand-btn').forEach(btn => {
- btn.addEventListener('click', (e) => {
- e.stopPropagation();
- const targetId = btn.getAttribute('data-target');
- const detail = document.getElementById(targetId);
- const isOpen = detail.classList.contains('open');
- detail.classList.toggle('open', !isOpen);
- btn.classList.toggle('open', !isOpen);
- btn.textContent = isOpen ? '+ Info' : '− Info';
- });
- });
- });
- }
+                    const img = card.querySelector(".yt-thumb");
+                    img.onerror = function () {
+                        const secondary = this.getAttribute("data-secondary");
+                        if (secondary && this.src !== secondary) this.src = secondary;
+                    };
+                    const videoWrap = card.querySelector(".sys-video-wrap");
+                    videoWrap.addEventListener("click", () => {
+                        videoWrap.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${sys.youtubeId}?autoplay=1&modestbranding=1&rel=0" style="width:100%;height:100%;border:none;" allow="autoplay;fullscreen;accelerometer;encrypted-media;gyroscope;picture-in-picture" allowfullscreen></iframe>`;
+                    });
+                    container.appendChild(card);
+                    card.querySelectorAll(".sys-expand-btn").forEach((btn) => {
+                        btn.addEventListener("click", (e) => {
+                            e.stopPropagation();
+                            const targetId = btn.getAttribute("data-target");
+                            const detail = document.getElementById(targetId);
+                            const isOpen = detail.classList.contains("open");
+                            detail.classList.toggle("open", !isOpen);
+                            btn.classList.toggle("open", !isOpen);
+                            btn.textContent = isOpen ? "+ Info" : "− Info";
+                        });
+                    });
+                });
+            }
 
- document.addEventListener('DOMContentLoaded', () => {
- loadAnimationGallery();
- loadModelsGallery();
- loadGuiGallery();
- loadSystemsGallery();
- });
+            document.addEventListener("DOMContentLoaded", () => {
+                loadAnimationGallery();
+                loadModelsGallery();
+                loadGuiGallery();
+                loadSystemsGallery();
+            });
 
- const hireForm = document.getElementById('hireForm');
- if (hireForm) {
- hireForm.addEventListener('submit', async (e) => {
- e.preventDefault();
- const f = e.target;
- try {
- await emailjs.send("service_k171wbt", "template_tp7g5di", {
- message: f.message.value,
- name: f.name.value,
- discord: f.discord.value,
- email: f.email.value,
- service: f.service.value
- });
- f.style.display = 'none';
- document.getElementById('successMessage').style.display = 'block';
- } catch (err) {
- alert('TRANSMISSION_ERROR');
- }
- });
- }
- </script>
-</body>
+            const hireForm = document.getElementById("hireForm");
+            if (hireForm) {
+                hireForm.addEventListener("submit", async (e) => {
+                    e.preventDefault();
+                    const f = e.target;
+                    try {
+                        await emailjs.send("service_k171wbt", "template_tp7g5di", {
+                            message: f.message.value,
+                            name: f.name.value,
+                            discord: f.discord.value,
+                            email: f.email.value,
+                            service: f.service.value,
+                        });
+                        f.style.display = "none";
+                        document.getElementById("successMessage").style.display = "block";
+                    } catch (err) {
+                        alert("TRANSMISSION_ERROR");
+                    }
+                });
+            }
+        </script>
+    </body>
 </html>

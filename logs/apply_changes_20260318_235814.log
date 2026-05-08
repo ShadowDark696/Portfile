@@ -1,6 +1,0 @@
-===== Apply Changes Script started: mi‚ 18/03/2026 23:58:15,20 ===== 
-Working directory: C:\Portfile 
-[INFO] Fetching and rebasing from origin/main... 
-error: cannot pull with rebase: You have unstaged changes.
-error: additionally, your index contains uncommitted changes.
-error: Please commit or stash them.

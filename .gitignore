@@ -1,3 +1,19 @@
-﻿# Large video files (exceed GitHub 100MB limit)
+﻿# Large video files
 Scripts/*.mp4
 Anims/*.mp4
+
+# Internal/dev files - not needed for the live site
+Explanaitons/
+logs/
+Scripts/
+Anims/
+animations.md
+apply_changes.bat
+apply_watermark.py
+auto_reply.html
+deploy-log.txt
+deploy.ps1
+email_template.html
+iniciar_servidor.bat
+nulecho
+tornado.md
